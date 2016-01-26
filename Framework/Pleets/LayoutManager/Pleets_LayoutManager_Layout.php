@@ -1,8 +1,6 @@
 <?php
 
-namespace Pleets\LayoutManager;
-
-class Layout
+class Pleets_LayoutManager_Layout
 {
 	private $controller;
 	private $view;
@@ -16,7 +14,7 @@ class Layout
 		$this->view = $view;
 
 		if (!file_exists($view))
-			throw new \Exception("The 'view' template $view does not exists");
+			throw new Exception("The 'view' template $view does not exists");
 
 		$params = $controller->getParams();
 

@@ -1,8 +1,6 @@
 <?php
 
-namespace Pleets\Mvc;
-
-abstract class AbstractionController
+abstract class Pleets_Mvc_AbstractionController
 {
 	private $module;
 	private $method = null;
@@ -36,7 +34,7 @@ abstract class AbstractionController
 			}
 			else {
 				$class = __CLASS__;
-				throw new \Exception("The '$method' method doesn't exists in the $class control class");
+				throw new Exception("The '$method' method doesn't exists in the $class control class");
 			}
 		}
 	}

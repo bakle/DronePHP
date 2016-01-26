@@ -1,8 +1,6 @@
 <?php
 
-namespace Pleets\Mvc;
-
-abstract class AbstractionModel
+abstract class Pleets_Mvc_AbstractionModel
 {
 	private $entityManager;
 

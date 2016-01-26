@@ -1,8 +1,6 @@
 <?php
 
-namespace Pleets\Mvc;
-
-abstract class AbstractionModule
+abstract class Pleets_Mvc_AbstractionModule
 {
 	protected $moduleName;
 

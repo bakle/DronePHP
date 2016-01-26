@@ -10,9 +10,7 @@
  * Date: 2014-10-06
  */
 
-namespace Pleets\FileSystem;
-
-class Shell implements IShellCommands
+class Pleets_FileSystem_Shell implements Pleets_FileSystem_IShellCommands
 {
 	private $home = null;				# Home path. Equivalent to ~
 	private $buffer = null;				# Buffer
@@ -80,7 +78,7 @@ class Shell implements IShellCommands
 			}
 		}
 		else
-			throw new \Exception("The directory '$handler' does not exists");
+			throw new Exception("The directory '$handler' does not exists");
 
 		if (!is_null($callback))
 			call_user_func($callback, $this);
@@ -185,7 +183,7 @@ class Shell implements IShellCommands
 		$recursive = is_null($recursive) ? false : $recursive;
 
 		if (is_null($file))
-			throw new \Exception("Missing parameter for rm!");
+			throw new Exception("Missing parameter for rm!");
 
 		if (file_exists($file) && !$recursive)
 			unlink($file);
@@ -209,7 +207,7 @@ class Shell implements IShellCommands
 		$recursive = (is_null($recursive)) ? false : $recursive;
 
 		if (empty($file) || empty($dest))
-			throw new \Exception("Missing parameters!");
+			throw new Exception("Missing parameters!");
 
 		if (is_dir($dest)) 
 		{
@@ -254,7 +252,7 @@ class Shell implements IShellCommands
 	public function mv($oldfile = null, $newfile)
 	{
 		if (empty($oldfile))
-			throw new \Exception("Missing parameter for mv!");
+			throw new Exception("Missing parameter for mv!");
 
 		if (is_dir($newfile))
 				$newfile .= '/'.basename($oldfile);
@@ -271,7 +269,7 @@ class Shell implements IShellCommands
 	public function mkdir($dir = null, $dest = null, $recursive = null)
 	{
 		if (empty($dir))
-			throw new \Exception("Missing parameter for mkdir!");
+			throw new Exception("Missing parameter for mkdir!");
 
 		if (empty($dest))
 			$dest = '.';
@@ -293,7 +291,7 @@ class Shell implements IShellCommands
 	public function rmdir($dir = null)
 	{
 		if (is_null($dir) || empty($dir))
-			throw new \Exception("Missing parameter for rmdir!");
+			throw new Exception("Missing parameter for rmdir!");
 
 		if (rmdir($dir))
 			return $this;

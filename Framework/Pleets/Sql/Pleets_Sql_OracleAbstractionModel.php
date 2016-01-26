@@ -1,8 +1,6 @@
 <?php
 
-namespace Pleets\Sql;
-
-abstract class OracleAbstractionModel
+abstract class Pleets_Sql_OracleAbstractionModel
 {
 	private $conn;		# SQLServer connection
 

@@ -1,8 +1,6 @@
 <?php
 
-namespace Pleets\Sql;
-
-abstract class SQLServerAbstractionModel
+abstract class Pleets_Sql_SQLServerAbstractionModel
 {
 	private $conn;		# SQLServer connection
 

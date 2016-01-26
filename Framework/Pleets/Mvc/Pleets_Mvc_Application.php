@@ -1,8 +1,6 @@
 <?php
 
-namespace Pleets\Mvc;
-
-class Application
+class Pleets_Mvc_Application
 {
 	protected $module;
 	protected $controller;
@@ -27,9 +25,9 @@ class Application
 		 */
 
 		if (!array_key_exists('app', $settings))
-			throw new \Exception("The key 'app' does not exists in the configuration file");
+			throw new Exception("The key 'app' does not exists in the configuration file");
 		if (!array_key_exists('base_path', $settings["app"]))
-			throw new \Exception("The key 'base_path' does not exists in the configuration file");
+			throw new Exception("The key 'base_path' does not exists in the configuration file");
 
 		define('BASEPATH', $settings["app"]["base_path"]);
 
@@ -98,7 +96,7 @@ class Application
 		$fileSystem = new \Pleets\FileSystem\Shell();
 
 		if (!array_key_exists('modules', $settings))
-			throw new \Exception("The key 'modules' does not exists in the configuration file");
+			throw new Exception("The key 'modules' does not exists in the configuration file");
 
 		if (count($settings["modules"]))
 		{
@@ -132,7 +130,7 @@ class Application
 			}
 		}
 		else
-			throw new \Exception("The application must have at least one module");
+			throw new Exception("The application must have at least one module");
 	}
 
 	private function buildRoute($settings)
@@ -157,26 +155,26 @@ class Application
 		if (is_null($this->getModule()))
 		{
 			if (!array_key_exists('router', $settings))
-				throw new \Exception("The key 'router' does not exists in the configuration file");
+				throw new Exception("The key 'router' does not exists in the configuration file");
 
 			if (!array_key_exists('routes', $settings["router"]))
-				throw new \Exception("The key 'routes' does not exists in the 'router' key in the configuration file");
+				throw new Exception("The key 'routes' does not exists in the 'router' key in the configuration file");
 
 			/*
 			 *	GETS DEFAULT ROUTE
 			 */
 
 			if (!array_key_exists('defaults', $settings["router"]["routes"]))
-				throw new \Exception("The key 'defaults' does not exists in '[router][routes]' key in the configuration file");
+				throw new Exception("The key 'defaults' does not exists in '[router][routes]' key in the configuration file");
 
 			if (!array_key_exists('module', $settings["router"]["routes"]["defaults"]))
-				throw new \Exception("You must define the module in the 'defaults' route");
+				throw new Exception("You must define the module in the 'defaults' route");
 
 			if (!array_key_exists('controller', $settings["router"]["routes"]["defaults"]))
-				throw new \Exception("You must define the controller in the 'defaults' route");
+				throw new Exception("You must define the controller in the 'defaults' route");
 
 			if (!array_key_exists('view', $settings["router"]["routes"]["defaults"]))
-				throw new \Exception("You must define the view in the 'defaults' route");
+				throw new Exception("You must define the view in the 'defaults' route");
 		}
 		else {
 			$module = $this->getModule();
@@ -184,20 +182,20 @@ class Application
 			$moduleSettings = require $moduleFileSettings;
 
 			if (!array_key_exists('router', $moduleSettings))
-				throw new \Exception("The key 'router' does not exists in the configuration file $moduleFileSettings");
+				throw new Exception("The key 'router' does not exists in the configuration file $moduleFileSettings");
 
 			if (!array_key_exists('routes', $moduleSettings["router"]))
-				throw new \Exception("The key 'routes' does not exists in the 'router' key in the configuration file $moduleFileSettings");
+				throw new Exception("The key 'routes' does not exists in the 'router' key in the configuration file $moduleFileSettings");
 
 			if (!array_key_exists($module, $moduleSettings["router"]["routes"]))
-				throw new \Exception("The key '$module' does not exists in '[router][routes]' key in the configuration file $moduleFileSettings");
+				throw new Exception("The key '$module' does not exists in '[router][routes]' key in the configuration file $moduleFileSettings");
 
 			$spModule = $moduleSettings["router"]["routes"][$module]["module"];
 			if (!in_array($spModule, $settings['modules']))
-				throw new \Exception("The module '$spModule' does not exist in the global configuration");
+				throw new Exception("The module '$spModule' does not exist in the global configuration");
 
 			if (!array_key_exists('module', $moduleSettings["router"]["routes"][$module]))
-				throw new \Exception("You must define the module in the '$module' route");
+				throw new Exception("You must define the module in the '$module' route");
 
 			/*
 			 *	GETS RELATIVE ROUTE TO MODULE
@@ -206,15 +204,15 @@ class Application
 			if (is_null($this->getController()))
 			{
 				if (!array_key_exists('controller', $moduleSettings["router"]["routes"][$module]))
-					throw new \Exception("You must define the controller in the '$module' route");
+					throw new Exception("You must define the controller in the '$module' route");
 
 				if (!array_key_exists('view', $moduleSettings["router"]["routes"][$module]))
-					throw new \Exception("You must define the view in the '$module' route");
+					throw new Exception("You must define the view in the '$module' route");
 			}
 			if (is_null($this->getView()))
 			{
 				if (!array_key_exists('view', $moduleSettings["router"]["routes"][$module]))
-					throw new \Exception("You must define the view in the '$module' route");
+					throw new Exception("You must define the view in the '$module' route");
 			}
 		}
 
@@ -252,12 +250,12 @@ class Application
 				if (class_exists($controller))
 					$controller_instance = new $controller($this->getModule(), $this->getView());
 				else
-					throw new \Exception("The control class $controller does not exists");
+					throw new Exception("The control class $controller does not exists");
 			}
 			else
-				throw new \Exception("The control class is NULL");
+				throw new Exception("The control class is NULL");
 		}
-		catch (\Exception $e) {
+		catch (Exception $e) {
 			echo $e->getMessage();
 		}
 	}

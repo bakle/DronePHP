@@ -1,8 +1,6 @@
 <?php
 
-namespace Pleets\Network;
-
-class Http
+class Pleets_Network_Http
 {
 	public static function getHost()
 	{

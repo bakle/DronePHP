@@ -9,9 +9,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
-namespace Pleets\Sql;
-
-class Mysql {
+class Pleets_Sql_Mysql {
 
     private $dbconn = NULL;                 # connection (Object Sql)
     private $buffer = NULL;                 # buffer

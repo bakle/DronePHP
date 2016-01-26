@@ -11,7 +11,7 @@
 
 namespace Pleets\FileSystem;
 
-interface IShellCommands
+interface Pleets_FileSystem_IShellCommands
 {
    public function pwd();
    public function ls($path);

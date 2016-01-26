@@ -9,9 +9,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
-namespace Pleets\Sql;
-
-class SQLServer
+class Pleets_Sql_SQLServer
 {
     private $dbhost = '';                           # default host
     private $dbuser = '';                           # default username
@@ -45,7 +43,7 @@ class SQLServer
         if ($this->dbconn === false)
         {
             $this->errors = sqlsrv_errors();
-                throw new \Exception("The database connection could not be started!");
+                throw new Exception("The database connection could not be started!");
         }
 	}
 
@@ -69,7 +67,7 @@ class SQLServer
         if ($this->dbconn === false)
         {
             $this->errors = sqlsrv_errors();
-            throw new \Exception("The database connection could not be started!");
+            throw new Exception("The database connection could not be started!");
         }
 
         return $this;
@@ -91,7 +89,7 @@ class SQLServer
         }
         else {
             $this->errors = sqlsrv_errors();
-            throw new \Exception("Could not perform the query to the database");
+            throw new Exception("Could not perform the query to the database");
         }
 
         if ($this->transac_mode)
@@ -115,10 +113,10 @@ class SQLServer
     public function begin_transaction()
     {
         if (sqlsrv_begin_transaction($this->dbconn) === false)
-            throw new \Exception(sqlsrv_errors());
+            throw new Exception(sqlsrv_errors());
 
         if ($this->transac_mode)
-            throw new \Exception("Transaction mode has already started");
+            throw new Exception("Transaction mode has already started");
 
         $this->transac_mode = true;
 
@@ -128,7 +126,7 @@ class SQLServer
     public function end_transaction()
     {
         if (is_null($this->transac_result))
-            throw new \Exception("There are not querys in this transaction");
+            throw new Exception("There are not querys in this transaction");
 
         if ($this->transac_result)
             sqlsrv_commit($this->dbconn);

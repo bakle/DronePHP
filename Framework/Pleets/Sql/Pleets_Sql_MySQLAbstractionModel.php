@@ -1,8 +1,6 @@
 <?php
 
-namespace Pleets\Sql;
-
-abstract class MySQLAbstractionModel
+abstract class Pleets_Sql_MySQLAbstractionModel
 {
 	private $dbconn;		# MySQL connection
 

@@ -33,5 +33,5 @@ spl_autoload_register("LibraryLoader");
 
 // Run application
 require_once("Framework/autoload.php");
-$mvc = new Pleets\Mvc\Application();
+$mvc = new Pleets_Mvc_Application();
 $mvc->run();

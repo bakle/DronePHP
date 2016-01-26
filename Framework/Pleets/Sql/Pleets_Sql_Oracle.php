@@ -9,9 +9,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
-namespace Pleets\Sql;
-
-class Oracle
+class Pleets_Sql_Oracle
 {
     private $dbhost = '';                           # default host
     private $dbuser = '';                           # default username
@@ -44,7 +42,7 @@ class Oracle
         if ($this->dbconn === false)
         {
             $this->errors = oci_error();
-                throw new \Exception("The database connection could not be started!");
+                throw new Exception("The database connection could not be started!");
         }
 	}
 
@@ -67,7 +65,7 @@ class Oracle
         if ($this->dbconn === false)
         {
             $this->errors = oci_error();
-            throw new \Exception("The database connection could not be started!");
+            throw new Exception("The database connection could not be started!");
         }
 
         return $this;
@@ -87,7 +85,7 @@ class Oracle
         {
             $e = oci_error($stid);
             $this->errors = trigger_error(htmlentities($e['message']), E_USER_ERROR);
-            throw new \Exception("Could not perform the query to the database");
+            throw new Exception("Could not perform the query to the database");
         }
 
         if ($this->transac_mode)
@@ -111,7 +109,7 @@ class Oracle
     public function begin_transaction()
     {
         if ($this->transac_mode)
-            throw new \Exception("Transaction mode has already started");
+            throw new Exception("Transaction mode has already started");
 
         $this->transac_mode = true;
 
@@ -121,7 +119,7 @@ class Oracle
     public function end_transaction()
     {
         if (is_null($this->transac_result))
-            throw new \Exception("There are not querys in this transaction");
+            throw new Exception("There are not querys in this transaction");
 
         if ($this->transac_result)
             oci_commit($this->dbconn);
