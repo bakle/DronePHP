@@ -6,9 +6,9 @@ abstract class Pleets_Sql_SQLServerAbstractionModel
 
 	public function __construct()
 	{
-		$dbsettings = include(__DIR__ . "/../../../config/database.sqlserver.config.php");
+		$dbsettings = include(dirname(__FILE__) . "/../../../config/database.sqlserver.config.php");
 
-		$this->connect = new SQLServer(
+		$this->connect = new Pleets_Sql_SQLServer(
 			$dbsettings["database"]["host"],
 			$dbsettings["database"]["user"],
 			$dbsettings["database"]["password"],

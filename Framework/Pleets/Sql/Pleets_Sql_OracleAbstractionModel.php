@@ -6,9 +6,9 @@ abstract class Pleets_Sql_OracleAbstractionModel
 
 	public function __construct()
 	{
-		$dbsettings = include(__DIR__ . "/../../../config/database.oracle.config.php");
+		$dbsettings = include(dirname(__FILE__) . "/../../../config/database.oracle.config.php");
 
-		$this->connect = new Oracle(
+		$this->connect = new Pleets_Sql_Oracle(
 			$dbsettings["database"]["host"],
 			$dbsettings["database"]["user"],
 			$dbsettings["database"]["password"],

@@ -245,7 +245,9 @@ class Pleets_Mvc_Application
 		try {
 			if (!is_null($this->getController()))
 			{
-                $controller = $this->getController();
+                $_controller = explode("_", $this->getController());
+
+                $controller = $this->getModule() . "_Controller_" . array_pop($_controller);
 
 				if (class_exists($controller))
 					$controller_instance = new $controller($this->getModule(), $this->getView());

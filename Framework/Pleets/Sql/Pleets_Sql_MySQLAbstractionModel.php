@@ -6,9 +6,9 @@ abstract class Pleets_Sql_MySQLAbstractionModel
 
 	public function __construct()
 	{
-		$dbsettings = include(__DIR__ . "/../../../config/database.mysql.config.php");
+		$dbsettings = include(dirname(__FILE__) . "/../../../config/database.mysql.config.php");
 
-		$this->connect = new MySQL(
+		$this->connect = new Pleets_Sql_Mysql(
 			$dbsettings["database"]["host"],
 			$dbsettings["database"]["user"],
 			$dbsettings["database"]["password"],
