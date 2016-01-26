@@ -4,10 +4,21 @@
  *	App Autoloader
  */
 
+include("Pleets/FileSystem/Pleets_FileSystem_IShellCommands.php");
+include("Pleets/FileSystem/Pleets_FileSystem_Shell.php");
+
 function FrameworkLoader($name) 
 {
 
-	$class = __DIR__ . "/". str_replace('\\', '/', $name) . ".php";
+    $nms = explode("_", $name);
+    $parsed_nms = "";
+
+    for ($i = 0; $i < count($nms) - 1; $i++)
+    {
+        $parsed_nms .= "/" . $nms[$i];
+    }
+    
+	$class = dirname(__FILE__) . $parsed_nms . "/" . $name . ".php";
 
 	if (file_exists($class))
 		include $class;

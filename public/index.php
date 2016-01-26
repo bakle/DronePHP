@@ -1,6 +1,6 @@
 <?php
 
-chdir(dirname(__DIR__));
+chdir(dirname(dirname(__FILE__)));
 
 // Set localtime zone
 date_default_timezone_set("America/Bogota");
@@ -18,7 +18,7 @@ function LibraryLoader($name)
 
 	foreach ($directories as $dir)
 	{
-		$class =  dirname(__DIR__) . "/$dir/". str_replace('\\', '/', $name) . ".php";
+		$class =  dirname(dirname(__FILE__)) . "/$dir/". str_replace('\\', '/', $name) . ".php";
 
 		if (file_exists($class))
 		{

@@ -9,8 +9,6 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
-namespace Pleets\FileSystem;
-
 interface Pleets_FileSystem_IShellCommands
 {
    public function pwd();
