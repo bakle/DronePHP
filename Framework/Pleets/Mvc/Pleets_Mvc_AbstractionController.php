@@ -19,7 +19,7 @@ abstract class Pleets_Mvc_AbstractionController
 		 * is initilized here, and contains several configurations and methods for
 		 * controllers.
 		 */
-		$fqn = "\\" . $module . "\\Module";
+		$fqn = $module . "_Module";
 
 		$this->module = new $fqn($module);
 
@@ -33,7 +33,7 @@ abstract class Pleets_Mvc_AbstractionController
 				$this->params = $this->$method();
 			}
 			else {
-				$class = __CLASS__;
+				$class = dirname(__FILE__);
 				throw new Exception("The '$method' method doesn't exists in the $class control class");
 			}
 		}
@@ -125,6 +125,6 @@ abstract class Pleets_Mvc_AbstractionController
 	public function __destruct()
 	{
 		if (!is_null($this->getMethod()))
-			$layoutManager = new \Pleets\LayoutManager\Layout($this);
+			$layoutManager = new Pleets_LayoutManager_Layout($this);
 	}
 }
