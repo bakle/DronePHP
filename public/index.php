@@ -18,7 +18,7 @@ function LibraryLoader($name)
 
 	foreach ($directories as $dir)
 	{
-		$class =  dirname(__DIR__) . "/$dir/". str_replace('\\', '/', $name) . ".php";
+		$class =  dirname(dirname(__FILE__)) . "/$dir/". str_replace('\\', '/', $name) . ".php";
 
 		if (file_exists($class))
 		{
