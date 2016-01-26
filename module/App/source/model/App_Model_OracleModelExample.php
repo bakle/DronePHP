@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Model;
-
-class SQLServerModelExample extends \Pleets\Sql\SQLServerAbstractionModel
+class App_Model_OracleModelExample extends Pleets_Sql_OracleAbstractionModel
 {
     public function consulta()
     {
-        $sql = "SELECT * FROM SYS.TABLES";
+        $sql = "SELECT * FROM HELP";
         $result = $this->connect->query($sql);
         return $this->connect->toArray(array('encode_utf8' => true));
     }

@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Model;
-
-class MySQLModelExample extends \Pleets\Sql\MySQLAbstractionModel
+class App_Model_MySQLModelExample extends Pleets_Sql_MySQLAbstractionModel
 {
     public function consulta()
     {

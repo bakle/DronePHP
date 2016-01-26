@@ -5,7 +5,7 @@ return array(
         'routes' => array(
         	'Pleets' => array(
         		'module' => 'Pleets',
-        		'controller' => 'App',
+        		'controller' => 'Pleets_Controller_App',
         		'view' => 'index'
         	)
         ),

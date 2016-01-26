@@ -1,10 +1,6 @@
 <?php
 
-namespace Pleets\model;
-
-Use Pleets\Mvc\AbstractionModel;
-
-class Database extends AbstractionModel
+class Pleets_model_Database extends Pleets_Mvc_AbstractionModel
 {
 	public function example()
 	{

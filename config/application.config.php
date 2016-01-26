@@ -14,7 +14,7 @@ return array(
             */
             'defaults' => array(
                 'module' => 'App',
-                'controller' => 'Index',
+                'controller' => 'App_Controller_Index',
                 'view' => 'index'
             ),
         ),

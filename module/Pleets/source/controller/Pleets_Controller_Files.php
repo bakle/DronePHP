@@ -1,11 +1,6 @@
 <?php
 
-namespace Pleets\Controller;
-
-Use Pleets\Mvc\AbstractionController;
-Use Pleets\FileSystem\Shell;
-
-class Files extends AbstractionController
+class Pleets_Controller_Files extends Pleets_Mvc_AbstractionController
 {
     public function fileActions()
     {

@@ -1,15 +1,10 @@
 <?php
 
-namespace Pleets\Controller;
-
-Use Pleets\Mvc\AbstractionController;
-Use Pleets\FileSystem\Shell;
-
-class App extends AbstractionController
+class Pleets_Controller_App extends Pleets_Mvc_AbstractionController
 {
 	public function index()
 	{
-		$shell = new Shell();
+		$shell = new Pleets_FileSystem_Shell();
 		$modules = $shell->ls('module');
 
 		$parsed_modules = array();
@@ -123,7 +118,7 @@ class App extends AbstractionController
 
         $file = 'module/'.$_POST["module"]."/source/view/".$_POST["controller"];
 
-		$shell = new Shell();
+		$shell = new Pleets_FileSystem_Shell();
 		$vistas = $shell->ls($file);
 
 		$parsed_views = array();

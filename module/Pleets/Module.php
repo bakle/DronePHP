@@ -1,10 +1,6 @@
 <?php
 
-namespace Pleets;
-
-Use Pleets\Mvc\AbstractionModule;
-
-class Module extends AbstractionModule
+class Pleets_Module extends Pleets_Mvc_AbstractionModule
 {
 	public function init()
 	{
