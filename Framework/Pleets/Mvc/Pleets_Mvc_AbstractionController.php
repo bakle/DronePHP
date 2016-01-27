@@ -21,7 +21,7 @@ abstract class Pleets_Mvc_AbstractionController
 		 */
 		$fqn = $module . "_Module";
 
-		$this->module = new $fqn($module);
+		$this->module = new $fqn($module, $this);
 
 		if (!is_null($method))
 		{

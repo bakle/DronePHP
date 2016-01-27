@@ -2,7 +2,7 @@
 
 class App_Module extends Pleets_Mvc_AbstractionModule
 {
-	public function init()
+	public function init($c)
 	{
 		// init procedures
 	}
