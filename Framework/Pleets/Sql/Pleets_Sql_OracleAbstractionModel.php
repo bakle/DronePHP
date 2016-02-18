@@ -2,20 +2,20 @@
 
 abstract class Pleets_Sql_OracleAbstractionModel
 {
-	private $conn;		# SQLServer connection
+	private $db;		# Oracle connection
 
-	public function __construct()
+	public function __construct($abstract_connection_string = "default")
 	{
 		$dbsettings = include(dirname(__FILE__) . "/../../../config/database.oracle.config.php");
 
-		$this->connect = new Pleets_Sql_Oracle(
-			$dbsettings["database"]["host"],
-			$dbsettings["database"]["user"],
-			$dbsettings["database"]["password"],
-			$dbsettings["database"]["dbname"]
+		$this->db = new Pleets_Sql_Oracle(
+			$dbsettings[$abstract_connection_string]["host"],
+			$dbsettings[$abstract_connection_string]["user"],
+			$dbsettings[$abstract_connection_string]["password"],
+			$dbsettings[$abstract_connection_string]["dbname"]
 		);
 	}
 
 	/* Getters */
-	public function getConn() { return $this->conn; }
+	public function getDb() { return $this->db; }
 }
