@@ -52,11 +52,14 @@ class Pleets_Sql_Oracle
     public function getUsername() { return $this->dbuser; }
     public function getDatabase() { return $this->dbname; }
 
-    public function getErrors() { return $this->errors; }
-
     /* Setters */
 
+    public function setHostname($dbname) { $this->dbname = $dbname; }
+    public function setUsername($dbuser) { $this->dbuser = $dbuser; }
+    public function setPassword($dbpass) { $this->dbpass = $dbpass; }
     public function setDatabase($dbname) { $this->dbname = $dbname; }
+
+    public function getErrors() { return $this->errors; }
 
     public function reconnect()
     {
