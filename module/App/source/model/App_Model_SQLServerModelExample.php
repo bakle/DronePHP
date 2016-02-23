@@ -1,6 +1,6 @@
 <?php
 
-class App_Model_SQLServerModelExample extends Pleets_Sql_SQLServerAbstractionModel
+class App_Model_SQLServerModelExample extends Pleets_Sql_AbstractionModel
 {
     public function consulta()
     {

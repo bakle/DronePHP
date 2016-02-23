@@ -1,6 +1,6 @@
 <?php
 
-class App_Model_OracleModelExample extends Pleets_Sql_OracleAbstractionModel
+class App_Model_OracleModelExample extends Pleets_Sql_AbstractionModel
 {
     public function consulta()
     {
