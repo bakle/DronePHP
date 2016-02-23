@@ -22,8 +22,8 @@ abstract class Pleets_Sql_AbstractionModel
         # driver => className
         $this->availableDrivers = array(
             "Oci8"          => "Pleets_Sql_Oracle",
-            "Mysqli"        => "",
-            "Sqlsrv"        => "",
+            "Mysqli"        => "Pleets_Sql_Mysql",
+            "Sqlsrv"        => "Pleets_Sql_SQLServer",
             // Drivers for future implementation
             //"Pdo_Mysql"     => "",
             //"Pgsql"         => "",
