@@ -43,9 +43,13 @@ class Pleets_Sql_Oracle
         if ($this->dbconn === false)
         {
             $this->errors = oci_error();
-                throw new Exception("The database connection could not be started!");
+
+            if (count($this->errors))
+                throw new Exception($this->errors["message"], $this->errors["code"]);
+            else
+                throw new Exception("Unknown error!");
         }
-	}
+    }
 
     /* Getters */
 
@@ -63,14 +67,18 @@ class Pleets_Sql_Oracle
     public function getErrors() { return $this->errors; }
 
     public function reconnect()
-    {        
+    {
         $connection_string = (is_null($this->dbhost) || empty($this->dbhost)) ? $this->dbname : $this->dbhost ."/". $this->dbname;
         $this->dbconn = oci_connect($this->dbuser,  $this->dbpass, $connection_string);
 
         if ($this->dbconn === false)
         {
             $this->errors = oci_error();
-            throw new Exception("The database connection could not be started!");
+
+            if (count($this->errors))
+                throw new Exception($this->errors["message"], $this->errors["code"]);
+            else
+                throw new Exception("Unknown error!");
         }
 
         return $this;
@@ -89,7 +97,11 @@ class Pleets_Sql_Oracle
         if (!$r)
         {
             $this->errors = oci_error($stid);
-            throw new Exception("Could not perform the query to the database");
+
+            if (count($this->errors))
+                throw new Exception($this->errors["message"], $this->errors["code"]);
+            else
+                throw new Exception("Unknown error!");
         }
 
         if ($this->transac_mode)
@@ -173,8 +185,8 @@ class Pleets_Sql_Oracle
         return $data;
     }
 
-	public function __destruct()
+    public function __destruct()
     {
-		oci_close($this->dbconn);
-	}
+        oci_close($this->dbconn);
+    }
 }
