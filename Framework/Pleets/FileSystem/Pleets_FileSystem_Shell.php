@@ -30,62 +30,6 @@ class Pleets_FileSystem_Shell implements Pleets_FileSystem_IShellCommands
 		return $this->buffer;
 	}
 
-	/*
-	 *	Recursive function to list files and directories
-	 */
-	public function getContents($handler, $fileCallback, $dirCallback, $callback = null)
-	{
-		$contents = array();
-
-		if (is_dir($handler))
-		{
-			$filesForHandler = $this->ls($handler);
-
-			foreach ($filesForHandler as $item) 
-			{
-				if ($item != '.' && $item != '..')
-					$contents[] = $item;
-			}
-
-			$allContents = $contents;
-
-			if (count($contents) > 0)
-			{
-				foreach ($contents as $i) 
-				{
-					if (is_file($handler.'/'.$i)) 
-					{
-						$allContents[] = $handler.'/'.$i;
-
-						$this->buffer = $handler.'/'.$i;
-						call_user_func($fileCallback, $this);
-					}
-					elseif (is_dir($handler.'/'.$i)) 
-					{
-						$allContents[] = $handler.'/'.$i;
-
-						$this->buffer = $handler.'/'.$i;
-						$this->getContents($handler.'/'.$i, $fileCallback, $dirCallback);
-
-						$directory = scandir($handler);
-
-						if (!count($directory) < 3)
-							$this->buffer = $handler.'/'.$i;
-
-						call_user_func($dirCallback, $this);
-					}
-				}
-			}
-		}
-		else
-			throw new Exception("The directory '$handler' does not exists");
-
-		if (!is_null($callback))
-			call_user_func($callback, $this);
-
-		return $allContents;
-	}
-
 	public function pwd()
 	{
 		if (getcwd())
@@ -109,23 +53,22 @@ class Pleets_FileSystem_Shell implements Pleets_FileSystem_IShellCommands
 
 			if ($recursive)
 			{
-				# Declare variables
-				$dirs = $files = array();
+                if ($handle = opendir($path)) {
 
-				$this->getContents($path, function($event) use (&$files) {
-					$files[] = $event->getBuffer();
-				}, function($event) use (&$dirs) {
-					$dirs[] = $event->getBuffer();
-				});
+                    while (false !== ($item = readdir($handle))) {
 
-				foreach ($dirs as $item) {
-					$filesToReturn[] = $item;
-				}
+                        if (strstr($item,'~') === false && $item != '.' && $item != '..')
+                        {
+                            if (is_dir($path . "/" . $item))
+                                $filesToReturn = array_merge($filesToReturn, $this->ls($path . "/" . $item, true));
 
-				foreach ($files as $item) {
-					$filesToReturn[] = $item;
-				}
-			}
+                            $filesToReturn[] = $path . "/" . $item;
+                        }
+                    }
+
+                    closedir($handle);
+                }
+   			}
 			else {
 				while (false !== ($item = $pathIns->read())) {
 					$filesToReturn[] = $item;
@@ -138,7 +81,7 @@ class Pleets_FileSystem_Shell implements Pleets_FileSystem_IShellCommands
 			$pathIns = dir('.');
 			$contents = $this->ls();
 
-			foreach ($contents as $item) 
+			foreach ($contents as $item)
 			{
 				if (!empty($path))
 					if (!strlen(stristr($item, $path)) > 0)
@@ -147,7 +90,7 @@ class Pleets_FileSystem_Shell implements Pleets_FileSystem_IShellCommands
 					$filesToReturn[] = $item;
 			}
 		}
-		
+
 		return $filesToReturn;
 	}
 
@@ -166,7 +109,7 @@ class Pleets_FileSystem_Shell implements Pleets_FileSystem_IShellCommands
 
 	public function touch($file)
 	{
-		if (!file_exists($file)) 
+		if (!file_exists($file))
 		{
 			if (!$openFile = fopen($file, 'w+'))
 				return false;
@@ -187,18 +130,30 @@ class Pleets_FileSystem_Shell implements Pleets_FileSystem_IShellCommands
 
 		if (file_exists($file) && !$recursive)
 			unlink($file);
-		elseif (is_dir($file) && $recursive) 
+		elseif (is_dir($file) && $recursive)
 		{
-			$that = $this;
+            if ($handle = opendir($file)) {
 
-			$this->getContents($file, function() use ($that) {
-				unlink($that->getBuffer());
-			}, function() use ($that) {
-				rmdir($that->getBuffer());
-			}, function() use ($file) {
-				@rmdir($file);
-			});
+                while (false !== ($item = readdir($handle))) {
+
+                    if (strstr($item,'~') === false && $item != '.' && $item != '..')
+                    {
+                    	if (is_dir($file ."/". $item))
+                    		$this->rm($file ."/". $item, true);
+                    	elseif (is_file($file ."/". $item))
+                    		$this->rm($file ."/". $item);
+
+                    	if (is_dir($file ."/". $item))
+                    		rmdir($file ."/". $item);
+                    }
+                }
+
+                rmdir($file);
+
+                closedir($handle);
+            }
 		}
+
 		return $this;
 	}
 
@@ -209,42 +164,37 @@ class Pleets_FileSystem_Shell implements Pleets_FileSystem_IShellCommands
 		if (empty($file) || empty($dest))
 			throw new Exception("Missing parameters!");
 
-		if (is_dir($dest)) 
+		if (is_dir($file))
 		{
-			if (!$recursive)
-				copy($file, $dest.'/'.$file);
-			else {
+			if ( (!file_exists($dest) || (file_exists($dest) && is_file($dest)) ) && $recursive)
+				mkdir($dest, 0777, true);
 
-				$files = array();
-				$files[0] = array();
-				$files[1] = array();
+            if ($handle = opendir($file)) {
 
-				$_SESSION["BUFFER"]["EXO"]["cp"][2] = $dest;
+                while (false !== ($item = readdir($handle))) {
 
-				$that = $this;
+                    if (strstr($item,'~') === false && $item != '.' && $item != '..')
+                    {
+                    	if (is_dir($file ."/". $item) && $recursive)
+                    	{
+                    		mkdir($dest ."/". $item, 0777, true);
+                    		$this->cp($file ."/". $item, $dest ."/". $item, true);
+                    	}
+                    	elseif (is_file($file ."/". $item))
+                    		$this->cp($file ."/". $item, $dest ."/". $item);
+                    }
+                }
 
-				$this->getContents($file, function() use($that, &$files) {
-					$files[0][] = $that->getBuffer();
-				}, function() use($that, &$files) {
-					$files[1][] = $that->getBuffer();
-				}, function() use ($files, $dest) {
-
-					foreach ($files[1] as $item)
-					{
-						if (!file_exists($dest.'/'.$item))
-							mkdir("$dest/$item", 0777, true);
-					}
-
-					foreach ($files[0] as $item)
-					{
-						if (!file_exists("$dest/$files"))
-							copy($item, $dest.'/'.$item);
-					}
-				});
-			}
+                closedir($handle);
+            }
 		}
 		else
-			copy($file, $dest);
+		{
+			if (file_exists($dest) && is_dir($dest))
+				copy($file, $dest.'/'. basename($file));
+			else
+				copy($file, $dest);
+		}
 
 		return $this;
 	}
@@ -282,7 +232,7 @@ class Pleets_FileSystem_Shell implements Pleets_FileSystem_IShellCommands
 			if (!is_dir($dir))
 			{
 				if(!mkdir("$dir", 0777))
-					return false;		
+					return false;
 			}
 		}
 		return $this;
