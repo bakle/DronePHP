@@ -30,24 +30,27 @@ class Pleets_Sql_Oracle
     private $transac_mode = false;                  # transaction process
     private $transac_result = null;                 # result of transactions
 
-    public function __construct($dbhost = null, $dbuser = null, $dbpass = null, $dbname = null)
+    public function __construct($dbhost = null, $dbuser = null, $dbpass = null, $dbname = null, $auto_connect = true)
     {
         $this->dbhost = is_null($dbhost) ? !defined('DBHOST') ? $this->dbhost : @DBHOST : $dbhost;
         $this->dbuser = is_null($dbuser) ? !defined('DBUSER') ? $this->dbuser : @DBUSER : $dbuser;
         $this->dbpass = is_null($dbpass) ? !defined('DBPASS') ? $this->dbpass : @DBPASS : $dbpass;
         $this->dbname = is_null($dbname) ? !defined('DBNAME') ? $this->dbname : @DBNAME : $dbname;
 
-        $connection_string = (is_null($this->dbhost) || empty($this->dbhost)) ? $this->dbname : $this->dbhost ."/". $this->dbname;
-        $this->dbconn = oci_connect($this->dbuser,  $this->dbpass, $connection_string);
-
-        if ($this->dbconn === false)
+        if ($auto_connect)
         {
-            $this->errors = oci_error();
+            $connection_string = (is_null($this->dbhost) || empty($this->dbhost)) ? $this->dbname : $this->dbhost ."/". $this->dbname;
+            $this->dbconn = @oci_connect($this->dbuser,  $this->dbpass, $connection_string);
 
-            if (count($this->errors))
-                throw new Exception($this->errors["message"], $this->errors["code"]);
-            else
-                throw new Exception("Unknown error!");
+            if ($this->dbconn === false)
+            {
+                $this->errors = oci_error();
+
+                if (count($this->errors))
+                    throw new Exception($this->errors["message"], $this->errors["code"]);
+                else
+                    throw new Exception("Unknown error!");
+            }
         }
     }
 
@@ -69,7 +72,7 @@ class Pleets_Sql_Oracle
     public function reconnect()
     {
         $connection_string = (is_null($this->dbhost) || empty($this->dbhost)) ? $this->dbname : $this->dbhost ."/". $this->dbname;
-        $this->dbconn = oci_connect($this->dbuser,  $this->dbpass, $connection_string);
+        $this->dbconn = @oci_connect($this->dbuser,  $this->dbpass, $connection_string);
 
         if ($this->dbconn === false)
         {
@@ -187,6 +190,7 @@ class Pleets_Sql_Oracle
 
     public function __destruct()
     {
-        oci_close($this->dbconn);
+        if ($this->dbconn)
+            oci_close($this->dbconn);
     }
 }
