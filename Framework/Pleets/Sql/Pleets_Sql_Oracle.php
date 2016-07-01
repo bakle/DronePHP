@@ -99,7 +99,7 @@ class Pleets_Sql_Oracle
 
         $this->result = $stid = oci_parse($this->dbconn, $sql);
 
-        $r = ($this->transac_mode) ? oci_execute($stid, OCI_NO_AUTO_COMMIT) : oci_execute($stid,  OCI_COMMIT_ON_SUCCESS);
+        $r = ($this->transac_mode) ? @oci_execute($stid, OCI_NO_AUTO_COMMIT) : @oci_execute($stid,  OCI_COMMIT_ON_SUCCESS);
 
         if (!$r)
         {
@@ -171,7 +171,7 @@ class Pleets_Sql_Oracle
 
         if ($this->result)
         {
-            while ($row = oci_fetch_array($this->result, OCI_BOTH))
+            while ( ($row = @oci_fetch_array($this->result, OCI_BOTH + OCI_RETURN_NULLS)) !== false )
             {
                 if ($utf8)
                 {
