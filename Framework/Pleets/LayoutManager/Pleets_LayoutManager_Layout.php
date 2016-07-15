@@ -5,6 +5,8 @@ class Pleets_LayoutManager_Layout
 	private $controller;
 	private $view;
 
+	private $title;
+
 	public function __construct($controller)
 	{
 		// str_replace() is needed in linux systems
@@ -27,6 +29,9 @@ class Pleets_LayoutManager_Layout
 	}
 
 	public function getController() { return $this->controller; }
+	public function getTitle() { return $this->title; }
+
+	public function setTitle($title) { $this->title = $title; }
 
 	public function content()
 	{
