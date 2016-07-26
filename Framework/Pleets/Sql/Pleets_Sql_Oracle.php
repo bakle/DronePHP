@@ -4,7 +4,7 @@
  * Oracle class
  * http://www.pleets.org
  *
- * Copyright 2014, Pleets Apps
+ * Copyright 2016, Pleets Apps
  * Free to use under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  */
@@ -15,19 +15,18 @@ class Pleets_Sql_Oracle
     private $dbuser = '';                           # default username
     private $dbpass = '';                           # default password
     private $dbname = '';                           # default database
-
     private $dbchar = '';                           # default charset
 
     private $dbconn = null;                         # connection
-    private $buffer = null;                         # buffer
 
-    private $errors = array();
+    private $errors = array();                      # Errors
 
-    public $numRows;                                # Rows returned
-    public $numFields;
-    public $rowsAffected;
+    private $numRows;                               # Rows returned
+    private $numFields;                             # Fields returned
+    private $rowsAffected;                          # Rows affected
 
-    public $result;                                 # latest result
+    private $result;                                # latest result (current buffer)
+    private $arrayResult;                           # result array (SELECT statements)
 
     private $transac_mode = false;                  # transaction process
     private $transac_result = null;                 # result of transactions
@@ -63,6 +62,20 @@ class Pleets_Sql_Oracle
     public function getHostname() { return $this->dbhost; }
     public function getUsername() { return $this->dbuser; }
     public function getDatabase() { return $this->dbname; }
+    public function getNumRows() { return $this->numRows; }
+    public function getNumFields() { return $this->numFields; }
+    public function getRowsAffected() { return $this->rowsAffected; }
+
+    public function getArrayResult()
+    {
+        if ($this->arrayResult)
+            return $this->arrayResult;
+
+        return $this->toArray();
+    }
+
+    public function getErrors() { return $this->errors; }
+
 
     /* Setters */
 
@@ -70,8 +83,6 @@ class Pleets_Sql_Oracle
     public function setUsername($dbuser) { $this->dbuser = $dbuser; }
     public function setPassword($dbpass) { $this->dbpass = $dbpass; }
     public function setDatabase($dbname) { $this->dbname = $dbname; }
-
-    public function getErrors() { return $this->errors; }
 
     public function reconnect()
     {
@@ -110,6 +121,12 @@ class Pleets_Sql_Oracle
             else
                 throw new Exception("Unknown error!");
         }
+
+        $rows = $this->getArrayResult();
+
+        $this->numRows = count($rows);
+        $this->numFields = oci_num_fields($stid);
+        $this->rowsAffected = oci_num_rows($stid);
 
         if ($this->transac_mode)
             $this->transac_result = is_null($this->transac_result) ? $this->result: $this->transac_result && $this->result;
@@ -188,6 +205,8 @@ class Pleets_Sql_Oracle
         }
         else
             throw new Exception('There are not data in the buffer!');
+
+        $this->arrayResult = $data;
 
         return $data;
     }
