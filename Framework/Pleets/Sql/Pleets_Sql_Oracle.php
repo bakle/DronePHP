@@ -110,6 +110,15 @@ class Pleets_Sql_Oracle
 
         $this->result = $stid = oci_parse($this->dbconn, $sql);
 
+        # Bound variables
+        if (count($params))
+        {
+            foreach ($params as $var => $value)
+            {
+                oci_bind_by_name($stid, $var, $value);
+            }
+        }
+
         $r = ($this->transac_mode) ? @oci_execute($stid, OCI_NO_AUTO_COMMIT) : @oci_execute($stid,  OCI_COMMIT_ON_SUCCESS);
 
         if (!$r)
