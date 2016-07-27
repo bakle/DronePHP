@@ -20,7 +20,7 @@
 								<div class="collection">
 								<?php foreach ($mod['controller'] as $ctrl): ?>
 									<a class="collection-item" data-role="file-actions" href="<?= $this->basePath().'/public/Pleets/Files/fileActions/file/'.$ctrl['name'].'/type/controller/module/'.$key ?>"><?= $ctrl['name'] ?> <span class="badge"><?= $ctrl['lines'] ?> lines, <?= $ctrl['characters'] ?> characters</span></a>
-								W<?php endforeach; ?>
+								<?php endforeach; ?>
 								</div>
 							</div>
 						</li>
