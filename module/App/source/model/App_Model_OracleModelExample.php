@@ -6,6 +6,6 @@ class App_Model_OracleModelExample extends Pleets_Sql_AbstractionModel
     {
         $sql = "SELECT * FROM HELP";
         $result = $this->getDb()->query($sql);
-        return $this->getDb()->toArray(array('encode_utf8' => true));
+        return $this->getDb()->getArrayResult();
     }
 }
