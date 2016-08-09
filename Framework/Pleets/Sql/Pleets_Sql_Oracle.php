@@ -192,7 +192,7 @@ class Pleets_Sql_Oracle
         oci_cancel($this->result);
     }
 
-    public function toArray(Array $settings = array())
+    private function toArray(Array $settings = array())
     {
         $utf8 = (isset($settings['encode_utf8']) && $settings['encode_utf8'] == true);
         $data = array();
