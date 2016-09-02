@@ -7,28 +7,8 @@ class App_Controller_Index extends Drone_Mvc_AbstractionController
 		return array();
 	}
 
-	public function inicio()
+	public function about()
 	{
-		$data = array();
-		$data["process"] = "success";
-
-		$modelo = new App_Model_MySQLModelExample();
-		//$modelo = new App_Model_SQLServerModelExample();
-		//$modelo = new App_Model_OracleModelExample();
-
-		try {
-
-			$rows = $modelo->myQuery();
-			$data["data"] = $rows;
-
-		} catch (\Exception $e) {
-
-			$data["message"] = $e->getMessage();
-			$data["process"] = "error";
-
-			return $data;
-		}
-
-		return $data;
+		return array();
 	}
 }
