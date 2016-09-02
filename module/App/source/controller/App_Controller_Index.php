@@ -1,6 +1,6 @@
 <?php
 
-class App_Controller_Index extends Pleets_Mvc_AbstractionController
+class App_Controller_Index extends Drone_Mvc_AbstractionController
 {
 	public function index()
 	{

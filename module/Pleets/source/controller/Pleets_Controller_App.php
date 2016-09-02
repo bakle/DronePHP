@@ -1,6 +1,6 @@
 <?php
 
-class Pleets_Controller_App extends Pleets_Mvc_AbstractionController
+class Pleets_Controller_App extends Drone_Mvc_AbstractionController
 {
 	public function index()
 	{
@@ -12,7 +12,7 @@ class Pleets_Controller_App extends Pleets_Mvc_AbstractionController
 	{
 		$data = array();
 
-		$shell = new Pleets_FileSystem_Shell();
+		$shell = new Drone_FileSystem_Shell();
 		$files = $shell->ls($_GET["folder"], true);
 
 		$parsed_files = array();
@@ -67,7 +67,7 @@ class Pleets_Controller_App extends Pleets_Mvc_AbstractionController
 
 	public function modules()
 	{
-		$shell = new Pleets_FileSystem_Shell();
+		$shell = new Drone_FileSystem_Shell();
 		$modules = $shell->ls('module');
 
 		$parsed_modules = array();
@@ -183,7 +183,7 @@ class Pleets_Controller_App extends Pleets_Mvc_AbstractionController
 
         $file = 'module/'.$_POST["module"]."/source/view/".$_POST["controller"];
 
-		$shell = new Pleets_FileSystem_Shell();
+		$shell = new Drone_FileSystem_Shell();
 		$vistas = $shell->ls($file);
 
 		$parsed_views = array();

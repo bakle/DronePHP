@@ -1,6 +1,6 @@
 <?php
 
-class Pleets_Controller_Files extends Pleets_Mvc_AbstractionController
+class Pleets_Controller_Files extends Drone_Mvc_AbstractionController
 {
     public function fileActions()
     {
@@ -43,7 +43,7 @@ class Pleets_Controller_Files extends Pleets_Mvc_AbstractionController
             $return_data['type'] = $_GET["type"];
 
             if ($_GET["type"] == 'view')
-                $return_data['controller'] = $_GET["controller"];                   
+                $return_data['controller'] = $_GET["controller"];
         }
 
         return $return_data;
@@ -60,7 +60,7 @@ class Pleets_Controller_Files extends Pleets_Mvc_AbstractionController
         $contents = $_POST["file-edition"];
 
         if (file_exists($file))
-    		$return_data["success"] = !(file_put_contents($file, $contents) === false); 
+    		$return_data["success"] = !(file_put_contents($file, $contents) === false);
 
 		return $return_data;
 	}
@@ -89,6 +89,6 @@ class Pleets_Controller_Files extends Pleets_Mvc_AbstractionController
 
     private function fileSize($file)
     {
-        return number_format(filesize($file) / 1024, 2) . " KB"; 
-    } 
+        return number_format(filesize($file) / 1024, 2) . " KB";
+    }
 }

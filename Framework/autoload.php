@@ -4,10 +4,10 @@
  *	App Autoloader
  */
 
-include("Pleets/FileSystem/Pleets_FileSystem_IShellCommands.php");
-include("Pleets/FileSystem/Pleets_FileSystem_Shell.php");
+include("Drone/FileSystem/Drone_FileSystem_IShellCommands.php");
+include("Drone/FileSystem/Drone_FileSystem_Shell.php");
 
-function FrameworkLoader($name) 
+function FrameworkLoader($name)
 {
 
     $nms = explode("_", $name);
@@ -17,7 +17,7 @@ function FrameworkLoader($name)
     {
         $parsed_nms .= "/" . $nms[$i];
     }
-    
+
 	$class = dirname(__FILE__) . $parsed_nms . "/" . $name . ".php";
 
 	if (file_exists($class))

@@ -1,11 +1,11 @@
 <?php
 
-class Pleets_model_Database extends Pleets_Mvc_AbstractionModel
+class Pleets_model_Database extends Drone_Mvc_AbstractionModel
 {
 	public function example()
 	{
 		#$query = $this->getEntityManager()->createQuery("SELECT u FROM User u");
-		#return $users = $query->getResult();		
+		#return $users = $query->getResult();
 	}
 
 	public function getUser($NUM_DOC_PAC)
@@ -30,7 +30,7 @@ class Pleets_model_Database extends Pleets_Mvc_AbstractionModel
 	public function authenticate($NUM_DOC_PAC, $PAS_USU)
 	{
 		$user = $this->getEntityManager()->find('\Auth\Model\Usuario', $NUM_DOC_PAC);
-		
+
 		if (!is_null($user))
 		{
 			if (md5($PAS_USU) == $user->getPAS_USU())

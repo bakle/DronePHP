@@ -1,6 +1,6 @@
 <?php
 
-class Api_Module extends Pleets_Mvc_AbstractionModule
+class Api_Module extends Drone_Mvc_AbstractionModule
 {
 	public function init($c)
 	{
