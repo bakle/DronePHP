@@ -108,10 +108,10 @@ class Drone_Form_Validator_QuickValidator
 								$validator = new Zend_Validate_Date();
 								break;
 
-							case 'url':
+							/*case 'url':
 
-								$validator = new Zend_ValidateUri();
-								break;
+								$validator = new Zend_Validate_Uri();
+								break;*/
 						}
  						break;
 
@@ -133,7 +133,7 @@ class Drone_Form_Validator_QuickValidator
 
 						break;
 
-					case 'steap':
+					/*case 'steap':
 
 						$baseValue = (in_array('min', $attributes)) ? $attributes['min'] : 0;
 
@@ -142,10 +142,10 @@ class Drone_Form_Validator_QuickValidator
 						else
 							throw new Exception("The input type must be 'range'");
 
-						break;
+						break;*/
 				}
 
-				if (in_array($name, ['required', 'digits', 'minlength', 'maxlength', 'type', 'min', 'max', 'date', 'step']))
+				if (in_array($name, ['required', 'digits', 'minlength', 'maxlength', 'type', 'min', 'max', 'date', /*'step'*/]))
 				{
 					$valid = $validator->isValid($form_value);
 					$this->setValid($valid);
@@ -155,7 +155,7 @@ class Drone_Form_Validator_QuickValidator
 						if (!in_array($key, array_keys($this->messages)))
 							$this->messages[$key] = array();
 
-						$this->messages[$key] = array_merge($this->messages[$key], $validator->getOption("messages"));
+						$this->messages[$key] = array_merge($this->messages[$key], $validator->getMessages());
 					}
 				}
 

@@ -1,6 +1,6 @@
 <?php
 
-class App_Controller_Db extends AbstractionController
+class App_Controller_Db extends Drone_Mvc_AbstractionController
 {
 	public function mysql()
 	{

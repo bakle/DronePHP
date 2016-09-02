@@ -7,9 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-namespace Drone_Sql_Mysql;
-
-class Mysql {
+class Drone_Sql_Mysql {
 
     private $dbhost = '';                           # default host
     private $dbuser = '';                           # default username

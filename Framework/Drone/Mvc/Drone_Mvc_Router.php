@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Router
+class Drone_Mvc_Router
 {
     /**
      * @var array
@@ -121,8 +121,7 @@ class Router
 		$view = (is_null($this->identifiers["view"]) || empty($this->identifiers["view"]))
 					? $this->routes[$module]["view"] : $this->identifiers["view"];
 
-        $_controller = explode("_", $this->getController());
-        $fqn_controller = $this->getModule() . "_Controller_" . array_pop($_controller);
+        $fqn_controller = $module . "_Controller_" . $controller;
 
 		if (class_exists($fqn_controller))
 			$this->controller = new $fqn_controller($module, $view, $this->basePath);

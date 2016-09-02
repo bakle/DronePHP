@@ -1,6 +1,6 @@
 <?php
 
-class App_Controller_Form extends AbstractionController
+class App_Controller_Form extends Drone_Mvc_AbstractionController
 {
 	public function validator()
 	{
@@ -52,7 +52,7 @@ class App_Controller_Form extends AbstractionController
 			);
 
 			try {
-				$validator = new QuickValidator($rules);
+				$validator = new Drone_Form_Validator_QuickValidator($rules);
 				$validator->validateWith($_POST);
 
 				if (!$validator->isValid())

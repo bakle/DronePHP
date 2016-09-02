@@ -15,7 +15,7 @@ class Drone_Mvc_Application
 	private $modules;
 
     /**
-     * @var Drone\Mvc\Router
+     * @var Drone_Mvc_Router
      */
 	private $router;
 
@@ -25,7 +25,7 @@ class Drone_Mvc_Application
 	private $devMode;
 
     /**
-	 * @return Drone\Mvc\Router
+	 * @return Drone_Mvc_Router
      */
 	public function getRouter()
 	{
@@ -123,7 +123,7 @@ class Drone_Mvc_Application
 
 		$this->loadModules($this->modules, $init_parameters["router"]["routes"]["defaults"]["module"]);
 
-		$this->router = new Router($init_parameters["router"]["routes"]);
+		$this->router = new Drone_Mvc_Router($init_parameters["router"]["routes"]);
 		$this->router->setBasePath($init_parameters["environment"]["base_path"]);
 
 		# load routes from modules
