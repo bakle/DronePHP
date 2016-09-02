@@ -14,22 +14,34 @@ class App_Controller_Form extends AbstractionController
 			$rules = array(
 				"fname" => array(
 					"required" => true,
-					/*"minlength" => 3,
+					"minlength" => 3,
 					"maxlength" => 10,
-					"alnumWhiteSpace" => true,*/
+					/*"alnumWhiteSpace" => true,*/
 					"label" => "First name"
 				),
 				"lname" => array(
 					"required" => true,
-					/*"minlength" => 3,
+					"minlength" => 3,
 					"maxlength" => 10,
-					"alnumWhiteSpace" => true,*/
+					/*"alnumWhiteSpace" => true,*/
 					"label" => "Last name"
 				),
 				"age" => array(
+					"type" => "number",
+ 					"required" => true,
+					"min" => 18,
+					"max" => 90,
+ 					"label" => "Age"
+				),
+				"email" => array(
+					"type" => "email",
 					"required" => true,
-					"digits" => true,
-					"label" => "Age"
+					"label" => "Email"
+				),
+				"date" => array(
+					"type" => "date",
+					"required" => true,
+					"label" => "Date"
 				)
 			);
 
