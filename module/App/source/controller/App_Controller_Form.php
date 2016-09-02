@@ -26,13 +26,14 @@ class App_Controller_Form extends AbstractionController
 					/*"alnumWhiteSpace" => true,*/
 					"label" => "Last name"
 				),
-				"age" => array(
-					"type" => "number",
+				"height" => array(
+					"type" => "range",
  					"required" => true,
-					"min" => 18,
-					"max" => 90,
- 					"label" => "Age"
-				),
+					"min" => 0.5,
+					"max" => 2.5,
+					"steap" => 0.1,
+					"label" => "Height"
+ 				),
 				"email" => array(
 					"type" => "email",
 					"required" => true,
