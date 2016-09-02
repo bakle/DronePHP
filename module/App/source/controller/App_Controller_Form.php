@@ -31,7 +31,7 @@ class App_Controller_Form extends Drone_Mvc_AbstractionController
  					"required" => true,
 					"min" => 0.5,
 					"max" => 2.5,
-					"steap" => 0.1,
+					"step" => 0.1,
 					"label" => "Height"
  				),
 				"email" => array(

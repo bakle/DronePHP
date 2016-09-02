@@ -133,7 +133,7 @@ class Drone_Form_Validator_QuickValidator
 
 						break;
 
-					/*case 'steap':
+					/*case 'step':
 
 						$baseValue = (in_array('min', $attributes)) ? $attributes['min'] : 0;
 
