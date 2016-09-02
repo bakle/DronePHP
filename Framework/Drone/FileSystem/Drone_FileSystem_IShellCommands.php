@@ -1,12 +1,10 @@
 <?php
-
-/*
- * PHP FileSystem Environment - ShellCommands interface
- * http://www.pleets.org
+/**
+ * DronePHP (http://www.dronephp.com)
  *
- * Copyright 2014, Pleets Apps
- * Free to use under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
+ * @link      http://github.com/fermius/Drone
+ * @copyright Copyright (c) 2014-2016 DronePHP. (http://www.dronephp.com)
+ * @license   http://www.dronephp.com/license
  */
 
 interface Drone_FileSystem_IShellCommands

@@ -1,4 +1,11 @@
 <?php
+/**
+ * DronePHP (http://www.dronephp.com)
+ *
+ * @link      http://github.com/fermius/Drone
+ * @copyright Copyright (c) 2014-2016 DronePHP. (http://www.dronephp.com)
+ * @license   http://www.dronephp.com/license
+ */
 
 class Drone_LayoutManager_Layout
 {
@@ -55,7 +62,7 @@ class Drone_LayoutManager_Layout
 
 	public function basePath()
 	{
-		return BASEPATH;
+		return $this->getController()->basePath;
 	}
 
 }

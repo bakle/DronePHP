@@ -1,4 +1,11 @@
 <?php
+/**
+ * DronePHP (http://www.dronephp.com)
+ *
+ * @link      http://github.com/fermius/Drone
+ * @copyright Copyright (c) 2014-2016 DronePHP. (http://www.dronephp.com)
+ * @license   http://www.dronephp.com/license
+ */
 
 abstract class Drone_Mvc_AbstractionController
 {
@@ -10,8 +17,9 @@ abstract class Drone_Mvc_AbstractionController
 	private $layout = "default";
 	private $terminal = false;
 
-	public function __construct($module, $method)
+	public function __construct($module, $method, $basePath)
 	{
+		$this->basePath = $basePath;
 		$this->parseRequestParameters($_GET);
 
 		/* Module class:
@@ -31,6 +39,9 @@ abstract class Drone_Mvc_AbstractionController
 
 				// Get the return value of the method (parameters sent to the view)
 				$this->params = $this->$method();
+
+				if (!is_null($this->getMethod()))
+					$layoutManager = new Drone_LayoutManager_Layout($this);
 			}
 			else {
 				$class = dirname(__FILE__);
@@ -128,11 +139,5 @@ abstract class Drone_Mvc_AbstractionController
 
 			unset($_GET["params"]);
 		}
-	}
-
-	public function __destruct()
-	{
-		if (!is_null($this->getMethod()))
-			$layoutManager = new Drone_LayoutManager_Layout($this);
 	}
 }

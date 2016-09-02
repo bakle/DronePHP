@@ -1,12 +1,10 @@
 <?php
-
-/*
- * TableGateway abstraction class
- * http://www.pleets.org
+/**
+ * DronePHP (http://www.dronephp.com)
  *
- * Copyright 2016, Pleets Apps
- * Free to use under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
+ * @link      http://github.com/fermius/Drone
+ * @copyright Copyright (c) 2014-2016 DronePHP. (http://www.dronephp.com)
+ * @license   http://www.dronephp.com/license
  */
 
 class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_Db_TableGatewayInterface
