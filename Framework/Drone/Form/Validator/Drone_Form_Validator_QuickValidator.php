@@ -107,6 +107,11 @@ class Drone_Form_Validator_QuickValidator
 
 								$validator = new Zend_Validate_Date();
 								break;
+
+							case 'url':
+
+								$validator = new Zend_ValidateUri();
+								break;
 						}
  						break;
 

@@ -35,15 +35,20 @@ class App_Controller_Form extends AbstractionController
 					"label" => "Height"
  				),
 				"email" => array(
-					"type" => "email",
 					"required" => true,
+					"type" => "email",
 					"label" => "Email"
 				),
 				"date" => array(
-					"type" => "date",
 					"required" => true,
+					"type" => "date",
 					"label" => "Date"
-				)
+				),
+				"url" => array(
+					"required" => true,
+					"type" => "url",
+					"label" => "Website"
+ 				)
 			);
 
 			try {
