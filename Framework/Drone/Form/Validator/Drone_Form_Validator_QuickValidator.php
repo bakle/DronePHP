@@ -133,19 +133,19 @@ class Drone_Form_Validator_QuickValidator
 
 						break;
 
-					/*case 'step':
+					case 'step':
 
 						$baseValue = (in_array('min', $attributes)) ? $attributes['min'] : 0;
 
 						if (in_array('type', $attributes) && $attributes['type'] == "range")
-							$validator = new Zend_Validate_Step(['baseValue' => $baseValue, 'step' => $value]);
+							$validator = new Drone_Validate_Step(['baseValue' => $baseValue, 'step' => $value]);
 						else
 							throw new Exception("The input type must be 'range'");
 
-						break;*/
+						break;
 				}
 
-				if (in_array($name, ['required', 'digits', 'minlength', 'maxlength', 'type', 'min', 'max', 'date', /*'step'*/]))
+				if (in_array($name, ['required', 'digits', 'minlength', 'maxlength', 'type', 'min', 'max', 'date', 'step']))
 				{
 					$valid = $validator->isValid($form_value);
 					$this->setValid($valid);

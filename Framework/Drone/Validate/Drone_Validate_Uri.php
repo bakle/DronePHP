@@ -28,7 +28,7 @@ class Drone_Validate_Uri extends Zend_Validate_Abstract
         $this->_setValue($value);
 
         if (!is_string($value)) {
-            $this->error(self::INVALID);
+            $this->_error(self::INVALID);
             return false;
         }
 
