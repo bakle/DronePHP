@@ -103,14 +103,12 @@ class Drone_Validator_FormValidator
 
 					case 'minlength':
 
-						$validator = new Zend_Validate_GreaterThan(['min' => $value, 'inclusive' => true]);
-						$form_value = strlen($form_value);
+						$validator = new Zend_Validate_StringLength(array('min' => $value));
 						break;
 
 					case 'maxlength':
 
-						$validator = new Zend_Validate_LessThan(['max' => $value, 'inclusive' => true]);
-						$form_value = strlen((string) $form_value);
+						$validator = new Zend_Validate_StringLength(array('max' => $value));
 						break;
 
 					case 'type':
