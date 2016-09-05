@@ -24,9 +24,9 @@ class App_Controller_Db extends Drone_Mvc_AbstractionController
 		$data = array();
 		$data["process"] = "success";
 
-		$model = new App_Model_MySQLModelExample();
-
 		try {
+
+			$model = new MySQLModelExample();
 
 			# no entity
 			# $rows = $model->myQuery();
@@ -52,9 +52,9 @@ class App_Controller_Db extends Drone_Mvc_AbstractionController
 		$data = array();
 		$data["process"] = "success";
 
-		$model = new App_Model_OracleModelExample();
-
 		try {
+
+			$model = new App_Model_OracleModelExample();
 
 			$rows = $model->myQuery();
 			$data["data"] = $rows;
@@ -75,9 +75,9 @@ class App_Controller_Db extends Drone_Mvc_AbstractionController
 		$data = array();
 		$data["process"] = "success";
 
-		$model = new App_Model_SQLServerModelExample();
-
 		try {
+
+			$model = new App_Model_SQLServerModelExample();
 
 			$rows = $model->myQuery();
 			$data["data"] = $rows;

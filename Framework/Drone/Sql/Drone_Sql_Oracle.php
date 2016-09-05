@@ -23,6 +23,8 @@ class Drone_Sql_Oracle
      * Constructor for Oracle driver
      *
      * @param array
+     *
+     * @throws Exception
      */
     public function __construct($options)
     {
