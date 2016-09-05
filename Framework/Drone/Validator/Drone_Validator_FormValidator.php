@@ -24,6 +24,11 @@ class Drone_Validator_FormValidator
      */
 	private $formHandler;
 
+	/**
+	 * @var Zend_Translate
+	 */
+	private $translator;
+
     /**
      * Get all failure messages
      *
@@ -62,6 +67,14 @@ class Drone_Validator_FormValidator
 	public function __construct(Drone_Dom_Element_Form $formHandler)
 	{
 		$this->formHandler = $formHandler;
+
+		$this->translator = new Zend_Translate(
+		    array(
+		        'adapter' => 'array',
+		        'content' => 'language/ES.php',
+		        'locale'  => 'es'
+		    )
+		);
 	}
 
     /**
@@ -169,6 +182,7 @@ class Drone_Validator_FormValidator
 
 				if (in_array($name, ['required', 'digits', 'minlength', 'maxlength', 'type', 'min', 'max', 'date', 'step']))
 				{
+					$validator->setTranslator($this->translator);
 					$valid = $validator->isValid($form_value);
 					$this->setValid($valid);
 
