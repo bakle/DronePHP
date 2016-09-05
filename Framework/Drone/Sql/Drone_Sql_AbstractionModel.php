@@ -36,14 +36,7 @@ abstract class Drone_Sql_AbstractionModel
         {
             $driver = $this->getAvailableDrivers();
 
-            $this->db = new $driver[$drv](
-                $dbsettings[$abstract_connection_string]["host"],
-                $dbsettings[$abstract_connection_string]["user"],
-                $dbsettings[$abstract_connection_string]["password"],
-                $dbsettings[$abstract_connection_string]["dbname"],
-                $auto_connect,
-                array_key_exists('charset', $dbsettings[$abstract_connection_string]) ? $dbsettings[$abstract_connection_string]["charset"] : ""
-            );
+            $this->db = new $driver[$drv]($dbsettings[$abstract_connection_string]);
         }
         else
             throw new Exception("The Database driver does not exists");
