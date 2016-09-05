@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Sql_SQLServer
+class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverInterface
 {
     /**
      * @return array
