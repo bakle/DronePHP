@@ -23,11 +23,6 @@ class Drone_FileSystem_Shell implements Drone_FileSystem_ShellInterface
 	 */
 	private $buffer = null;
 
-	public function __construct($home = null)
-	{
-		$this->home = (is_null($home) || empty($home)) ? $this->pwd() : $home;
-	}
-
 	/**
 	 * Returns the home path
 	 *

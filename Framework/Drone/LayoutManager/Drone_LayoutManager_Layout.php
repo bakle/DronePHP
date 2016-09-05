@@ -65,7 +65,7 @@ class Drone_LayoutManager_Layout
 	 *
 	 * @param AbstractionController
 	 */
-	public function __construct(Drone_Mv_AbstractionController $controller)
+	public function __construct($controller)
 	{
 		// str_replace() is needed in linux systems
 		$view = 'module/' . $controller->getModule()->getModuleName() .'/source/view/'. basename(str_replace('\\','/',get_class($controller))) . '/' . $controller->getMethod() . '.phtml';

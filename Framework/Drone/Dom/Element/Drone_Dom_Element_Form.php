@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Dom_Element_Form extends Element
+class Drone_Dom_Element_Form extends Drone_Dom_Element
 {
     /**
      * Constructor

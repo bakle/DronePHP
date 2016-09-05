@@ -109,12 +109,12 @@ abstract class Drone_Dom_Element
         {
 
             if (!array_key_exists($name, $attribs))
-                $this->attributes[$label][] = new Attribute($name, $value);
+                $this->attributes[$label][] = new Drone_Dom_Attribute($name, $value);
             else
                 $this->getAttribute($label, $name)->setValue($value);
         }
         else {
-            $this->attributes[$label][] = new Attribute($name, $value);
+            $this->attributes[$label][] = new Drone_Dom_Attribute($name, $value);
         }
    }
 
@@ -133,7 +133,7 @@ abstract class Drone_Dom_Element
 
             foreach ($attributes as $name => $value)
             {
-                $this->attributes[$label][] = new Attribute($name, $value);
+                $this->attributes[$label][] = new Drone_Dom_Attribute($name, $value);
             }
         }
     }

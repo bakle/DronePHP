@@ -4,8 +4,8 @@
  *	App Autoloader
  */
 
-include("Drone/FileSystem/Drone_FileSystem_IShellCommands.php");
-include("Drone/FileSystem/Drone_FileSystem_Shell.php");
+require_once("Drone/FileSystem/Drone_FileSystem_ShellInterface.php");
+require_once("Drone/FileSystem/Drone_FileSystem_Shell.php");
 
 function FrameworkLoader($name)
 {
