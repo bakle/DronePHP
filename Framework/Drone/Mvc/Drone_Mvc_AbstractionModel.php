@@ -9,18 +9,26 @@
 
 abstract class Drone_Mvc_AbstractionModel
 {
+    /**
+     * @var mixed
+     */
 	private $entityManager;
 
+    /**
+     * Returns the entity manager
+     *
+     * @return mixed
+     */
+	public function getEntityManager()
+	{
+		return $this->entityManager;
+	}
+
+    /**
+     * Constructor
+     */
 	public function __construct()
-	{
+    {
 		$this->entityManager = include("bootstrap.php");
-	}
-
-	/* Getters */
-	public function getEntityManager() { return $this->entityManager; }
-
-	public function __destruct()
-	{
-		// $this->getEntityManager()->flush();
-	}
+    }
 }

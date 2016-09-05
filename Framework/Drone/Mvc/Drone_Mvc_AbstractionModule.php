@@ -9,8 +9,16 @@
 
 abstract class Drone_Mvc_AbstractionModule
 {
+	/**
+	 * @var string
+	 */
 	protected $moduleName;
 
+	/**
+	 * Constructor
+	 *
+	 * @param string $moduleName
+	 */
 	public function __construct($moduleName, $controller)
 	{
 		$this->moduleName = $moduleName;
@@ -19,12 +27,21 @@ abstract class Drone_Mvc_AbstractionModule
 
 	public abstract function init($controller);
 
+	/**
+	 * Gets module name
+	 *
+	 * @return string
+	 */
 	public function getModuleName()
 	{
 		return $this->moduleName;
 	}
 
-	# Get system configuration
+	/**
+	 * Gets configuration file
+	 *
+	 * @return array
+	 */
 	public function getConfig()
 	{
 		return include 'module/' . $this->getModuleName() . '/config/module.config.php';
