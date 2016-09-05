@@ -2,7 +2,6 @@
 
 class App_Controller_Db extends Drone_Mvc_AbstractionController
 {
-
 	private $mysqlUserTable;
 
 	public function getMysqlUserTable()

@@ -2,20 +2,39 @@
 /**
  * DronePHP (http://www.dronephp.com)
  *
- * @link      http://github.com/fermius/Drone
+ * @link      http://github.com/fermius/DronePHP
  * @copyright Copyright (c) 2014-2016 DronePHP. (http://www.dronephp.com)
  * @license   http://www.dronephp.com/license
  */
 
 class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_Db_TableGatewayInterface
 {
+    /**
+     * Table name
+     *
+     * @var string
+     */
     private $tableName;
 
+    /**
+     * Sets table name
+     *
+     * @param string
+     *
+     * @return null
+     */
     public function bind($tableName)
     {
         $this->tableName = $tableName;
     }
 
+    /**
+     * Select statement
+     *
+     * @param array $where
+     *
+     * @return array
+     */
     public function select($where = array())
     {
         if (count($where))
@@ -42,6 +61,13 @@ class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_
         return $this->getDb()->getArrayResult();
     }
 
+    /**
+     * Insert statement
+     *
+     * @param array $where
+     *
+     * @return boolean
+     */
     public function insert($data)
     {
         $cols = implode(", ", array_keys($row));
@@ -62,6 +88,14 @@ class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_
         return $this->getDb()->query($sql);
     }
 
+    /**
+     * Update statement
+     *
+     * @param array $set
+     * @param array $where
+     *
+     * @return boolean
+     */
     public function update($set, $where)
     {
         $parsed_set = array();
@@ -96,6 +130,13 @@ class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_
         return $this->getDb()->query($sql);
     }
 
+    /**
+     * Delete statement
+     *
+     * @param array $where
+     *
+     * @return boolean
+     */
     public function delete($where)
     {
         if (count($where))

@@ -2,12 +2,12 @@
 /**
  * DronePHP (http://www.dronephp.com)
  *
- * @link      http://github.com/fermius/Drone
+ * @link      http://github.com/fermius/DronePHP
  * @copyright Copyright (c) 2014-2016 DronePHP. (http://www.dronephp.com)
  * @license   http://www.dronephp.com/license
  */
 
-interface Drone_FileSystem_IShellCommands
+interface Drone_FileSystem_ShellInterface
 {
    public function pwd();
    public function ls($path);
