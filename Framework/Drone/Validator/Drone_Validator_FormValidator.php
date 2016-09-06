@@ -42,7 +42,7 @@ class Drone_Validator_FormValidator
     /**
      * Get valid attribute after validation
      *
-     * @return array
+     * @return boolean
      */
 	public function isValid()
 	{
@@ -52,11 +52,11 @@ class Drone_Validator_FormValidator
     /**
      * Set valid atribute after each validation
      *
-     * @return array
+     * @return null
      */
 	public function setValid($valid)
 	{
-		return $this->valid && $valid;
+		$this->valid = $this->valid && $valid;
 	}
 
     /**
