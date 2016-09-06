@@ -1,6 +1,6 @@
-# Drone (fork)
-### Framework for PHP 5.2
+# DronePHP (fork)
+### Framework for PHP 5.2.17
 
-Simple framework for PHP
+Make it easy!
 
-Please visit the [Pleets Apps project](http://pleets.org)
+Visit [DronePHP official](http://www.dronephp.com)
