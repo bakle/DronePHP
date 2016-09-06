@@ -1,6 +1,11 @@
 <?php
-
-#require_once 'Zend/Validate/Abstract.php';
+/**
+ * DronePHP (http://www.dronephp.com)
+ *
+ * @link      http://github.com/fermius/DronePHP
+ * @copyright Copyright (c) 2016 DronePHP. (http://www.dronephp.com)
+ * @license   http://www.dronephp.com/license
+ */
 
 class Drone_Validate_Uri extends Zend_Validate_Abstract
 {
