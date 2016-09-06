@@ -129,7 +129,7 @@ abstract class Drone_Dom_Element
     {
         foreach ($definition as $label => $attributes)
         {
-            $this->attributes[$label] = [];
+            $this->attributes[$label] = array();
 
             foreach ($attributes as $name => $value)
             {

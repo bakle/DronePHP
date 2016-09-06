@@ -93,7 +93,7 @@ class Drone_Validator_FormValidator
 
 			$label = (array_key_exists('label', array_keys($attributes))) ? $attributes["label"] : $key;
 
-			$all_attribs = [];
+			$all_attribs = array();
 
 			foreach ($attributes as $attr)
 			{
@@ -152,8 +152,8 @@ class Drone_Validator_FormValidator
 
 					case 'min':
 
-						if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], ['number', 'range']))
-							$validator = new Zend_Validate_GreaterThan(['min' => $value, 'inclusive' => true]);
+						if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], array('number', 'range')))
+							$validator = new Zend_Validate_GreaterThan(array('min' => $value, 'inclusive' => true));
 						else
 							throw new Exception("The input type must be 'range' or 'number'");
 
@@ -161,8 +161,8 @@ class Drone_Validator_FormValidator
 
 					case 'max':
 
-						if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], ['number', 'range']))
-							$validator = new Zend_Validate_LessThan(['max' => $value, 'inclusive' => true]);
+						if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], array('number', 'range')))
+							$validator = new Zend_Validate_LessThan(array('max' => $value, 'inclusive' => true));
 						else
 							throw new Exception("The input type must be 'range' or 'number'");
 
@@ -172,15 +172,15 @@ class Drone_Validator_FormValidator
 
 						$baseValue = (array_key_exists('min', $all_attribs)) ? $all_attribs['min'] : 0;
 
-						if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], ['range']))
-							$validator = new Drone_Validate_Step(['baseValue' => $baseValue, 'step' => $value]);
+						if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], array('range')))
+							$validator = new Drone_Validate_Step(array('baseValue' => $baseValue, 'step' => $value));
 						else
 							throw new Exception("The input type must be 'range'");
 
 						break;
 				}
 
-				if (in_array($name, ['required', 'digits', 'minlength', 'maxlength', 'type', 'min', 'max', 'date', 'step']))
+				if (in_array($name, array('required', 'digits', 'minlength', 'maxlength', 'type', 'min', 'max', 'date', 'step')))
 				{
 					$validator->setTranslator($this->translator);
 					$valid = $validator->isValid($form_value);
