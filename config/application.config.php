@@ -2,9 +2,7 @@
 
 return array(
     'modules' => array(
-        'App',
-        'Api',
-        'Pleets',
+        'App'
     ),
     'router' => array(
         'routes' => array(
