@@ -62,7 +62,7 @@ class Drone_Validator_FormValidator
     /**
      * Constructor
      *
-     * @param array $rules
+     * @param Drone_Dom_Element_Form $formHandler
      */
 	public function __construct(Drone_Dom_Element_Form $formHandler)
 	{
