@@ -211,6 +211,18 @@ abstract class Drone_Sql_Driver
     }
 
     /**
+     * Sets dbchar attribute
+     *
+     * @param string
+     *
+     * @return null
+     */
+    public function setDbchar($value)
+    {
+        return $this->dbchar = $value;
+    }
+
+    /**
      * Constructor for connect and set connection parameters
      *
      * It accepts the follow parameters
