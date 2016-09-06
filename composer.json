@@ -1,6 +1,6 @@
 {
-    "name": "pleet/Drone",
-    "description": "DronePHP Framework for PHP",
+    "name": "pleet/dronephp",
+    "description": "DronePHP - Make it easy",
     "license": "MIT licence",
     "keywords": [
         "framework",
