@@ -10,22 +10,23 @@
 class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_Db_TableGatewayInterface
 {
     /**
-     * Table name
+     * Entity instance
      *
-     * @var string
+     * @var Drone_Db_Entity
      */
-    private $tableName;
+    private $entity;
 
     /**
-     * Sets table name
+     * Constructor
      *
-     * @param string
+     * @param string $entity
      *
      * @return null
      */
-    public function bind($tableName)
+    public function __construct(Entity $entity)
     {
-        $this->tableName = $tableName;
+        parent::__construct("default", true);
+        $this->entity = $entity;
     }
 
     /**
@@ -54,8 +55,10 @@ class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_
         else
             $where = "";
 
+        $table = $this->entity->getTableName();
+
         $sql = "SELECT *
-                FROM {$this->tableName} $where";
+                FROM {$table} $where";
 
         $result = $this->getDb()->query($sql);
         return $this->getDb()->getArrayResult();
@@ -82,7 +85,9 @@ class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_
 
         $vals = implode(", ", array_values($parsed_vals));
 
-        $sql = "INSERT INTO {$this->tableName}
+        $table = $this->entity->getTableName();
+
+        $sql = "INSERT INTO {$table}
                 ($cols) VALUES ($vals)";
 
         return $this->getDb()->query($sql);
@@ -123,7 +128,9 @@ class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_
 
         $parsed_where = implode(" AND ", $parsed_where);
 
-        $sql = "UPDATE {$this->tableName}
+        $table = $this->entity->getTableName();
+
+        $sql = "UPDATE {$table}
                 SET $parsed_set
                 WHERE $parsed_where";
 
