@@ -45,12 +45,14 @@ abstract class Drone_Db_Entity
      */
     public function exchangeArray($data)
     {
+        $class = get_class($this);
+
         foreach ($data as $prop => $value)
         {
             if (property_exists($this, $prop))
                 $this->$prop = $value;
             else
-                throw new Exception("The property '$prop' does not exists in the class!");
+                throw new Exception("The property '$prop' does not exists in the class '$class'");
         }
     }
 }
