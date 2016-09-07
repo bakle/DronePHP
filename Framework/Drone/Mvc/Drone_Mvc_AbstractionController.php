@@ -10,26 +10,36 @@
 abstract class Drone_Mvc_AbstractionController
 {
 	/**
+	 * Current module
+	 *
 	 * @var string
 	 */
 	private $module;
 
 	/**
+	 * Current method
+	 *
 	 * @var string
 	 */
 	private $method = null;
 
 	/**
+	 * Current parameters
+	 *
 	 * @var string
 	 */
 	private $params;
 
 	/**
+	 * Layout name
+	 *
 	 * @var string
 	 */
 	private $layout = "default";
 
 	/**
+	 * Terminal mode
+	 *
 	 * @var boolean
 	 */
 	private $terminal = false;
@@ -75,7 +85,7 @@ abstract class Drone_Mvc_AbstractionController
 	}
 
 	/**
-	 * Returns all params
+	 * Returns all parameters
 	 *
 	 * @return string
 	 */
@@ -95,7 +105,7 @@ abstract class Drone_Mvc_AbstractionController
 	}
 
 	/**
-	 * Returns the $_POST variable
+	 * Returns $_POST variable, event json encoded (php://input)
 	 *
 	 * @return array
 	 */
@@ -120,7 +130,7 @@ abstract class Drone_Mvc_AbstractionController
 	}
 
 	/**
-	 * Sets layout parameter
+	 * Sets layout name
 	 *
 	 * @param string $layout
 	 *
@@ -132,7 +142,7 @@ abstract class Drone_Mvc_AbstractionController
 	}
 
 	/**
-	 * Sets the method parameter
+	 * Sets the method attribute
 	 *
 	 * @param string $method
 	 *
@@ -195,7 +205,7 @@ abstract class Drone_Mvc_AbstractionController
 	}
 
 	/**
-	 * Checks if a param exists
+	 * Checks if a parameter exists
 	 *
 	 * @return boolean
 	 */
@@ -235,8 +245,9 @@ abstract class Drone_Mvc_AbstractionController
 
 
 	/**
-	 * Parses requets parameters
-	 * Search for URI formed as /var1/value1/var2/value2
+	 * Parses requests parameters
+	 *
+	 * Searches for URI formed as follows /var1/value1/var2/value2
 	 *
 	 * @return null
 	 */

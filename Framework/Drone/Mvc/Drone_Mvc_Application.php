@@ -15,6 +15,8 @@ class Drone_Mvc_Application
 	private $modules;
 
     /**
+     * Returns the router instance
+     *
      * @var Drone_Mvc_Router
      */
 	private $router;
@@ -33,7 +35,7 @@ class Drone_Mvc_Application
 	}
 
     /**
-     * Prepare app environment
+     * Prepares the app environment
      *
 	 * @return null
      */
@@ -45,8 +47,9 @@ class Drone_Mvc_Application
 	}
 
     /**
-     * Check app.config structure
+     * Checks app.config structure
      *
+     * @param array $required_tree
      * @param array $parameters
      *
 	 * @return null
@@ -135,9 +138,10 @@ class Drone_Mvc_Application
 	}
 
     /**
-     * Load user classes in each module
+     * Loads user classes in each module
      *
      * @param array $modules
+     * @param array $module
      *
 	 * @return null
      */
@@ -183,7 +187,7 @@ class Drone_Mvc_Application
 	}
 
     /**
-     * Run application
+     * Runs the application
      *
 	 * @return null
      */

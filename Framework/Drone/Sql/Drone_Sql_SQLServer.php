@@ -22,7 +22,7 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
     /**
      * Constructor for Oracle driver
      *
-     * @param array
+     * @param array $options
      *
      * @throws Exception
      */
@@ -167,7 +167,7 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
     }
 
     /**
-     * Begin a transaction in SQLServer
+     * Begins a transaction in SQLServer
      *
      * @return boolean
      */
@@ -191,7 +191,7 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
     }
 
     /**
-     * Close connection
+     * Closes the connection
      *
      * @return boolean
      */

@@ -113,6 +113,8 @@ abstract class Drone_Sql_Driver
     protected $transac_result = null;
 
     /**
+     * Returns the dbhost attribute
+     *
      * @return string
      */
     public function getDbhost()
@@ -121,6 +123,8 @@ abstract class Drone_Sql_Driver
     }
 
     /**
+     * Returns the dbuser attribute
+     *
      * @return string
      */
     public function getDbuser()
@@ -129,6 +133,8 @@ abstract class Drone_Sql_Driver
     }
 
     /**
+     * Returns the numRows attribute
+     *
      * @return integer
      */
     public function getNumRows()
@@ -137,6 +143,8 @@ abstract class Drone_Sql_Driver
     }
 
     /**
+     * Returns the numFields attribute
+     *
      * @return integer
      */
     public function getNumFields()
@@ -145,6 +153,8 @@ abstract class Drone_Sql_Driver
     }
 
     /**
+     * Returns the rowsAffected attribute
+     *
      * @return integer
      */
     public function getRowsAffected()

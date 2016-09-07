@@ -20,7 +20,7 @@ class Drone_Dom_Attribute
    private $value;
 
     /**
-     * Get name
+     * Gets the name attribute
      *
      * @return array
      */
@@ -30,7 +30,7 @@ class Drone_Dom_Attribute
     }
 
     /**
-     * Get value
+     * Gets the value attribute
      *
      * @return array
      */
@@ -40,7 +40,7 @@ class Drone_Dom_Attribute
     }
 
     /**
-     * Set value
+     * Sets the value attribute
      *
      * @param mixed $value
      *

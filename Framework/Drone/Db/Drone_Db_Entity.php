@@ -15,7 +15,7 @@ abstract class Drone_Db_Entity
     private $tableName;
 
     /**
-     * Gets the tableName property
+     * Returns the tableName property
      *
      * @return string
      */
@@ -25,7 +25,7 @@ abstract class Drone_Db_Entity
     }
 
     /**
-     * Sets the tableName property
+     * Sets all entity properties passed in the array
      *
      * @param string $tableName
      *

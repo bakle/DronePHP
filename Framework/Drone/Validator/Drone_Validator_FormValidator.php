@@ -30,7 +30,7 @@ class Drone_Validator_FormValidator
 	private $translator;
 
     /**
-     * Get all failure messages
+     * Returns all failure messages
      *
      * @return array
      */
@@ -40,7 +40,7 @@ class Drone_Validator_FormValidator
 	}
 
     /**
-     * Get valid attribute after validation
+     * Returns valid attribute after validation
      *
      * @return boolean
      */
@@ -50,7 +50,7 @@ class Drone_Validator_FormValidator
 	}
 
     /**
-     * Set valid atribute after each validation
+     * Sets valid atribute after each validation
      *
      * @return null
      */
@@ -78,7 +78,7 @@ class Drone_Validator_FormValidator
 	}
 
     /**
-     * Check all form rules
+     * Checks all form rules
      *
      * @return null
      */

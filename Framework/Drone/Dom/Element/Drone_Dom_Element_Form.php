@@ -23,7 +23,7 @@ class Drone_Dom_Element_Form extends Drone_Dom_Element
    }
 
     /**
-     * Fill the form with passed values (apply for form controls)
+     * Fills the form with all passed values
      *
      * @param array $values
      */

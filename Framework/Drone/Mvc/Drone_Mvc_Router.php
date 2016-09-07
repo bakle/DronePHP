@@ -15,14 +15,16 @@ class Drone_Mvc_Router
 	private $routes;
 
     /**
-     * Prepare identifiers to build the route
+     * The Identifiers builds the route
      *
      * @var array
      */
 	private $identifiers;
 
     /**
-     * @var object
+     * Controller instance
+     *
+     * @var Drone\Mvc\AbstractionController
      */
 	private $controller;
 
@@ -32,6 +34,8 @@ class Drone_Mvc_Router
 	private $basePath;
 
     /**
+     * Returns all routes built
+     *
      * @return array
      */
 	public function getRoutes()
@@ -40,6 +44,8 @@ class Drone_Mvc_Router
 	}
 
     /**
+     * Returns all identifiers
+     *
      * @return array
      */
 	public function getIdentifiers()
@@ -48,7 +54,9 @@ class Drone_Mvc_Router
 	}
 
     /**
-     * @return object
+     * Returns the controller instance
+     *
+     * @return Drone\Mvc\AbstractionController
      */
 	public function getController()
 	{
@@ -56,6 +64,8 @@ class Drone_Mvc_Router
 	}
 
     /**
+     * Returns the base path of the application
+     *
      * @return string
      */
     public function getBasePath()
@@ -64,6 +74,8 @@ class Drone_Mvc_Router
 	}
 
     /**
+     * Sets identifiers
+     *
      * @param string $module
      * @param string $controller
      * @param string $view
@@ -80,6 +92,8 @@ class Drone_Mvc_Router
 	}
 
     /**
+     * Sets the basePath attribute
+     *
      * @param string $basePath
      *
      * @return null
@@ -100,7 +114,7 @@ class Drone_Mvc_Router
 	}
 
     /**
-     * Build current route and call the controller
+     * Builds the current route and calls the controller
      *
      * @return  null
      */
@@ -130,6 +144,8 @@ class Drone_Mvc_Router
 	}
 
     /**
+     * Adds a new route to router
+     *
      * @param Array $routes
      *
      * @return string

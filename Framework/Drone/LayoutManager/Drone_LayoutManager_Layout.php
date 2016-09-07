@@ -99,6 +99,8 @@ class Drone_LayoutManager_Layout
 	/**
 	 * Returns a user param
 	 *
+	 * This param is sent through the controller in a return statement
+	 *
 	 * @param string
 	 *
 	 * @return mixed
@@ -109,7 +111,7 @@ class Drone_LayoutManager_Layout
 	}
 
 	/**
-	 * Checks if a param exists
+	 * Checks if a parameter exists
 	 *
 	 * @param string
 	 *
@@ -121,7 +123,7 @@ class Drone_LayoutManager_Layout
 	}
 
 	/**
-	 * Returns all params
+	 * Returns all parameters sent through the controller
 	 *
 	 * @return array
 	 */
@@ -131,7 +133,7 @@ class Drone_LayoutManager_Layout
 	}
 
 	/**
-	 * Returns the base path of application
+	 * Returns the base path of the application
 	 *
 	 * @return string
 	 */

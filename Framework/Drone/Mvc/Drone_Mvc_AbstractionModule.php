@@ -17,18 +17,24 @@ abstract class Drone_Mvc_AbstractionModule
 	/**
 	 * Constructor
 	 *
-	 * @param string $moduleName
+	 * @param string                $moduleName
+	 * @param AbstractionController $controller
 	 */
-	public function __construct($moduleName, $controller)
+	public function __construct($moduleName, AbstractionController $controller)
 	{
 		$this->moduleName = $moduleName;
 		$this->init($controller);
 	}
 
-	public abstract function init($controller);
+	/**
+	 * Absract method to be executed before each controller in each module
+	 *
+	 * @param AbstractionController
+	 */
+	public abstract function init(AbstractionController $controller);
 
 	/**
-	 * Gets module name
+	 * Returns the moduleName attribute
 	 *
 	 * @return string
 	 */
@@ -38,7 +44,7 @@ abstract class Drone_Mvc_AbstractionModule
 	}
 
 	/**
-	 * Gets configuration file
+	 * Returns an array with application settings
 	 *
 	 * @return array
 	 */

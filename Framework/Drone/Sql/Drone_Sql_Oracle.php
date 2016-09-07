@@ -22,7 +22,7 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
     /**
      * Constructor for Oracle driver
      *
-     * @param array
+     * @param array $options
      *
      * @throws Exception
      */
@@ -172,7 +172,7 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
     }
 
     /**
-     * Close connection
+     * Closes the connection
      *
      * @return boolean
      */

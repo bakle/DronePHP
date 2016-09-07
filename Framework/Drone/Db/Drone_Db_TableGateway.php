@@ -19,11 +19,11 @@ class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_
     /**
      * Constructor
      *
-     * @param string $entity
+     * @param Entity $entity
      *
      * @return null
      */
-    public function __construct(Entity $entity)
+    public function __construct(Drone_Db_Entity $entity)
     {
         parent::__construct("default", true);
         $this->entity = $entity;
@@ -34,7 +34,7 @@ class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_
      *
      * @param array $where
      *
-     * @return array
+     * @return array With all results
      */
     public function select($where = array())
     {

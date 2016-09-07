@@ -22,7 +22,7 @@ class Drone_Sql_Mysql extends Drone_Sql_Driver implements Drone_Sql_DriverInterf
     /**
      * Constructor for MySql driver
      *
-     * @param array
+     * @param array $options
      *
      * @throws Exception
      */
@@ -135,7 +135,7 @@ class Drone_Sql_Mysql extends Drone_Sql_Driver implements Drone_Sql_DriverInterf
     }
 
     /**
-     * Close connection
+     * Closes the connection
      *
      * @return boolean
      */
