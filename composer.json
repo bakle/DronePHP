@@ -8,9 +8,13 @@
     ],
     "homepage": "http://www.dronephp.com",
 	"require": {
-		"zendframework/zendframework1": "1.12.*"
+        "zf1/zend-translate": "1.12.*",
+        "zf1/zend-validate": "1.12.*",
+        "zf1/zend-filter": "1.12.*",
+        "zf1/zend-uri": "1.12.*",
+        "zf1/zend-crypt": "1.12.*"
 	},
-		"autoload": {
+	"autoload": {
 		"psr-0": {"": "src/"}
 	}
 }
