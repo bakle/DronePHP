@@ -10,7 +10,7 @@
 class Drone_Validator_FormValidator
 {
     /**
-     * @var boolean
+     * @var boolean|null
      */
 	private $valid;
 
@@ -56,7 +56,7 @@ class Drone_Validator_FormValidator
      */
 	public function setValid($valid)
 	{
-		$this->valid = $this->valid && $valid;
+		$this->valid = (is_null($this->valid) ? true : $this->valid) && $valid;
 	}
 
     /**
