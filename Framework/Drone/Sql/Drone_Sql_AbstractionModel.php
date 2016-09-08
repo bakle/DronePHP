@@ -45,7 +45,7 @@ abstract class Drone_Sql_AbstractionModel
         # driver => className
         $this->availableDrivers = array(
             "Oci8"          => "Drone_Sql_Oracle",
-            "Mysqli"        => "Drone_Sql_Mysql",
+            "Mysqli"        => "Drone_Sql_MySQL",
             "Sqlsrv"        => "Drone_Sql_SQLServer",
             // Drivers for future implementation
             //"Pdo_Mysql"     => "",
