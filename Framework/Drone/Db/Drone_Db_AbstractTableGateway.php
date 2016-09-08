@@ -36,18 +36,19 @@ abstract class Drone_Db_AbstractTableGateway
 
         $drv = $dbsettings[$abstract_connection_string]["driver"];
 
-        if (array_key_exists($drv, $drivers))
-            self::$db = new $drivers[$drv]($dbsettings[$abstract_connection_string]);
-        else
+        if (!array_key_exists($drv, $drivers))
             throw new Exception("The Database driver '$drv' does not exists");
-   }
+
+        if (array_key_exists($drv, $drivers) && !isset(self::$db))
+            self::$db = new $drivers[$drv]($dbsettings[$abstract_connection_string]);
+    }
 
     /**
      * Returns the handle instance
      *
      * @return Driver
      */
-    public function getDb()
+    public static function getDb()
     {
         return self::$db;
     }
