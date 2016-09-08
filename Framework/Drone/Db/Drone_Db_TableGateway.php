@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Db_TableGateway extends Drone_Sql_AbstractionModel implements Drone_Db_TableGatewayInterface
+class Drone_Db_TableGateway extends AbstractTableGateway implements Drone_Db_TableGatewayInterface
 {
     /**
      * Entity instance
