@@ -70,7 +70,7 @@ class Drone_Validator_FormValidator
 
 		$this->translator = new Zend_Translate(
 		    array(
-		        'adapter' => 'array',
+		        'adapter' => 'Zend_Translate_Adapter_Array',
 		        'content' => 'language/ES.php',
 		        'locale'  => 'es'
 		    )
