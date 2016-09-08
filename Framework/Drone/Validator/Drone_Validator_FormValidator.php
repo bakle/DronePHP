@@ -68,11 +68,14 @@ class Drone_Validator_FormValidator
 	{
 		$this->formHandler = $formHandler;
 
+		$config = include('config/application.config.php');
+		$locale = $config["environment"]["locale"];
+
 		$this->translator = new Zend_Translate(
 		    array(
 		        'adapter' => 'Zend_Translate_Adapter_Array',
-		        'content' => 'language/ES.php',
-		        'locale'  => 'es'
+		        'content' => "languages/$locale/Zend_Validate.php",
+		        'locale'  => "$locale"
 		    )
 		);
 	}
