@@ -29,6 +29,11 @@ class Drone_Validator_FormValidator
 	 */
 	private $translator;
 
+	/**
+	 * @var array
+	 */
+	private $options;
+
     /**
      * Returns all failure messages
      *
@@ -60,13 +65,29 @@ class Drone_Validator_FormValidator
 	}
 
     /**
+     * Gets an option
+     *
+     * @param string $option
+     *
+     * @return mixed
+     */
+	public function getOption($key, $name)
+	{
+		if (!array_key_exists($key, $this->options))
+			throw new Exception("The option '$option' does not exists");
+
+		return array_key_exists($name, $this->options[$key]) ? $this->options[$key][$name] : null;
+	}
+
+    /**
      * Constructor
      *
      * @param Drone_Dom_Element_Form $formHandler
      */
-	public function __construct(Drone_Dom_Element_Form $formHandler)
+	public function __construct(Drone_Dom_Element_Form $formHandler, $options)
 	{
 		$this->formHandler = $formHandler;
+		$this->options = (is_array($options)) ? $options : array();
 
 		$config = include('config/application.config.php');
 		$locale = $config["environment"]["locale"];
@@ -94,7 +115,7 @@ class Drone_Validator_FormValidator
 			if (!array_key_exists($key, $attribs))
 				throw new Exception("The field '$key' does not exists!");
 
-			$label = (array_key_exists('label', array_keys($attributes))) ? $attributes["label"] : $key;
+			$label = (array_key_exists('label', array_keys($this->options))) ? $attributes["label"] : $key;
 
 			$all_attribs = array();
 
