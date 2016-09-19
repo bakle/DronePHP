@@ -74,7 +74,7 @@ class Drone_Validator_FormValidator
 	public function getOption($key, $name)
 	{
 		if (!array_key_exists($key, $this->options))
-			throw new Exception("The option '$option' does not exists");
+			throw new Exception("The option '$key' does not exists");
 
 		return array_key_exists($name, $this->options[$key]) ? $this->options[$key][$name] : null;
 	}
