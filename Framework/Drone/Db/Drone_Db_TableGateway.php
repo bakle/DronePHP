@@ -109,6 +109,8 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
         {
             if (is_string($value))
                 $value = "'$value'";
+            if (is_null($value))
+                $value = "null";
 
             $parsed_set[] = "$key = $value";
         }
