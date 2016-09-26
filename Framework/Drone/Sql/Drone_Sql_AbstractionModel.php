@@ -56,6 +56,7 @@ abstract class Drone_Sql_AbstractionModel
         );
 
         $drv = $dbsettings[$abstract_connection_string]["driver"];
+        $dbsettings[$abstract_connection_string]["auto_connect"] = $auto_connect;
 
         if (array_key_exists($drv, $this->availableDrivers))
         {
