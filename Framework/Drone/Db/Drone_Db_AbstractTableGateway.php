@@ -35,6 +35,7 @@ abstract class Drone_Db_AbstractTableGateway
         );
 
         $drv = $dbsettings[$abstract_connection_string]["driver"];
+        $dbsettings[$abstract_connection_string]["auto_connect"] = $auto_connect;
 
         if (!array_key_exists($drv, $drivers))
             throw new Exception("The Database driver '$drv' does not exists");
