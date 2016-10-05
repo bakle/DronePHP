@@ -36,7 +36,7 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
      *
      * @return array With all results
      */
-    public function select($where = array())
+    public function select($where)
     {
         if (count($where))
         {

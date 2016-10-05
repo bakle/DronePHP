@@ -76,7 +76,7 @@ class Drone_FileSystem_Shell implements Drone_FileSystem_ShellInterface
 	 *
 	 * @return array
 	 */
-	public function ls($path = null, $recursive = false)
+	public function ls($path, $recursive = false)
 	{
 		$filesToReturn = array();
 
@@ -116,7 +116,7 @@ class Drone_FileSystem_Shell implements Drone_FileSystem_ShellInterface
 		else {
 
 			$pathIns = dir('.');
-			$contents = $this->ls();
+			$contents = $this->ls('.');
 
 			foreach ($contents as $item)
 			{
@@ -138,7 +138,7 @@ class Drone_FileSystem_Shell implements Drone_FileSystem_ShellInterface
 	 *
 	 * @return boolean
 	 */
-	public function cd($path = null)
+	public function cd($path)
 	{
 		$moveTo = (is_null($path) || empty($path)) ? $this->home : $path;
 
@@ -303,7 +303,7 @@ class Drone_FileSystem_Shell implements Drone_FileSystem_ShellInterface
 	 *
 	 * @return boolean
 	 */
-	public function mkdir($dir, $dest = null, $recursive = null)
+	public function mkdir($dir, $dest, $recursive = null)
 	{
 		if (empty($dir))
 			throw new Exception("Missing parameter for mkdir!");
