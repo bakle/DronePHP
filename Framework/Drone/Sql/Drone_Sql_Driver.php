@@ -21,10 +21,10 @@ abstract class Drone_Sql_Driver
      *
      * @var array
      */
-    protected $messagesTemplates = [
+    protected $messagesTemplates = array(
         self::TRANSAC_STARTED => 'Transaction mode has already started',
         self::EMPTY_TRANSAC   => 'There are not querys in this transaction'
-    ];
+    );
 
     /**
      * @var string
