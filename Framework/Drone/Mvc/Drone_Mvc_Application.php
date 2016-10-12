@@ -132,8 +132,11 @@ class Drone_Mvc_Application
 		# load routes from modules
 		foreach ($this->modules as $module)
 		{
-			$module_config_file = require "module/$module/config/module.config.php";
-			$this->getRouter()->addRoute($module_config_file["router"]["routes"]);
+			if (file_exists("module/$module/config/module.config.php"))
+			{
+				$module_config_file = require "module/$module/config/module.config.php";
+				$this->getRouter()->addRoute($module_config_file["router"]["routes"]);
+			}
 		}
 	}
 
@@ -155,31 +158,27 @@ class Drone_Mvc_Application
 
 			foreach ($modules as $module)
 			{
-				/* Load only Pleets componentes when the current module is Pleets */
-				if ($mod == 'Pleets' && $module != 'Pleets')
-					continue;
-				else {
-					// First include the Module class
+				// First include the Module class
+				if (file_exists("module/".$module."/Module.php"))
 					include("module/".$module."/Module.php");
 
-					$controllers = $fileSystem->ls("module/".$module."/source/controller");
+				$controllers = $fileSystem->ls("module/".$module."/source/controller");
 
-					// Load controllers for each module
-					foreach ($controllers as $controller)
-					{
-						if (!in_array($controller, array('.', '..')))
-							include("module/".$module."/source/controller/" . $controller);
-					}
-
-					$models = $fileSystem->ls("module/".$module."/source/model");
-
-					// Load models for each module
-					foreach ($models as $model)
-					{
-						if (!in_array($model, array('.', '..')))
-							include("module/".$module."/source/model/" . $model);
-				    }
+				// Load controllers for each module
+				foreach ($controllers as $controller)
+				{
+					if (!in_array($controller, array('.', '..')))
+						include("module/".$module."/source/controller/" . $controller);
 				}
+
+				$models = $fileSystem->ls("module/".$module."/source/model");
+
+				// Load models for each module
+				foreach ($models as $model)
+				{
+					if (!in_array($model, array('.', '..')))
+						include("module/".$module."/source/model/" . $model);
+			    }
 			}
 		}
 		else
