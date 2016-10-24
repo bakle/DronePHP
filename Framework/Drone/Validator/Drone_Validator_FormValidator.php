@@ -239,7 +239,6 @@ class Drone_Validator_FormValidator
 						}
 					}
 				}
-
 			}
 		}
 
