@@ -41,7 +41,7 @@ class Drone_Validate_GreaterThan extends Zend_Validate_Abstract
      */
     protected $_messageTemplates = array(
         self::NOT_GREATER => "'%value%' is not greater than '%min%'",
-        self::NOT_GREATER_INCLUSIVE => "The input is not greater than or equal to '%min%'"
+        self::NOT_GREATER_INCLUSIVE => "The input is not greater or equal than '%min%'"
     );
 
     /**
