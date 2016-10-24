@@ -178,7 +178,7 @@ class Drone_Validator_FormValidator
 					case 'min':
 
 						if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], array('number', 'range')))
-							$validator = new Zend_Validate_GreaterThan(array('min' => $value, 'inclusive' => true));
+							$validator = new Drone_Validate_GreaterThan(array('min' => $value, 'inclusive' => true));
 						else
 							throw new Exception("The input type must be 'range' or 'number'");
 
@@ -187,7 +187,7 @@ class Drone_Validator_FormValidator
 					case 'max':
 
 						if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], array('number', 'range')))
-							$validator = new Zend_Validate_LessThan(array('max' => $value, 'inclusive' => true));
+							$validator = new Drone_Validate_LessThan(array('max' => $value, 'inclusive' => true));
 						else
 							throw new Exception("The input type must be 'range' or 'number'");
 
