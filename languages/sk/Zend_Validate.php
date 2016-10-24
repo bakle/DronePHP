@@ -185,6 +185,7 @@ return array(
 
     // Zend_Validate_GreaterThan
     "'%value%' is not greater than '%min%'" => "'%value%' nie je viac ako '%min%'",
+    "The input is not greater or equal than '%min%'" => "Hodnota nie je väčšia alebo rovná '%min%'",
 
     // Zend_Validate_Hex
     "Invalid type given. String expected" => "Chybný typ. Bol očakávaný reťazec",
@@ -228,6 +229,7 @@ return array(
 
     // Zend_Validate_LessThan
     "'%value%' is not less than '%max%'" => "'%value%' nie je menej ako '%max%'",
+    "The input is not less or equal than '%max%'" => "Hodnota nie je menej alebo presne než '%max%'",
 
     // Zend_Validate_NotEmpty
     "Invalid type given. String, integer, float, boolean or array expected" => "Chybný typ. Bol očakávaný reťazec, celé alebo desatinné číslo, boolean alebo pole",

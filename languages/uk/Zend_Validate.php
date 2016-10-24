@@ -185,6 +185,7 @@ return array(
 
     // Zend_Validate_GreaterThan
     "'%value%' is not greater than '%min%'" => "'%value%' не більше ніж '%min%'",
+    "The input is not greater or equal than '%min%'" => "Значення не дорівнює і не є більшим за '%min%'",
 
     // Zend_Validate_Hex
     "Invalid type given, value should be a string" => "Неприпустимий тип даних, значення повинно бути рядком",
@@ -227,6 +228,7 @@ return array(
 
     // Zend_Validate_LessThan
     "'%value%' is not less than '%max%'" => "'%value%' не менше ніж '%max%'",
+    "The input is not less or equal than '%max%'" => "Значення не дорівнює і не є меншим за '%max%'",
 
     // Zend_Validate_NotEmpty
     "Invalid type given, value should be float, string, array, boolean or integer" => "Неприпустимий тип даних, значення повинно бути числом з плаваючою крапкою, рядком, масивом чи цілим числом",

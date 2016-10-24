@@ -185,6 +185,7 @@ return array(
 
     // Zend_Validate_GreaterThan
     "'%value%' is not greater than '%min%'" => "'%value%' is not greater than '%min%'",
+    "The input is not greater than or equal to '%min%'" => "The input is not greater than or equal to '%min%'",
 
     // Zend_Validate_Hex
     "Invalid type given. String expected" => "Invalid type given. String expected",
@@ -228,6 +229,7 @@ return array(
 
     // Zend_Validate_LessThan
     "'%value%' is not less than '%max%'" => "'%value%' is not less than '%max%'",
+    "The input is not less or equal than '%max%'" => "The input is not less or equal than '%max%'",
 
     // Zend_Validate_NotEmpty
     "Invalid type given. String, integer, float, boolean or array expected" => "Invalid type given. String, integer, float, boolean or array expected",

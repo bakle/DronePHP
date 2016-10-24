@@ -185,6 +185,7 @@ return array(
 
     // Zend_Validate_GreaterThan
     "'%value%' is not greater than '%min%'" => " '%value%' は '%min%' より大きくありません",
+    "The input is not greater or equal than '%min%'" => "入力値は '%min%' 以上ではありません",
 
     // Zend_Validate_Hex
     "Invalid type given. String expected" => "不正な形式です。文字列が期待されています",
@@ -228,6 +229,7 @@ return array(
 
     // Zend_Validate_LessThan
     "'%value%' is not less than '%max%'" => " '%value%' は '%max%' 未満ではありません",
+    "The input is not less or equal than '%max%'" => "入力値は '%max%' 以下ではありません",
 
     // Zend_Validate_NotEmpty
     "Invalid type given. String, integer, float, boolean or array expected" => "不正な形式です。文字列、整数、小数、真偽値もしくは配列が期待されています",

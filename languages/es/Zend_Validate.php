@@ -183,8 +183,9 @@ return array(
     "Invalid type given, value should be float, string, or integer" => "El tipo especificado no es válido, el valor deberí­a ser de tipo float, una cadena de texto o un entero",
     "'%value%' does not appear to be a float" => "'%value%' no parece ser un float",
 
-// Zend_Validate_GreaterThan
+    // Zend_Validate_GreaterThan
     "'%value%' is not greater than '%min%'" => "'%value%' no es mayor que '%min%'",
+    "The input is not greater or equal than '%min%'" => "El valor especificado no es más grande o igual que '%min%'",
 
     // Zend_Validate_Hex
     "Invalid type given, value should be a string" => "El tipo especificado es incorrecto, el valor deberí­a ser una cadena de texto",
@@ -228,6 +229,7 @@ return array(
 
     // Zend_Validate_LessThan
     "'%value%' is not less than '%max%'" => "'%value%' no es menor que '%max%'",
+    "The input is not less or equal than '%max%'" => "El valor especificado no es menor o igual que '%max%'",
 
     // Zend_Validate_NotEmpty
     "Invalid type given, value should be float, string, array, boolean or integer" => "El tipo especificado es inválido, el valor deberí­a ser un float, una cadena de texto, un array, un boolean o un entero",
