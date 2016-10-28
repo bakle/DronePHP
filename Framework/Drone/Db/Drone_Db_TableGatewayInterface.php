@@ -9,7 +9,7 @@
 
 interface Drone_Db_TableGatewayInterface
 {
-   public function select($where);
+   public function select();
    public function insert($data);
    public function update($set, $where);
    public function delete($where);
