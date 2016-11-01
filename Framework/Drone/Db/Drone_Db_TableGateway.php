@@ -123,9 +123,9 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
         foreach ($where as $key => $value)
         {
             if (is_string($value))
-                $value = "$key = '$value'";
-
-            $parsed_where[] = "$value";
+                $parsed_where[] = "$key = '$value'";
+            else
+                $parsed_where[] = "$key = $value";
         }
 
         $parsed_where = implode(" AND ", $parsed_where);
