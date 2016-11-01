@@ -30,6 +30,16 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
     }
 
     /**
+     * Returns the entity
+     *
+     * @return Drone_Db_Entity
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    /**
      * Select statement
      *
      * @param array $where
