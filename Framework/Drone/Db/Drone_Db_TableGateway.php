@@ -83,17 +83,18 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
      */
     public function insert($data)
     {
-        $cols = implode(", ", array_keys($data));
-        $vals = array_values($data);
-
-        $parsed_vals = array();
-
-        foreach ($vals as $value)
+        foreach ($data as $key => $value)
         {
-            $parsed_vals[] = (is_string($value)) ? "'$value'" : $value;
+            if (is_string($value))
+                $value = "'$value'";
+            if (is_null($value))
+                $value = "null";
+
+            $data[$key] = $value;
         }
 
-        $vals = implode(", ", array_values($parsed_vals));
+        $cols = implode(", ", array_keys($data));
+        $vals = implode(", ", array_values($data));
 
         $table = $this->entity->getTableName();
 
