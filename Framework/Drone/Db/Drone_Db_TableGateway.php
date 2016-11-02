@@ -93,13 +93,12 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
             $data[$key] = $value;
         }
 
-        $cols = implode(", ", array_keys($data));
-        $vals = implode(", ", array_values($data));
+        $cols = implode(",\r\n\t", array_keys($data));
+        $vals = implode(",\r\n\t", array_values($data));
 
         $table = $this->entity->getTableName();
 
-        $sql = "INSERT INTO {$table}
-                ($cols) VALUES ($vals)";
+        $sql = "INSERT INTO {$table} \r\n(\r\n\t$cols\r\n) \r\nVALUES \r\n(\r\n\t$vals\r\n)";
 
         return $this->getDb()->query($sql);
     }
