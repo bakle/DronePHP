@@ -89,6 +89,8 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
                 $value = "'$value'";
             if (is_null($value))
                 $value = "null";
+            if ($value instanceof Drone_Sql_Platform_SQLFunction)
+                $value = $value->getStatement();
 
             $data[$key] = $value;
         }
