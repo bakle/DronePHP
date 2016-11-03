@@ -78,10 +78,15 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
      *
      * @param array $data
      *
+     * @throws Exception
+     *
      * @return boolean
      */
     public function insert($data)
     {
+        if (!count($data))
+            throw new Exception("Missing values for INSERT statement!");
+
         foreach ($data as $key => $value)
         {
             if (is_string($value))
@@ -110,11 +115,16 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
      * @param array $set
      * @param array $where
      *
+     * @throws Exception
+     *
      * @return boolean
      */
     public function update($set, $where)
     {
         $parsed_set = array();
+
+        if (!count($set))
+            throw new Exception("Missing SET arguments!");
 
         foreach ($set as $key => $value)
         {
@@ -153,6 +163,8 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
      *
      * @param array $where
      *
+     * @throws Exception
+     *
      * @return boolean
      */
     public function delete($where)
@@ -172,7 +184,7 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
             $where = "\r\nWHERE \r\n\t" . implode(" AND\r\n\t", $parsed_where);
         }
         else
-            throw new Exception("You cannot delete rows without WHERE clause!");
+            throw new Exception("You cannot delete rows without WHERE clause!. Use TRUNCATE statement instead.");
 
         $sql = "DELETE FROM {$this->tableName} $where";
 
