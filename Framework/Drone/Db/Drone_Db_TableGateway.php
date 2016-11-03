@@ -126,7 +126,7 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
             $parsed_set[] = "$key = $value";
         }
 
-        $parsed_set = implode(", ", $parsed_set);
+        $parsed_set = implode(",\r\n\t", $parsed_set);
 
 
         $parsed_where = array();
@@ -139,13 +139,11 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
                 $parsed_where[] = "$key = $value";
         }
 
-        $parsed_where = implode(" AND ", $parsed_where);
+        $parsed_where = implode(" AND\r\n\t", $parsed_where);
 
         $table = $this->entity->getTableName();
 
-        $sql = "UPDATE {$table}
-                SET $parsed_set
-                WHERE $parsed_where";
+        $sql = "UPDATE {$table} \r\nSET \r\n\t$parsed_set \r\nWHERE \r\n\t$parsed_where";
 
         return $this->getDb()->query($sql);
     }
