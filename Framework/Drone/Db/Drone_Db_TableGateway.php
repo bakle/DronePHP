@@ -194,7 +194,9 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
         else
             throw new Exception("You cannot delete rows without WHERE clause!. Use TRUNCATE statement instead.");
 
-        $sql = "DELETE FROM {$this->tableName} $where";
+        $table = $this->entity->getTableName();
+
+        $sql = "DELETE FROM {$table} $where";
 
         return $this->getDb()->query($sql);
     }
