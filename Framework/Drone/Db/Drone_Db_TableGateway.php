@@ -56,6 +56,8 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
             {
                 if (is_string($value))
                     $parsed_where[] = "$key = '$value'";
+                elseif ($value instanceof Drone_Sql_Platform_SQLFunction)
+                    $parsed_where[] = "$key = " . $value->getStatement();
                 else
                     $parsed_where[] = "$key = $value";
             }
@@ -179,6 +181,8 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
             {
                 if (is_string($value))
                     $parsed_where[] = "$key = '$value'";
+                elseif ($value instanceof Drone_Sql_Platform_SQLFunction)
+                    $parsed_where[] = "$key = " . $value->getStatement();
                 else
                     $parsed_where[] = "$key = $value";
             }
