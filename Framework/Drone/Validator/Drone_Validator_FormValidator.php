@@ -124,6 +124,8 @@ class Drone_Validator_FormValidator
 				$all_attribs[$attr->getName()] = $attr->getValue();
 			}
 
+			$required = array_key_exists('required', $all_attribs) ? $all_attribs["required"] : false;
+
 			foreach ($attributes as $name => $attr)
 			{
 				$name = $attr->getName();
@@ -208,7 +210,7 @@ class Drone_Validator_FormValidator
 				if (in_array($name, array('required', 'digits', 'minlength', 'maxlength', 'type', 'min', 'max', 'date', 'step')))
 				{
 					$validator->setTranslator($this->translator);
-					$this->_validate($validator, $form_value, $key);
+					$this->_validate($validator, $form_value, $key, $required);
 				}
 			}
 		}
@@ -239,7 +241,7 @@ class Drone_Validator_FormValidator
 						$form_value = $this->formHandler->getAttribute($key, "value")->getValue();
 
 						$validator->setTranslator($this->translator);
-						$this->_validate($validator, $form_value, $key);
+						$this->_validate($validator, $form_value, $key, $required);
 					}
 				}
 			}
@@ -258,6 +260,14 @@ class Drone_Validator_FormValidator
 		if (gettype($form_value) != 'array')
 		{
 			$val = $form_value;
+
+			# Check if the value is required. If it is, check the other rules.
+			$v = new Zend_Validate_NotEmpty();
+			$v->setTranslator($this->translator);
+			$notEmpty = $v->isValid($val);
+
+			if (!$required && !$notEmpty)
+				return null;
 
 			$valid = $validator->isValid($val);
 			$this->setValid($valid);
