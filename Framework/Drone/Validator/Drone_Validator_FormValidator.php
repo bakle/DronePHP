@@ -248,14 +248,19 @@ class Drone_Validator_FormValidator
 		}
 	}
 
-    /**
-     * Checks all rules
+	/**
+     * Validate all field values iteratively
      *
-     *  Supports n-dimensional arrays (name='example[][]')
+     * Supports n-dimensional arrays (name='example[][]')
+     *
+     * @param Zend\Validator $validator
+     * @param mixed 		 $form_value
+     * @param integer	     $key
+     * @param boolean	     $required
      *
      * @return null
      */
-	private function _validate($validator, $form_value, $key)
+	private function _validate($validator, $form_value, $key, $required)
 	{
 		if (gettype($form_value) != 'array')
 		{
