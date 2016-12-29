@@ -250,9 +250,10 @@ abstract class Drone_Mvc_AbstractionController
 	 */
 	public function isXmlHttpRequest()
 	{
-	   if (isset($_SERVER['CONTENT_TYPE']))
+		# non standard (HTTP_X_REQUESTED_WITH is not a part of PHP)
+	   	if (isset($_SERVER['HTTP_X_REQUESTED_WITH']))
 			return true;
-	   return false;
+	   	return false;
 	}
 
 	/**
