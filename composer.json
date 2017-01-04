@@ -13,7 +13,8 @@
         "zf1/zend-registry": "1.12.*",
         "zf1/zend-filter": "1.12.*",
         "zf1/zend-uri": "1.12.*",
-        "zf1/zend-crypt": "1.12.*"
+        "zf1/zend-crypt": "1.12.*",
+        "zf1/zend-date": "1.12.*"
 	},
 	"autoload": {
 		"psr-0": {"": "src/"}
