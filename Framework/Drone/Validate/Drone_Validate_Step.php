@@ -35,7 +35,7 @@ class Drone_Validate_Step extends Zend_Validate_Abstract
      *
      * @param array $options
      */
-    public function __construct($options = [])
+    public function __construct($options = array())
     {
         if ($options instanceof Zend_Config) {
             $options = $options->toArray();
@@ -138,8 +138,8 @@ class Drone_Validate_Step extends Zend_Validate_Abstract
             return 1.0;
         }
         //find the maximum precision from both input params to give accurate results
-        $xFloatSegment = substr($x, strpos($x, '.') + 1) ?: '';
-        $yFloatSegment = substr($y, strpos($y, '.') + 1) ?: '';
+        $xFloatSegment = substr($x, strpos($x, '.') + 1) ? substr($x, strpos($x, '.') + 1) : '';
+        $yFloatSegment = substr($y, strpos($y, '.') + 1) ? substr($y, strpos($y, '.') + 1) : '';
         $precision = strlen($xFloatSegment) + strlen($yFloatSegment);
         return round($x - $y * floor($x / $y), $precision);
     }
