@@ -115,7 +115,7 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
             );
 
             if (count($this->errors))
-                throw new Exception($error["message"], $error["code"]);
+                throw new Exception($error[0]["message"], $error[0]["code"]);
             else
                 throw new Exception("Unknown error!");
         }
