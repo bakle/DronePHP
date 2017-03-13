@@ -55,6 +55,7 @@ class Drone_Dom_Attribute
      * Constructor
      *
      * @param string $name
+     * @param mixed  $value
      */
    public function __construct($name, $value = null)
    {

@@ -49,7 +49,7 @@ abstract class Drone_Dom_Element
     /**
      * Returns the endTag attribute
      *
-     * @return string
+     * @return boolean
      */
    public function getEndTag()
    {
@@ -82,6 +82,9 @@ abstract class Drone_Dom_Element
 
     /**
      * Returns a particular Attribute
+     *
+     * @param string $label
+     * @param string $name
      *
      * @return Drone\Dom\Atribute|null
      */
