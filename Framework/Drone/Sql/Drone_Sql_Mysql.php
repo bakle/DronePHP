@@ -28,6 +28,9 @@ class Drone_Sql_MySQL extends Drone_Sql_Driver implements Drone_Sql_DriverInterf
      */
     public function __construct($options)
     {
+        if (!extension_loaded('mysqli'))
+            throw new Exception("The Mysqli extension is not loaded");
+
         if (!array_key_exists("Dbchar", $options))
             $options["dbchar"] = "utf8";
 
@@ -61,6 +64,9 @@ class Drone_Sql_MySQL extends Drone_Sql_Driver implements Drone_Sql_DriverInterf
      */
     public function reconnect()
     {
+        if (!extension_loaded('mysqli'))
+            throw new Exception("The Mysqli extension is not loaded");
+
         $this->dbconn = new mysqli($this->dbhost,$this->dbuser,$this->dbpass,$this->dbname);
 
         if ($this->dbconn->connect_errno === false)
