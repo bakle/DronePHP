@@ -19,6 +19,8 @@ class Drone_Validator_FormValidator
 	private $valid;
 
     /**
+     * Validation messages
+     *
      * @var array
      */
 	private $messages = array();
