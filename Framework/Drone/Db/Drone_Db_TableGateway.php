@@ -81,7 +81,6 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
      * @param array $data
      *
      * @throws Exception
-     *
      * @return boolean
      */
     public function insert($data)
@@ -118,7 +117,6 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
      * @param array $where
      *
      * @throws Exception
-     *
      * @return boolean
      */
     public function update($set, $where)
@@ -170,7 +168,6 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
      * @param array $where
      *
      * @throws Exception
-     *
      * @return boolean
      */
     public function delete($where)

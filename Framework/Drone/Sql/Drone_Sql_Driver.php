@@ -175,7 +175,7 @@ abstract class Drone_Sql_Driver
     /**
      * Sets dbhost attribute
      *
-     * @param string
+     * @param string $value
      *
      * @return null
      */
@@ -187,7 +187,7 @@ abstract class Drone_Sql_Driver
     /**
      * Sets dbuser attribute
      *
-     * @param string
+     * @param string $value
      *
      * @return null
      */
@@ -199,7 +199,7 @@ abstract class Drone_Sql_Driver
     /**
      * Sets dbpass attribute
      *
-     * @param string
+     * @param string $value
      *
      * @return null
      */
@@ -211,7 +211,7 @@ abstract class Drone_Sql_Driver
     /**
      * Sets dbname attribute
      *
-     * @param string
+     * @param string $value
      *
      * @return null
      */
@@ -233,12 +233,11 @@ abstract class Drone_Sql_Driver
     }
 
     /**
-     * Constructor for connect and set connection parameters
+     * Driver Constructor
      *
-     * It accepts the follow parameters
-     *  - an array with all parameters array['Dbhost' => 'myhost', 'Dbpass' => 'mypass', ...]
+     * All modifiable attributes (i.e. with setter method) can be passed as key
      *
-     * @param array
+     * @param array $options
      */
     public function __construct($options)
     {
@@ -252,9 +251,10 @@ abstract class Drone_Sql_Driver
     /**
      * Adds an error
      *
-     * @param string
+     * @param string $code
+     * @param string $message
      *
-     * @return void
+     * @return null
      */
     public function error($code, $message = null)
     {
@@ -264,24 +264,20 @@ abstract class Drone_Sql_Driver
 
     /**
      * Abstract commit
+     *
+     * @return boolean
      */
-    public function commit()
-    {
-        //
-    }
+    public function commit() {}
 
     /**
      * Abstract rollback
+     *
+     * @return boolean
      */
-    public function rollback()
-    {
-        //
-    }
+    public function rollback() {}
 
     /**
      * Defines start point of a transaction
-     *
-     * @throws Exception
      *
      * @return boolean
      */
@@ -300,8 +296,6 @@ abstract class Drone_Sql_Driver
 
     /**
      * Defines end point of a transaction
-     *
-     * @throws Exception
      *
      * @return boolean
      */

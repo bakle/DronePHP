@@ -18,8 +18,6 @@ class Drone_Db_EntityManager
      * Constructor
      *
      * @param Drone_Db_TableGateway $tableGateway
-     *
-     * @return null
      */
     public function __construct(Drone_Db_TableGateway $tableGateway)
     {
@@ -78,7 +76,8 @@ class Drone_Db_EntityManager
      *
      * @param Drone_Db_Entity|array $entity
      *
-     * @return integer
+     * @throws Exception
+     * @return boolean
      */
     public function insert($entity)
     {
@@ -98,7 +97,8 @@ class Drone_Db_EntityManager
      * @param Drone_Db_Entity|array $entity
      * @param array $where
      *
-     * @return integer
+     * @throws Exception
+     * @return boolean
      */
     public function update($entity, $where)
     {
@@ -117,7 +117,8 @@ class Drone_Db_EntityManager
      *
      * @param Drone_Db_Entity|array $entity
      *
-     * @return integer
+     * @throws Exception
+     * @return boolean
      */
     public function delete($entity)
     {

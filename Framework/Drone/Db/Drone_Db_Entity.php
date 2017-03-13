@@ -29,7 +29,7 @@ abstract class Drone_Db_Entity
      *
      * @param string $tableName
      *
-     * @param null
+     * @return null
      */
     public function setTableName($tableName)
     {

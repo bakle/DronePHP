@@ -17,16 +17,16 @@ abstract class Drone_Sql_AbstractionModel
     private $driver;
 
     /**
-     * Handle
+     * Connection resource
      *
-     * @var object
+     * @var resource
      */
     private $db;
 
     /**
      * All supported drivers
      *
-     * @var string
+     * @var array
      */
     private $availableDrivers;
 
@@ -35,8 +35,6 @@ abstract class Drone_Sql_AbstractionModel
      *
      * @param string  $abstract_connection_string
      * @param boolean $auto_connect
-     *
-     * @return null
      */
     public function __construct($abstract_connection_string = "default", $auto_connect = true)
     {
@@ -79,9 +77,9 @@ abstract class Drone_Sql_AbstractionModel
     }
 
     /**
-     * Returns the current handle instance
+     * Returns the connection resource
      *
-     * @return object
+     * @return resource
      */
     public function getDb()
     {

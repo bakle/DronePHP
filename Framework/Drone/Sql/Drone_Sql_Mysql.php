@@ -62,6 +62,7 @@ class Drone_Sql_MySQL extends Drone_Sql_Driver implements Drone_Sql_DriverInterf
     /**
      * Reconnects to database
      *
+     * @throws Exception
      * @return boolean
      */
     public function reconnect()
@@ -87,6 +88,7 @@ class Drone_Sql_MySQL extends Drone_Sql_Driver implements Drone_Sql_DriverInterf
     /**
      * Excecutes a statement
      *
+     * @throws Exception
      * @return boolean
      */
     public function query($sql, $params = array())
@@ -157,7 +159,6 @@ class Drone_Sql_MySQL extends Drone_Sql_Driver implements Drone_Sql_DriverInterf
      * Returns an array with the rows fetched
      *
      * @throws Exception
-     *
      * @return array
      */
     private function toArray()

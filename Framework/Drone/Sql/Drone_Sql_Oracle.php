@@ -62,6 +62,7 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
     /**
      * Reconnects to database
      *
+     * @throws Exception
      * @return boolean
      */
     public function reconnect()
@@ -89,6 +90,7 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
     /**
      * Excecutes a statement
      *
+     * @throws Exception
      * @return boolean
      */
     public function query($sql, Array $params = array())
@@ -191,7 +193,6 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
      * Returns an array with the rows fetched
      *
      * @throws Exception
-     *
      * @return array
      */
     private function toArray()
