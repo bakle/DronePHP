@@ -31,7 +31,7 @@ class Drone_Sql_MySQL extends Drone_Sql_Driver implements Drone_Sql_DriverInterf
         if (!extension_loaded('mysqli'))
             throw new Exception("The Mysqli extension is not loaded");
 
-        if (!array_key_exists("Dbchar", $options))
+        if (!array_key_exists("dbchar", $options))
             $options["dbchar"] = "utf8";
 
         parent::__construct($options);
@@ -54,6 +54,8 @@ class Drone_Sql_MySQL extends Drone_Sql_Driver implements Drone_Sql_DriverInterf
                 else
                     throw new Exception("Unknown error!");
             }
+            else
+                $this->dbconn->set_charset($options["dbchar"]);
         }
     }
 

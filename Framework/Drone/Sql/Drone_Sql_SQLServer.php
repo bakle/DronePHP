@@ -31,7 +31,7 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
         if (!extension_loaded('sqlsrv'))
             throw new Exception("The Sqlsrv extension is not loaded");
 
-        if (!array_key_exists("Dbchar", $options))
+        if (!array_key_exists("dbchar", $options))
             $options["dbchar"] = "SQLSRV_ENC_CHAR";
 
         parent::__construct($options);

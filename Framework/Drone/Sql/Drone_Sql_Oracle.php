@@ -31,7 +31,7 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
         if (!extension_loaded('oci8'))
             throw new Exception("The Oci8 extension is not loaded");
 
-        if (!array_key_exists("Dbchar", $options))
+        if (!array_key_exists("dbchar", $options))
             $options["dbchar"] = "AL32UTF8";
 
         parent::__construct($options);
