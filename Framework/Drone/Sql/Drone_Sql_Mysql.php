@@ -109,10 +109,11 @@ class Drone_Sql_MySQL extends Drone_Sql_Driver implements Drone_Sql_DriverInterf
                 throw new Exception("Unknown error!");
         }
 
-        $rows = $this->getArrayResult();
+        if (is_object($this->result) && property_exists($this->result, 'num_rows'))
+            $this->numRows = $this->result->num_rows;
 
-        $this->numRows = $this->result->num_rows;
-        $this->numFields = $this->result->field_count;
+        if (is_object($this->result) && property_exists($this->result, 'field_count'))
+            $this->numFields = $this->result->field_count;
 
         if (is_object($this->result) && property_exists($this->result, 'affected_rows'))
             $this->rowsAffected = $this->result->affected_rows;
