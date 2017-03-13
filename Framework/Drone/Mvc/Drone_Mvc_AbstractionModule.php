@@ -52,4 +52,26 @@ abstract class Drone_Mvc_AbstractionModule
 	{
 		return include 'module/' . $this->getModuleName() . '/config/module.config.php';
 	}
+
+	/**
+	 * Creates an autoloader for module classes
+	 *
+	 * @param string $name
+	 *
+	 * @return null
+	 */
+	public static function loader($name)
+	{
+		$class = $name;
+		$nm    = explode('_', $name);
+
+		$module     = array_shift($nm);
+		$path 		= array_shift($nm);
+		$className  = array_shift($nm);
+
+		$class = "module/" . $module . "/source/" . $path ."/". $name . ".php";
+
+		if (file_exists($class))
+			include $class;
+	}
 }
