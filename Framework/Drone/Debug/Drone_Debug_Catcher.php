@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Catcher
+class Drone_Debug_Catcher
 {
     /**
      * Output filename
