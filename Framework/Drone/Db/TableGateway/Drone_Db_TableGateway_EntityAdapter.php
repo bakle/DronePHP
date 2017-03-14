@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Db_EntityManager
+class Drone_Db_TableGateway_EntityAdapter
 {
     /**
      * @var Drone_Db_TableGateway $tableGateway
@@ -17,9 +17,9 @@ class Drone_Db_EntityManager
     /**
      * Constructor
      *
-     * @param Drone_Db_TableGateway $tableGateway
+     * @param Drone_Db_TableGateway_TableGateway $tableGateway
      */
-    public function __construct(Drone_Db_TableGateway $tableGateway)
+    public function __construct(Drone_Db_TableGateway_TableGateway $tableGateway)
     {
         $this->tableGateway = $tableGateway;
     }

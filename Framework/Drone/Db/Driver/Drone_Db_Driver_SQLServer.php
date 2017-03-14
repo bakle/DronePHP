@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverInterface
+class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_Db_Driver_DriverInterface
 {
     /**
      * @return array
@@ -28,9 +28,6 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
      */
     public function __construct($options)
     {
-        if (!extension_loaded('sqlsrv'))
-            throw new Exception("The Sqlsrv extension is not loaded");
-
         if (!array_key_exists("dbchar", $options))
             $options["dbchar"] = "SQLSRV_ENC_CHAR";
 
@@ -39,35 +36,16 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
         $auto_connect = array_key_exists('auto_connect', $options) ? $options["auto_connect"] : true;
 
         if ($auto_connect)
-        {
-    		$db_info = array("Database" => $this->dbname, "UID" => $this->dbuser, "PWD" => $this->dbpass, "CharacterSet" => $this->dbchar);
-    		$this->dbconn = sqlsrv_connect($this->dbhost, $db_info);
-
-            if ($this->dbconn === false)
-            {
-                $errors = sqlsrv_errors();
-
-                foreach ($errors as $error)
-                {
-                    $this->error(
-                        $error["code"], $error["message"]
-                    );
-                }
-
-                if (count($this->errors))
-                    throw new Exception($errors[0]["message"], $errors[0]["code"]);
-                else
-                    throw new Exception("Unknown error!");
-        }
+            $this->connect();
 	}
 
     /**
-     * Reconnects to database
+     * Connects to database
      *
      * @throws Exception
      * @return boolean
      */
-    public function reconnect()
+    public function connect()
     {
         if (!extension_loaded('sqlsrv'))
             throw new Exception("The Sqlsrv extension is not loaded");
@@ -86,10 +64,25 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
                 );
             }
 
-            return false;
+            if (count($this->errors))
+                throw new Exception($errors[0]["message"], $errors[0]["code"]);
+            else
+                throw new Exception("Unknown error!");
         }
 
         return true;
+    }
+
+    /**
+     * Reconnects to database
+     *
+     * @throws Exception
+     * @return boolean
+     */
+    public function reconnect()
+    {
+        $this->disconnect();
+        $this->connect();
     }
 
     /**
@@ -98,7 +91,7 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
      * @throws Exception
      * @return boolean
      */
-    public function query($sql, Array $params = array())
+    public function execute($sql, Array $params = array())
     {
         $this->numRows = 0;
         $this->numFields = 0;
@@ -144,14 +137,14 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
      */
     public function transaction($querys)
     {
-        $this->begin_transaction();
+        $this->beginTransaction();
 
         foreach ($querys as $sql)
         {
-            $this->query($sql);
+            $this->execute($sql);
         }
 
-        $this->end_transaction();
+        $this->endTransaction();
     }
 
     /**
@@ -175,11 +168,11 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
     }
 
     /**
-     * Begins a transaction in SQLServer
+     * Defines start point of a transaction
      *
      * @return boolean
      */
-    public function begin_transaction()
+    public function beginTransaction()
     {
         if (sqlsrv_begin_transaction($this->dbconn) === false)
         {
@@ -195,7 +188,7 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
             return false;
         }
 
-        return parent::begin_transaction();
+        return parent::beginTransaction();
     }
 
     /**
@@ -203,7 +196,7 @@ class Drone_Sql_SQLServer extends Drone_Sql_Driver implements Drone_Sql_DriverIn
      *
      * @return boolean
      */
-    public function cancel()
+    public function disconnect()
     {
         sqlsrv_cancel($this->result);
     }

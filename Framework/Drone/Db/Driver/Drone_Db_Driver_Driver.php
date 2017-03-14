@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-abstract class Drone_Sql_Driver
+abstract class Drone_Db_Driver_Driver
 {
     /**#@+
      * Transaction constants
@@ -130,6 +130,16 @@ abstract class Drone_Sql_Driver
     public function getDbuser()
     {
         return $this->dbuser;
+    }
+
+    /**
+     * Returns the dbname attribute
+     *
+     * @return string
+     */
+    public function getDbname()
+    {
+        return $this->dbname;
     }
 
     /**
@@ -256,11 +266,28 @@ abstract class Drone_Sql_Driver
      *
      * @return null
      */
-    public function error($code, $message = null)
+    protected function error($code, $message = null)
     {
         if (!array_key_exists($code, $this->errors))
             $this->errors[$message] = (is_null($message) && array_key_exists($code, $this->messagesTemplates)) ? $this->messagesTemplates[$code] : $message;
     }
+
+    /**
+     * Returns true if there is a stablished connection
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return (is_resource($this->dbconn) || is_object($this->dbconn));
+    }
+
+    /**
+     * Abstract connect
+     *
+     * @return resource
+     */
+    public function connect() {}
 
     /**
      * Abstract commit
@@ -281,8 +308,11 @@ abstract class Drone_Sql_Driver
      *
      * @return boolean
      */
-    public function begin_transaction()
+    public function beginTransaction()
     {
+        if (!$this->isConnected())
+            $this->connect();
+
         if ($this->transac_mode)
         {
             $this->error(self::TRANSAC_STARTED);
@@ -299,7 +329,7 @@ abstract class Drone_Sql_Driver
      *
      * @return boolean
      */
-    public function end_transaction()
+    public function endTransaction()
     {
         if (is_null($this->transac_result))
         {

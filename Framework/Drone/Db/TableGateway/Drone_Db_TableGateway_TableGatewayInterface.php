@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-interface Drone_Db_TableGatewayInterface
+interface Drone_Db_TableGateway_TableGatewayInterface
 {
    public function select();
    public function insert($data);

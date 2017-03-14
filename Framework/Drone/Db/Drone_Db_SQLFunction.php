@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Sql_Platform_SQLFunction
+class Drone_Db_SQLFunction
 {
     /**
      * The SQL function

@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInterface
+class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_Driver_DriverInterface
 {
     /**
      * @return array
@@ -28,9 +28,6 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
      */
     public function __construct($options)
     {
-        if (!extension_loaded('oci8'))
-            throw new Exception("The Oci8 extension is not loaded");
-
         if (!array_key_exists("dbchar", $options))
             $options["dbchar"] = "AL32UTF8";
 
@@ -39,33 +36,16 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
         $auto_connect = array_key_exists('auto_connect', $options) ? $options["auto_connect"] : true;
 
         if ($auto_connect)
-        {
-            $connection_string = (is_null($this->dbhost) || empty($this->dbhost)) ? $this->dbname : $this->dbhost ."/". $this->dbname;
-            $this->dbconn = @oci_connect($this->dbuser,  $this->dbpass, $connection_string, $this->dbchar);
-
-            if ($this->dbconn === false)
-            {
-                $error = oci_error();
-
-                $this->error(
-                    $error["code"], $error["message"]
-                );
-
-                if (count($this->errors))
-                    throw new Exception($error["message"], $error["code"]);
-                else
-                    throw new Exception("Unknown error!");
-            }
-        }
+            $this->connect();
     }
 
     /**
-     * Reconnects to database
+     * Connects  to database
      *
      * @throws Exception
      * @return boolean
      */
-    public function reconnect()
+    public function connect()
     {
         if (!extension_loaded('oci8'))
             throw new Exception("The Oci8 extension is not loaded");
@@ -81,10 +61,25 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
                 $error["code"], $error["message"]
             );
 
-            return false;
+            if (count($this->errors))
+                throw new Exception($error["message"], $error["code"]);
+            else
+                throw new Exception("Unknown error!");
         }
 
         return true;
+    }
+
+    /**
+     * Reconnects to database
+     *
+     * @throws Exception
+     * @return boolean
+     */
+    public function reconnect()
+    {
+        $this->disconnect();
+        $this->connect();
     }
 
     /**
@@ -93,7 +88,7 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
      * @throws Exception
      * @return boolean
      */
-    public function query($sql, Array $params = array())
+    public function execute($sql, Array $params = array())
     {
         $this->numRows = 0;
         $this->numFields = 0;
@@ -149,14 +144,14 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
      */
     public function transaction($querys)
     {
-        $this->begin_transaction();
+        $this->beginTransaction();
 
         foreach ($querys as $sql)
         {
-            $this->query($sql);
+            $this->execute($sql);
         }
 
-        $this->end_transaction();
+        $this->endTransaction();
     }
 
     /**
@@ -184,7 +179,7 @@ class Drone_Sql_Oracle extends Drone_Sql_Driver implements Drone_Sql_DriverInter
      *
      * @return boolean
      */
-    public function cancel()
+    public function disconnect()
     {
         oci_cancel($this->result);
     }

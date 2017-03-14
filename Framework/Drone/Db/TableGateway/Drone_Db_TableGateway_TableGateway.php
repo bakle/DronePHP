@@ -7,7 +7,9 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Drone_Db_TableGatewayInterface
+class Drone_Db_TableGateway_TableGateway
+    extends Drone_Db_TableGateway_AbstractTableGateway
+    implements Drone_Db_TableGateway_TableGatewayInterface
 {
     /**
      * Entity instance
@@ -17,19 +19,6 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
     private $entity;
 
     /**
-     * Constructor
-     *
-     * @param Entity $entity
-     *
-     * @return null
-     */
-    public function __construct(Drone_Db_Entity $entity, $auto_connect = true)
-    {
-        parent::__construct("default", $auto_connect);
-        $this->entity = $entity;
-    }
-
-    /**
      * Returns the entity
      *
      * @return Drone_Db_Entity
@@ -37,6 +26,17 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    /**
+     * Constructor
+     *
+     * @param Drone_Db_Entity $entity
+     */
+    public function __construct(Drone_Db_Entity $entity, $auto_connect = true)
+    {
+        parent::__construct("default", $auto_connect);
+        $this->entity = $entity;
     }
 
     /**
@@ -71,8 +71,8 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
 
         $sql = "SELECT * \r\nFROM {$table}\r\n$where";
 
-        $result = $this->getDb()->query($sql);
-        return $this->getDb()->getArrayResult();
+        $result = $this->getDriver()->getDb()->execute($sql);
+        return $this->getDriver()->getDb()->getArrayResult();
     }
 
     /**
@@ -107,7 +107,7 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
 
         $sql = "INSERT INTO {$table} \r\n(\r\n\t$cols\r\n) \r\nVALUES \r\n(\r\n\t$vals\r\n)";
 
-        return $this->getDb()->query($sql);
+        return $this->getDriver()->getDb()->execute($sql);
     }
 
     /**
@@ -159,7 +159,7 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
 
         $sql = "UPDATE {$table} \r\nSET \r\n\t$parsed_set \r\nWHERE \r\n\t$parsed_where";
 
-        return $this->getDb()->query($sql);
+        return $this->getDriver()->getDb()->execute($sql);
     }
 
     /**
@@ -195,6 +195,6 @@ class Drone_Db_TableGateway extends Drone_Db_AbstractTableGateway implements Dro
 
         $sql = "DELETE FROM {$table} $where";
 
-        return $this->getDb()->query($sql);
+        return $this->getDriver()->getDb()->execute($sql);
     }
 }
