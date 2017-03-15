@@ -296,7 +296,7 @@ class Drone_Validator_FormValidator
 		else {
 			foreach ($form_value as $val)
 			{
-				$this->_validate($validator, $val, $key);
+				$this->_validate($validator, $val, $key, $required);
 			}
 		}
 	}
