@@ -94,7 +94,7 @@ class Drone_Db_TableGateway_TableGateway
                 $value = "'$value'";
             elseif (is_null($value))
                 $value = "null";
-            elseif ($value instanceof Drone_Sql_Platform_SQLFunction)
+            elseif ($value instanceof Drone_Db_SQLFunction)
                 $value = $value->getStatement();
 
             $data[$key] = $value;
