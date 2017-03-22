@@ -78,7 +78,7 @@ class Drone_LayoutManager_Layout
 
 		$params = $controller->getParams();
 
-		if ($controller->getTerminal())
+		if ($controller->getTerminal() && file_exists($view))
 			include $view;
 		else {
 			$config = $controller->getModule()->getConfig();
