@@ -290,6 +290,18 @@ abstract class Drone_Db_Driver_Driver
     public function connect() {}
 
     /**
+     * Reconnects to the database
+     *
+     * @throws Exception
+     * @return boolean
+     */
+    public function reconnect()
+    {
+        $this->disconnect();
+        return $this->connect();
+    }
+
+    /**
      * Abstract commit
      *
      * @return boolean

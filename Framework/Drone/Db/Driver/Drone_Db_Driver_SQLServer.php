@@ -74,18 +74,6 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
     }
 
     /**
-     * Reconnects to database
-     *
-     * @throws Exception
-     * @return boolean
-     */
-    public function reconnect()
-    {
-        $this->disconnect();
-        $this->connect();
-    }
-
-    /**
      * Excecutes a statement
      *
      * @throws Exception

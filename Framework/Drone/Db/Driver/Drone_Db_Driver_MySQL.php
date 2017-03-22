@@ -71,18 +71,8 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
         }
         else
             $this->dbconn->set_charset($this->dbchar);
-    }
 
-    /**
-     * Reconnects to database
-     *
-     * @throws Exception
-     * @return boolean
-     */
-    public function reconnect()
-    {
-        $this->disconnect();
-        $this->connect();
+        return true;
     }
 
     /**

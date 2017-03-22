@@ -71,18 +71,6 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_
     }
 
     /**
-     * Reconnects to database
-     *
-     * @throws Exception
-     * @return boolean
-     */
-    public function reconnect()
-    {
-        $this->disconnect();
-        $this->connect();
-    }
-
-    /**
      * Excecutes a statement
      *
      * @throws Exception
