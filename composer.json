@@ -1,5 +1,5 @@
 {
-    "name": "pleet/dronephp",
+    "name": "fermius/dronephp",
     "description": "DronePHP - Framework",
     "license": "MIT licence",
     "keywords": [
@@ -7,6 +7,16 @@
         "PHP"
     ],
     "homepage": "http://www.dronephp.com",
+   "support": {
+        "issues": "https://github.com/fermius/DronePHP/issues",
+        "source": "https://github.com/fermius/DronePHP"
+    },
+    "authors": [
+        {
+            "name": "Darío Rivera",
+            "email": "fermius.us@gmail.com"
+        }
+    ],
 	"require": {
         "php": "^5.2.17 || ^7.0",
         "zf1/zend-translate": "1.12.*",
@@ -17,7 +27,9 @@
         "zf1/zend-crypt": "1.12.*",
         "zf1/zend-date": "1.12.*"
 	},
-	"autoload": {
-		"psr-0": {"": "src/"}
+    "autoload": {
+        "psr-4": {
+            "Drone\\": "src/"
+        }
 	}
 }
