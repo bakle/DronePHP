@@ -1,35 +1,12 @@
 <?php
 /**
- * Zend Framework
+ * DronePHP (http://www.dronephp.com)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @link      http://github.com/fermius/DronePHP
+ * @copyright Copyright (c) 2016-2017 Pleets. (http://www.pleets.org)
+ * @license   http://www.dronephp.com/license
  */
 
-/**
- * @see Zend_Validate_Abstract
- */
-// require_once 'Zend/Validate/Abstract.php';
-
-/**
- * @category   Zend
- * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
 class Drone_Validate_LessThan extends Zend_Validate_Abstract
 {
     const NOT_LESS = 'notLessThan';
