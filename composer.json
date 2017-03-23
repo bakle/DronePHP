@@ -8,6 +8,7 @@
     ],
     "homepage": "http://www.dronephp.com",
 	"require": {
+        "php": "^5.2.17 || ^7.0",
         "zf1/zend-translate": "1.12.*",
         "zf1/zend-validate": "1.12.*",
         "zf1/zend-registry": "1.12.*",
