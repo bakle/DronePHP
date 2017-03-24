@@ -212,7 +212,7 @@ abstract class Drone_Mvc_AbstractionController
 			}
 			else {
 				$class = dirname(__FILE__);
-				throw new Exception("The '$method' method doesn't exists in the $class control class");
+				throw new Drone_Mvc_PageNotFoundException("The '$method' method doesn't exists in the $class control class");
 			}
 		}
 	}

@@ -140,7 +140,7 @@ class Drone_Mvc_Router
 		if (class_exists($fqn_controller))
 			$this->controller = new $fqn_controller($module, $view, $this->basePath);
 		else
-			throw new Exception("The control class '$fqn_controller' does not exists!", 1);
+			throw new Drone_Mvc_PageNotFoundException("The control class '$fqn_controller' does not exists!", 1);
 	}
 
     /**
