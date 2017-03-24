@@ -73,16 +73,18 @@ class Drone_LayoutManager_Layout
 		$this->controller = $controller;
 		$this->view = $view;
 
-		if (!file_exists($view) && !$controller->getTerminal())
-			throw new Exception("The 'view' template $view does not exists");
+		if ($controller->getTerminal())
+		{
+			if (file_exists($view))
+				include $view;
+		}
+		else
+		{
+			if (!file_exists($view))
+				throw new Exception("The 'view' template $view does not exists");
 
-		$params = $controller->getParams();
-
-		if ($controller->getTerminal() && file_exists($view))
-			include $view;
-		else {
-			$config = $controller->getModule()->getConfig();
-			include $config["view_manager"]["template_map"][$controller->getLayout()];
+				$config = $controller->getModule()->getConfig();
+				include $config["view_manager"]["template_map"][$controller->getLayout()];
 		}
 	}
 
