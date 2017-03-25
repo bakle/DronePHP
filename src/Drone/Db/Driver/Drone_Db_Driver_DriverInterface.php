@@ -9,12 +9,12 @@
 
 interface Drone_Db_Driver_DriverInterface
 {
-	public function connect();
-  	public function reconnect();
-  	public function commit();
-  	public function rollback();
-  	public function transaction($array_of_sentences);
-  	public function beginTransaction();
-  	public function endTransaction();
-  	public function disconnect();
+    public function connect();
+    public function reconnect();
+    public function commit();
+    public function rollback();
+    public function transaction($array_of_sentences);
+    public function beginTransaction();
+    public function endTransaction();
+    public function disconnect();
 }

@@ -37,7 +37,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
 
         if ($auto_connect)
             $this->connect();
-	}
+    }
 
     /**
      * Connects to database
@@ -209,14 +209,14 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
         else
             throw new Exception('There are not data in the buffer!');
 
-		$this->arrayResult = $data;
+        $this->arrayResult = $data;
 
         return $data;
     }
 
-	public function __destruct()
+    public function __destruct()
     {
         if ($this->dbconn)
-		    sqlsrv_close($this->dbconn);
-	}
+            sqlsrv_close($this->dbconn);
+    }
 }
