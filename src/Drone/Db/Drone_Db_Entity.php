@@ -15,6 +15,11 @@ abstract class Drone_Db_Entity
     private $tableName;
 
     /**
+     * @var string
+     */
+    private $connectionIdentifier = "default";
+
+    /**
      * Returns the tableName property
      *
      * @return string
@@ -22,6 +27,16 @@ abstract class Drone_Db_Entity
     public function getTableName()
     {
         return $this->tableName;
+    }
+
+    /**
+     * Returns the connectionIdentifier property
+     *
+     * @return string
+     */
+    public function getConnectionIdentifier()
+    {
+        return $this->connectionIdentifier;
     }
 
     /**
@@ -34,6 +49,18 @@ abstract class Drone_Db_Entity
     public function setTableName($tableName)
     {
         $this->tableName = $tableName;
+    }
+
+    /**
+     * Sets the connectionIdentifier property
+     *
+     * @param string $connectionIdentifier
+     *
+     * @return null
+     */
+    public function setConnectionIdentifier($connectionIdentifier)
+    {
+        $this->connectionIdentifier = $connectionIdentifier;
     }
 
     /**

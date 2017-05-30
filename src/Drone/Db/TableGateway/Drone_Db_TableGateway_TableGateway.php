@@ -35,7 +35,7 @@ class Drone_Db_TableGateway_TableGateway
      */
     public function __construct(Drone_Db_Entity $entity, $auto_connect = true)
     {
-        parent::__construct("default", $auto_connect);
+        parent::__construct($entity->getConnectionIdentifier(), $auto_connect);
         $this->entity = $entity;
     }
 

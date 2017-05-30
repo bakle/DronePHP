@@ -10,20 +10,47 @@
 abstract class Drone_Db_TableGateway_AbstractTableGateway
 {
     /**
-     * Driver connection
+     * Driver collector
      *
-     * @var DriverAdapter
+     * @var DriverAdapter[]
      */
-    private static $driver;
+    private static $drivers;
 
     /**
-     * Returns the DriverAdapter
+     * Current driver identifier
+     *
+     * @var string
+     */
+    private $currentDriverIdentifier;
+
+    /**
+     * Returns all registered drivers
+     *
+     * @return DriverAdapter[]
+     */
+    public static function getDrivers()
+    {
+        return self::$drivers;
+    }
+
+    /**
+     * Returns the current driver identifier
+     *
+     * @return string
+     */
+    public function getCurrentDriverIdentifier()
+    {
+        return $this->currentDriverIdentifier;
+    }
+
+    /**
+     * Returns the current DriverAdapter
      *
      * @return DriverAdapter
      */
-    public static function getDriver()
+    public function getDriver()
     {
-        return self::$driver;
+        return self::$drivers[$this->currentDriverIdentifier];
     }
 
     /**
@@ -34,7 +61,9 @@ abstract class Drone_Db_TableGateway_AbstractTableGateway
      */
     public function __construct($connection_identifier = "default", $auto_connect = true)
     {
-        if (!isset(self::$driver))
-            self::$driver = new Drone_Db_Driver_DriverAdapter($connection_identifier, $auto_connect);
+        $this->currentDriverIdentifier = $connection_identifier;
+
+        if (!isset(self::$drivers[$connection_identifier]))
+            self::$drivers[$connection_identifier] = new Drone_Db_Driver_DriverAdapter($connection_identifier, $auto_connect);
     }
 }
