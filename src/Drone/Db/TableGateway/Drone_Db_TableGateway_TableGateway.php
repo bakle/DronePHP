@@ -107,7 +107,7 @@ class Drone_Db_TableGateway_TableGateway
             if (is_string($value))
                 $value = "'$value'";
             elseif (is_null($value))
-                $value = "null";
+                $value = "NULL";
             elseif ($value instanceof Drone_Db_SQLFunction)
                 $value = $value->getStatement();
 
@@ -143,7 +143,7 @@ class Drone_Db_TableGateway_TableGateway
         foreach ($set as $key => $value)
         {
             if (is_null($value))
-                $parsed_set[] = "$key = null";
+                $parsed_set[] = "$key = NULL";
             elseif (is_string($value))
                 $parsed_set[] = "$key = '$value'";
             elseif (is_null($value))
