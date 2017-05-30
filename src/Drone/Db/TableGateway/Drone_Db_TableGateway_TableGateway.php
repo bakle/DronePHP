@@ -58,6 +58,18 @@ class Drone_Db_TableGateway_TableGateway
                     $parsed_where[] = "$key = '$value'";
                 elseif ($value instanceof Drone_Db_SQLFunction)
                     $parsed_where[] = "$key = " . $value->getStatement();
+                elseif (is_array($value))
+                {
+                    $parsed_in = [];
+
+                    foreach ($value as $in_value)
+                    {
+                        if (is_string($in_value))
+                            $parsed_in[] = "'$in_value'";
+                    }
+
+                    $parsed_where[] = "$key IN (" . implode(", ", $parsed_in) . ")";
+                }
                 else
                     $parsed_where[] = "$key = $value";
             }
@@ -128,14 +140,26 @@ class Drone_Db_TableGateway_TableGateway
 
         foreach ($set as $key => $value)
         {
-            if (is_string($value))
-                $value = "'$value'";
-            elseif (is_null($value))
-                $value = "null";
+            if (is_null($value))
+                $parsed_set = "$key = null";
+            elseif (is_string($value))
+                $parsed_set[] = "$key = '$value'";
             elseif ($value instanceof Drone_Db_SQLFunction)
-                $value = $value->getStatement();
+                $parsed_set[] = "$key = " . $value->getStatement();
+            elseif (is_array($value))
+            {
+                $parsed_in = [];
 
-            $parsed_set[] = "$key = $value";
+                foreach ($value as $in_value)
+                {
+                    if (is_string($in_value))
+                        $parsed_in[] = "'$in_value'";
+                }
+
+                $parsed_set[] = "$key IN (" . implode(", ", $parsed_in) . ")";
+            }
+            else
+                $parsed_set[] = "$key = $value";
         }
 
         $parsed_set = implode(",\r\n\t", $parsed_set);
@@ -149,6 +173,18 @@ class Drone_Db_TableGateway_TableGateway
                 $parsed_where[] = "$key = '$value'";
             elseif ($value instanceof Drone_Db_SQLFunction)
                 $parsed_where[] = "$key = " . $value->getStatement();
+            elseif (is_array($value))
+            {
+                $parsed_in = [];
+
+                foreach ($value as $in_value)
+                {
+                    if (is_string($in_value))
+                        $parsed_in[] = "'$in_value'";
+                }
+
+                $parsed_where[] = "$key IN (" . implode(", ", $parsed_in) . ")";
+            }
             else
                 $parsed_where[] = "$key = $value";
         }
@@ -182,6 +218,18 @@ class Drone_Db_TableGateway_TableGateway
                     $parsed_where[] = "$key = '$value'";
                 elseif ($value instanceof Drone_Db_SQLFunction)
                     $parsed_where[] = "$key = " . $value->getStatement();
+                elseif (is_array($value))
+                {
+                    $parsed_in = [];
+
+                    foreach ($value as $in_value)
+                    {
+                        if (is_string($in_value))
+                            $parsed_in[] = "'$in_value'";
+                    }
+
+                    $parsed_where[] = "$key IN (" . implode(", ", $parsed_in) . ")";
+                }
                 else
                     $parsed_where[] = "$key = $value";
             }
