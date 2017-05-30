@@ -186,7 +186,10 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
      */
     public function disconnect()
     {
-        sqlsrv_cancel($this->result);
+        if ($this->dbconn)
+            return sqlsrv_close($this->dbconn);
+
+        return true;
     }
 
     /**

@@ -173,7 +173,10 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
      */
     public function disconnect()
     {
-        $this->dbconn->close();
+        if ($this->dbconn !== false)
+            return $this->dbconn->close();
+
+        return true;
     }
 
     /**

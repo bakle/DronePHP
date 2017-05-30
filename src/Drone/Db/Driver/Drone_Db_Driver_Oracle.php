@@ -169,7 +169,10 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_
      */
     public function disconnect()
     {
-        oci_cancel($this->result);
+        if ($this->dbconn)
+            return oci_close($this->dbconn);
+
+        return true;
     }
 
     /**
