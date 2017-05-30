@@ -56,6 +56,8 @@ class Drone_Db_TableGateway_TableGateway
             {
                 if (is_string($value))
                     $parsed_where[] = "$key = '$value'";
+                elseif (is_null($value))
+                    $parsed_where[] = "$key IS NULL";
                 elseif ($value instanceof Drone_Db_SQLFunction)
                     $parsed_where[] = "$key = " . $value->getStatement();
                 elseif (is_array($value))
@@ -144,6 +146,8 @@ class Drone_Db_TableGateway_TableGateway
                 $parsed_set[] = "$key = null";
             elseif (is_string($value))
                 $parsed_set[] = "$key = '$value'";
+            elseif (is_null($value))
+                $parsed_where[] = "$key IS NULL";
             elseif ($value instanceof Drone_Db_SQLFunction)
                 $parsed_set[] = "$key = " . $value->getStatement();
             elseif (is_array($value))
@@ -216,6 +220,8 @@ class Drone_Db_TableGateway_TableGateway
             {
                 if (is_string($value))
                     $parsed_where[] = "$key = '$value'";
+                elseif (is_null($value))
+                    $parsed_where[] = "$key IS NULL";
                 elseif ($value instanceof Drone_Db_SQLFunction)
                     $parsed_where[] = "$key = " . $value->getStatement();
                 elseif (is_array($value))
