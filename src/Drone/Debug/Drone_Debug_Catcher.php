@@ -14,6 +14,7 @@ class Drone_Debug_Catcher
      * @var string
      */
     const PERMISSION_DENIED = 'permissionDenied';
+    const JSON_ERROR        = 'jsonError';
 
     /**
      * Validation failure message template definitions
@@ -21,7 +22,8 @@ class Drone_Debug_Catcher
      * @var array
      */
     protected $messagesTemplates = [
-        self::PERMISSION_DENIED => 'Failed to open stream: %file%, Permission Denied!'
+        self::PERMISSION_DENIED => 'Failed to open stream: %file%, Permission Denied!',
+        self::JSON_ERROR        => 'Failed to parse error to JSON object!',
     ];
 
     /**
@@ -101,14 +103,21 @@ class Drone_Debug_Catcher
         $id = time();
 
         $data = (file_exists($this->output)) ? json_decode(file_get_contents($this->output), true) : array();
+
         $data[$id] = array(
             "message" => $e->getMessage(),
             "object"  => serialize($e)
         );
 
-        $hd = @fopen($this->output, "w");
+        if (($encoded_data = json_encode($data)) === false)
+        {
+            $this->error(self::JSON_ERROR);
+            return false;
+        }
 
-        if (!$hd || !@fwrite($hd, json_encode($data)))
+        $hd = @fopen($this->output, "w+");
+
+        if (!$hd || !@fwrite($hd, $encoded_data))
         {
             $this->error(self::PERMISSION_DENIED, $this->output);
             return false;
