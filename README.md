@@ -19,7 +19,7 @@ DronePHP is a web application framework for PHP with a clean syntax. Our main go
 
 ## Installation
 
-You can install DronePHP via composer. A copy of *composer.phar* is given in [DronePHP Skeleton](https://github.com/Pleets/DronePHP-Skeleton).
+You can install DronePHP via composer. A copy of *composer.phar* is given in [fermius/DronePHP Skeleton](https://github.com/fermius/DronePHP-Skeleton).
 
 ## License
 
