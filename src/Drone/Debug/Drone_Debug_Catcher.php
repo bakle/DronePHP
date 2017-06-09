@@ -40,7 +40,7 @@ class Drone_Debug_Catcher
      *
      * @var array
      */
-    protected $errors = [];
+    protected $errors = array();
 
     /**
      * Returns the output filename

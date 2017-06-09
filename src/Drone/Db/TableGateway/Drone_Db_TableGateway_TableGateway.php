@@ -62,7 +62,7 @@ class Drone_Db_TableGateway_TableGateway
                     $parsed_where[] = "$key = " . $value->getStatement();
                 elseif (is_array($value))
                 {
-                    $parsed_in = [];
+                    $parsed_in = array();
 
                     foreach ($value as $in_value)
                     {
@@ -152,7 +152,7 @@ class Drone_Db_TableGateway_TableGateway
                 $parsed_set[] = "$key = " . $value->getStatement();
             elseif (is_array($value))
             {
-                $parsed_in = [];
+                $parsed_in = array();
 
                 foreach ($value as $in_value)
                 {
@@ -179,7 +179,7 @@ class Drone_Db_TableGateway_TableGateway
                 $parsed_where[] = "$key = " . $value->getStatement();
             elseif (is_array($value))
             {
-                $parsed_in = [];
+                $parsed_in = array();
 
                 foreach ($value as $in_value)
                 {
@@ -226,7 +226,7 @@ class Drone_Db_TableGateway_TableGateway
                     $parsed_where[] = "$key = " . $value->getStatement();
                 elseif (is_array($value))
                 {
-                    $parsed_in = [];
+                    $parsed_in = array();
 
                     foreach ($value as $in_value)
                     {
