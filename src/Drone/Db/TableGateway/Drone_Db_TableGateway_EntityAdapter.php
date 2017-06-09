@@ -62,8 +62,7 @@ class Drone_Db_TableGateway_EntityAdapter
 
             $user_entity = get_class($this->tableGateway->getEntity());
 
-            $entity = new $user_entity();
-            $entity->exchangeArray($filtered_array);
+            $entity = new $user_entity($filtered_array);
 
             $array_result[] = $entity;
         }
@@ -105,7 +104,20 @@ class Drone_Db_TableGateway_EntityAdapter
     public function update($entity, $where)
     {
         if ($entity instanceof Drone_Db_Entity)
+        {
+            $changedFields = $entity->getChangedFields();
             $entity = get_object_vars($entity);
+
+            $fieldsToModify = array();
+
+            foreach ($entity as $key => $value)
+            {
+                if (in_array($key, $changedFields))
+                    $fieldsToModify[$key] = $value;
+            }
+
+            $entity = $fieldsToModify;
+        }
         else if (!is_array($entity))
             throw new Exception("Invalid type given. Drone_Db_Entity or Array expected");
 

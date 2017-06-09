@@ -89,9 +89,12 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_
         # Bound variables
         if (count($params))
         {
-            foreach ($params as $var => $value)
+            $param_keys   = array_keys($params);
+            $param_values = array_values($params);
+
+            for ($i = 0; $i < count($params); $i++)
             {
-                oci_bind_by_name($stid, $var, $value);
+                oci_bind_by_name($stid, $param_keys[$i], $param_values[$i], -1);
             }
         }
 

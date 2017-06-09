@@ -52,11 +52,15 @@ class Drone_Db_TableGateway_TableGateway
         {
             $parsed_where = array();
 
+            $bind_values = array();
+
+            $k = 0;
+
             foreach ($where as $key => $value)
             {
-                if (is_string($value))
-                    $parsed_where[] = "$key = '$value'";
-                elseif (is_null($value))
+                $k++;
+
+                if (is_null($value))
                     $parsed_where[] = "$key IS NULL";
                 elseif ($value instanceof Drone_Db_SQLFunction)
                     $parsed_where[] = "$key = " . $value->getStatement();
@@ -66,14 +70,19 @@ class Drone_Db_TableGateway_TableGateway
 
                     foreach ($value as $in_value)
                     {
-                        if (is_string($in_value))
-                            $parsed_in[] = "'$in_value'";
+                        $parsed_in[] = ":$k";
+                        $bind_values[":$k"] = $value;
+
+                        $k++;
                     }
 
                     $parsed_where[] = "$key IN (" . implode(", ", $parsed_in) . ")";
                 }
                 else
-                    $parsed_where[] = "$key = $value";
+                {
+                    $parsed_where[] = "$key = :$k";
+                    $bind_values[":$k"] = $value;
+                }
             }
 
             $where = "WHERE \r\n\t" . implode(" AND\r\n\t", $parsed_where);
@@ -85,7 +94,7 @@ class Drone_Db_TableGateway_TableGateway
 
         $sql = "SELECT * \r\nFROM {$table}\r\n$where";
 
-        $result = $this->getDriver()->getDb()->execute($sql);
+        $result = $this->getDriver()->getDb()->execute($sql, $bind_values);
         return $this->getDriver()->getDb()->getArrayResult();
     }
 
@@ -102,14 +111,22 @@ class Drone_Db_TableGateway_TableGateway
         if (!count($data))
             throw new Exception("Missing values for INSERT statement!");
 
+        $bind_values = array();
+
+        $k = 0;
+
         foreach ($data as $key => $value)
         {
-            if (is_string($value))
-                $value = "'$value'";
-            elseif (is_null($value))
+            $k++;
+
+            if (is_null($value))
                 $value = "NULL";
             elseif ($value instanceof Drone_Db_SQLFunction)
                 $value = $value->getStatement();
+            else {
+                $bind_values[":$k"] = $value;
+                $value = ":$k";
+            }
 
             $data[$key] = $value;
         }
@@ -121,7 +138,7 @@ class Drone_Db_TableGateway_TableGateway
 
         $sql = "INSERT INTO {$table} \r\n(\r\n\t$cols\r\n) \r\nVALUES \r\n(\r\n\t$vals\r\n)";
 
-        return $this->getDriver()->getDb()->execute($sql);
+        return $this->getDriver()->getDb()->execute($sql, $bind_values);
     }
 
     /**
@@ -140,14 +157,16 @@ class Drone_Db_TableGateway_TableGateway
         if (!count($set))
             throw new Exception("Missing SET arguments!");
 
+        $bind_values = array();
+
+        $k = 0;
+
         foreach ($set as $key => $value)
         {
+            $k++;
+
             if (is_null($value))
                 $parsed_set[] = "$key = NULL";
-            elseif (is_string($value))
-                $parsed_set[] = "$key = '$value'";
-            elseif (is_null($value))
-                $parsed_where[] = "$key IS NULL";
             elseif ($value instanceof Drone_Db_SQLFunction)
                 $parsed_set[] = "$key = " . $value->getStatement();
             elseif (is_array($value))
@@ -157,15 +176,23 @@ class Drone_Db_TableGateway_TableGateway
                 foreach ($value as $in_value)
                 {
                     if (is_string($in_value))
-                        $parsed_in[] = "'$in_value'";
+                        $parsed_in[] = ":$k";
+
+                    $bind_values[":$k"] = $in_value;
+
+                    $k++;
                 }
 
                 $parsed_set[] = "$key IN (" . implode(", ", $parsed_in) . ")";
             }
             else
-                $parsed_set[] = "$key = $value";
+            {
+                $parsed_set[] = "$key = :$k";
+                $bind_values[":$k"] = $value;
+            }
         }
 
+        $parsed_set_array = $parsed_set;
         $parsed_set = implode(",\r\n\t", $parsed_set);
 
 
@@ -173,11 +200,11 @@ class Drone_Db_TableGateway_TableGateway
 
         foreach ($where as $key => $value)
         {
-            if (is_string($value))
-                $parsed_where[] = "$key = '$value'";
-            elseif (is_null($value))
+            $k++;
+
+            if (is_null($value))
                 $parsed_where[] = "$key IS NULL";
-            elseif ($value instanceof Drone_Db_SQLFunction)
+            if ($value instanceof Drone_Db_SQLFunction)
                 $parsed_where[] = "$key = " . $value->getStatement();
             elseif (is_array($value))
             {
@@ -185,14 +212,19 @@ class Drone_Db_TableGateway_TableGateway
 
                 foreach ($value as $in_value)
                 {
-                    if (is_string($in_value))
-                        $parsed_in[] = "'$in_value'";
+                    $parsed_in[] = ":$k";
+                    $bind_values[":$k"] = $in_value;
+
+                    $k++;
                 }
 
                 $parsed_where[] = "$key IN (" . implode(", ", $parsed_in) . ")";
             }
             else
-                $parsed_where[] = "$key = $value";
+            {
+                $parsed_where[] = "$key = :$k";
+                $bind_values[":$k"] = $value;
+            }
         }
 
         $parsed_where = implode(" AND\r\n\t", $parsed_where);
@@ -201,7 +233,7 @@ class Drone_Db_TableGateway_TableGateway
 
         $sql = "UPDATE {$table} \r\nSET \r\n\t$parsed_set \r\nWHERE \r\n\t$parsed_where";
 
-        return $this->getDriver()->getDb()->execute($sql);
+        return $this->getDriver()->getDb()->execute($sql, $bind_values);
     }
 
     /**
@@ -218,11 +250,15 @@ class Drone_Db_TableGateway_TableGateway
         {
             $parsed_where = array();
 
+            $bind_values = array();
+
+            $k = 0;
+
             foreach ($where as $key => $value)
             {
-                if (is_string($value))
-                    $parsed_where[] = "$key = '$value'";
-                elseif (is_null($value))
+                $k++;
+
+                if (is_null($value))
                     $parsed_where[] = "$key IS NULL";
                 elseif ($value instanceof Drone_Db_SQLFunction)
                     $parsed_where[] = "$key = " . $value->getStatement();
@@ -232,14 +268,19 @@ class Drone_Db_TableGateway_TableGateway
 
                     foreach ($value as $in_value)
                     {
-                        if (is_string($in_value))
-                            $parsed_in[] = "'$in_value'";
+                        $parsed_in[] = ":$k";
+                        $bind_values[":$k"] = $value;
+
+                        $k++;
                     }
 
                     $parsed_where[] = "$key IN (" . implode(", ", $parsed_in) . ")";
                 }
                 else
-                    $parsed_where[] = "$key = $value";
+                {
+                    $parsed_where[] = "$key = :$k";
+                    $bind_values[":$k"] = $value;
+                }
             }
 
             $where = "\r\nWHERE \r\n\t" . implode(" AND\r\n\t", $parsed_where);
@@ -251,6 +292,6 @@ class Drone_Db_TableGateway_TableGateway
 
         $sql = "DELETE FROM {$table} $where";
 
-        return $this->getDriver()->getDb()->execute($sql);
+        return $this->getDriver()->getDb()->execute($sql, $bind_values);
     }
 }
