@@ -48,11 +48,11 @@ class Drone_Db_TableGateway_TableGateway
      */
     public function select($where = array())
     {
+        $bind_values = array();
+
         if (count($where))
         {
             $parsed_where = array();
-
-            $bind_values = array();
 
             $k = 0;
 
@@ -94,7 +94,8 @@ class Drone_Db_TableGateway_TableGateway
 
         $sql = "SELECT * \r\nFROM {$table}\r\n$where";
 
-        $result = $this->getDriver()->getDb()->execute($sql, $bind_values);
+        $result = (count($bind_values)) ? $this->getDriver()->getDb()->execute($sql, $bind_values) : $this->getDriver()->getDb()->execute($sql);
+
         return $this->getDriver()->getDb()->getArrayResult();
     }
 
