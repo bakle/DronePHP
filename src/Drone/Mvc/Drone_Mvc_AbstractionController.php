@@ -105,7 +105,7 @@ abstract class Drone_Mvc_AbstractionController
     }
 
     /**
-     * Returns $_POST variable, event json encoded (php://input)
+     * Returns $_POST contents
      *
      * @return array
      */
@@ -114,7 +114,7 @@ abstract class Drone_Mvc_AbstractionController
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST))
             $_POST = json_decode(file_get_contents('php://input'), true);
 
-        return $_POST;
+        return (array) $_POST;
     }
 
     /**
