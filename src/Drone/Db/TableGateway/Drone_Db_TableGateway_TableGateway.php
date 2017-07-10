@@ -71,7 +71,7 @@ class Drone_Db_TableGateway_TableGateway
                     foreach ($value as $in_value)
                     {
                         $parsed_in[] = ":$k";
-                        $bind_values[":$k"] = $value;
+                        $bind_values[":$k"] = $in_value;
 
                         $k++;
                     }
