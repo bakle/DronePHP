@@ -205,7 +205,7 @@ class Drone_Db_TableGateway_TableGateway
 
             if (is_null($value))
                 $parsed_where[] = "$key IS NULL";
-            if ($value instanceof Drone_Db_SQLFunction)
+            elseif ($value instanceof Drone_Db_SQLFunction)
                 $parsed_where[] = "$key = " . $value->getStatement();
             elseif (is_array($value))
             {
