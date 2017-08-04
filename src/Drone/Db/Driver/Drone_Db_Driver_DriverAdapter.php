@@ -63,16 +63,13 @@ class Drone_Db_Driver_DriverAdapter
     /**
      * Constructor
      *
-     * @param string  $connection_identifier
-     * @param boolean $auto_connect
+     * @param string|array  $connection_identifier
+     * @param boolean       $auto_connect
      *
      * @throws Exception
      */
     public function __construct($connection_identifier = "default", $auto_connect = true)
     {
-        # Take connection parameters from configuration file
-        $dbsettings = include("config/database.config.php");
-
         # driver => className
         $this->availableDrivers = array(
             "Oci8"   => "Drone_Db_Driver_Oracle",
@@ -80,15 +77,24 @@ class Drone_Db_Driver_DriverAdapter
             "Sqlsrv" => "Drone_Db_Driver_SQLServer",
         );
 
-        $drv = $dbsettings[$connection_identifier]["driver"];
-        $dbsettings[$connection_identifier]["auto_connect"] = $auto_connect;
+        if (gettype($connection_identifier) == 'array')
+            $connection_array = $connection_identifier;
+        else
+        {
+            # Take connection parameters from configuration file
+            $dbsettings = include("config/database.config.php");
+            $connection_array = $dbsettings[$connection_identifier];
+        }
+
+        $drv = $connection_array["driver"];
+        $connection_array["auto_connect"] = $auto_connect;
 
         if (array_key_exists($drv, $this->availableDrivers))
         {
             $driver = $this->getAvailableDrivers();
 
             $this->driver = $drv;
-            $this->db = new $driver[$drv]($dbsettings[$connection_identifier]);
+            $this->db = new $driver[$drv]($connection_array);
         }
         else
             throw new Exception("The Database driver does not exists");
