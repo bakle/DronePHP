@@ -50,6 +50,8 @@ class Drone_Db_TableGateway_TableGateway
     {
         $bind_values = array();
 
+        $driver = $this->getDriver()->getDriver();
+
         if (count($where))
         {
             $parsed_where = array();
@@ -70,8 +72,18 @@ class Drone_Db_TableGateway_TableGateway
 
                     foreach ($value as $in_value)
                     {
-                        $parsed_in[] = ":$k";
-                        $bind_values[":$k"] = $in_value;
+                        switch ($driver)
+                        {
+                            case 'Oci8':
+                                $parsed_in[] = ":$k";
+                                $bind_values[":$k"] = $in_value;
+                                break;
+
+                            case 'Mysqli':
+                                $parsed_in[] = "?";
+                                $bind_values[] = $in_value;
+                                break;
+                        }
 
                         $k++;
                     }
@@ -80,8 +92,18 @@ class Drone_Db_TableGateway_TableGateway
                 }
                 else
                 {
-                    $parsed_where[] = "$key = :$k";
-                    $bind_values[":$k"] = $value;
+                    switch ($driver)
+                    {
+                        case 'Oci8':
+                            $parsed_where[] = "$key = :$k";
+                            $bind_values[":$k"] = $value;
+                            break;
+
+                        case 'Mysqli':
+                            $parsed_where[] = "$key = ?";
+                            $bind_values[] = $value;
+                            break;
+                    }
                 }
             }
 
@@ -114,6 +136,8 @@ class Drone_Db_TableGateway_TableGateway
 
         $bind_values = array();
 
+        $driver = $this->getDriver()->getDriver();
+
         $k = 0;
 
         foreach ($data as $key => $value)
@@ -125,8 +149,19 @@ class Drone_Db_TableGateway_TableGateway
             elseif ($value instanceof Drone_Db_SQLFunction)
                 $value = $value->getStatement();
             else {
-                $bind_values[":$k"] = $value;
-                $value = ":$k";
+
+               switch ($driver)
+                {
+                    case 'Oci8':
+                        $bind_values[":$k"] = $value;
+                        $value = ":$k";
+                        break;
+
+                    case 'Mysqli':
+                        $bind_values[] = $value;
+                        $value = "?";
+                        break;
+                }
             }
 
             $data[$key] = $value;
@@ -160,6 +195,8 @@ class Drone_Db_TableGateway_TableGateway
 
         $bind_values = array();
 
+        $driver = $this->getDriver()->getDriver();
+
         $k = 0;
 
         foreach ($set as $key => $value)
@@ -176,10 +213,22 @@ class Drone_Db_TableGateway_TableGateway
 
                 foreach ($value as $in_value)
                 {
-                    if (is_string($in_value))
-                        $parsed_in[] = ":$k";
+                    switch ($driver)
+                    {
+                        case 'Oci8':
 
-                    $bind_values[":$k"] = $in_value;
+                            # [POSSIBLE BUG] - To Future revision (What about non-string values ?)
+                            if (is_string($in_value))
+                                $parsed_in[] = ":$k";
+
+                            $bind_values[":$k"] = $in_value;
+                            break;
+
+                        case 'Mysqli':
+                            $parsed_in[] = "?";
+                            $bind_values[] = $in_value;
+                            break;
+                    }
 
                     $k++;
                 }
@@ -188,8 +237,18 @@ class Drone_Db_TableGateway_TableGateway
             }
             else
             {
-                $parsed_set[] = "$key = :$k";
-                $bind_values[":$k"] = $value;
+                switch ($driver)
+                {
+                    case 'Oci8':
+                        $parsed_set[] = "$key = :$k";
+                        $bind_values[":$k"] = $value;
+                        break;
+
+                    case 'Mysqli':
+                        $parsed_set[] = "$key = ?";
+                        $bind_values[] = $value;
+                        break;
+                }
             }
         }
 
@@ -213,8 +272,18 @@ class Drone_Db_TableGateway_TableGateway
 
                 foreach ($value as $in_value)
                 {
-                    $parsed_in[] = ":$k";
-                    $bind_values[":$k"] = $in_value;
+                    switch ($driver)
+                    {
+                        case 'Oci8':
+                            $parsed_in[] = ":$k";
+                            $bind_values[":$k"] = $in_value;
+                            break;
+
+                        case 'Mysqli':
+                            $parsed_in[] = "?";
+                            $bind_values[] = $in_value;
+                            break;
+                    }
 
                     $k++;
                 }
@@ -223,8 +292,18 @@ class Drone_Db_TableGateway_TableGateway
             }
             else
             {
-                $parsed_where[] = "$key = :$k";
-                $bind_values[":$k"] = $value;
+                switch ($driver)
+                {
+                    case 'Oci8':
+                        $parsed_where[] = "$key = :$k";
+                        $bind_values[":$k"] = $value;
+                        break;
+
+                    case 'Mysqli':
+                        $parsed_where[] = "$key = ?";
+                        $bind_values[] = $value;
+                        break;
+                }
             }
         }
 
@@ -253,6 +332,8 @@ class Drone_Db_TableGateway_TableGateway
 
             $bind_values = array();
 
+            $driver = $this->getDriver()->getDriver();
+
             $k = 0;
 
             foreach ($where as $key => $value)
@@ -269,8 +350,18 @@ class Drone_Db_TableGateway_TableGateway
 
                     foreach ($value as $in_value)
                     {
-                        $parsed_in[] = ":$k";
-                        $bind_values[":$k"] = $value;
+                        switch ($driver)
+                        {
+                            case 'Oci8':
+                                $parsed_in[] = ":$k";
+                                $bind_values[":$k"] = $in_value;
+                                break;
+
+                            case 'Mysqli':
+                                $parsed_in[] = "?";
+                                $bind_values[] = $in_value;
+                                break;
+                        }
 
                         $k++;
                     }
@@ -279,8 +370,18 @@ class Drone_Db_TableGateway_TableGateway
                 }
                 else
                 {
-                    $parsed_where[] = "$key = :$k";
-                    $bind_values[":$k"] = $value;
+                    switch ($driver)
+                    {
+                        case 'Oci8':
+                            $parsed_where[] = "$key = :$k";
+                            $bind_values[":$k"] = $value;
+                            break;
+
+                        case 'Mysqli':
+                            $parsed_where[] = "$key = ?";
+                            $bind_values[] = $value;
+                            break;
+                    }
                 }
             }
 

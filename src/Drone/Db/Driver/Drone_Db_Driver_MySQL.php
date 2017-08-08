@@ -89,9 +89,45 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
 
         $this->arrayResult = null;
 
-        $this->result = @$this->dbconn->query($sql);
+        # Bound variables
+        if (count($params))
+        {
+            $this->result = $stmt = @$this->dbconn->prepare($sql);
 
-        if (!$this->result)
+            $param_values = array_values($params);
+
+            $n_params = count($param_values);
+            $bind_values = array();
+            $bind_types = "";
+
+            for ($i = 0; $i < $n_params; $i++)
+            {
+                if (is_string($param_values[$i]))
+                    $bind_types .= 's';
+                else if(is_float($param_values[$i]))
+                    $bind_types .= 'd';
+                # [POSSIBLE BUG] - To Future revision (What about non-string and non-decimal types ?)
+                else
+                    $bind_types .= 's';
+
+                $bind_values[] = '$param_values[' . $i . ']';
+            }
+
+            $values = implode(', ', $bind_values);
+            eval('$stmt->bind_param(\'' . $bind_types . '\', ' . $values . ');');
+
+            $r = $stmt->execute();
+
+            if ($r)
+            {
+                if (is_object($stmt) && get_class($stmt) == 'mysqli_stmt')
+                    $this->result = $this->result->get_result();
+            }
+        }
+        else
+            $r = $this->result = @$this->dbconn->query($sql);
+
+        if (!$r)
         {
             $this->error(
                 100, $this->dbconn->error
@@ -173,7 +209,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
      */
     public function disconnect()
     {
-        if ($this->dbconn !== false)
+        if ($this->dbconn !== false && !is_null($this->dbconn))
             return $this->dbconn->close();
 
         return true;
