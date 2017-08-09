@@ -37,7 +37,7 @@ class Drone_Validate_Uri extends Zend_Validate_Abstract
             return false;
         }
 
-        if (!Zend_Uri::check($value)) {
+        if (!Drone_Patch_Uri::check($value)) {
             $this->_error(self::NOT_URI);
             return false;
         }
