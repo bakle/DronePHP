@@ -79,7 +79,7 @@ class Drone_Db_TableGateway_TableGateway
                                 $bind_values[":$k"] = $in_value;
                                 break;
 
-                            case 'Mysqli':
+                            case 'Mysqli' || 'Sqlsrv':
                                 $parsed_in[] = "?";
                                 $bind_values[] = $in_value;
                                 break;
@@ -99,7 +99,7 @@ class Drone_Db_TableGateway_TableGateway
                             $bind_values[":$k"] = $value;
                             break;
 
-                        case 'Mysqli':
+                        case 'Mysqli' || 'Sqlsrv':
                             $parsed_where[] = "$key = ?";
                             $bind_values[] = $value;
                             break;
@@ -140,9 +140,20 @@ class Drone_Db_TableGateway_TableGateway
 
         $k = 0;
 
+        $null_keys = [];
+
         foreach ($data as $key => $value)
         {
             $k++;
+
+            # insert NULL values cause problems when BEFORE INSERT triggers are
+            # defined to assigns values over fields. For SQLServer is better not
+            # pass NULL values
+            if ($driver == 'Sqlsrv' && is_null($value))
+            {
+                $null_keys[] = $key;
+                continue;
+            }
 
             if (is_null($value))
                 $value = "NULL";
@@ -157,7 +168,7 @@ class Drone_Db_TableGateway_TableGateway
                         $value = ":$k";
                         break;
 
-                    case 'Mysqli':
+                    case 'Mysqli' || 'Sqlsrv':
                         $bind_values[] = $value;
                         $value = "?";
                         break;
@@ -165,6 +176,11 @@ class Drone_Db_TableGateway_TableGateway
             }
 
             $data[$key] = $value;
+        }
+
+        foreach ($null_keys as $key)
+        {
+            unset($data[$key]);
         }
 
         $cols = implode(",\r\n\t", array_keys($data));
@@ -224,7 +240,7 @@ class Drone_Db_TableGateway_TableGateway
                             $bind_values[":$k"] = $in_value;
                             break;
 
-                        case 'Mysqli':
+                        case 'Mysqli' || 'Sqlsrv':
                             $parsed_in[] = "?";
                             $bind_values[] = $in_value;
                             break;
@@ -244,7 +260,7 @@ class Drone_Db_TableGateway_TableGateway
                         $bind_values[":$k"] = $value;
                         break;
 
-                    case 'Mysqli':
+                    case 'Mysqli' || 'Sqlsrv':
                         $parsed_set[] = "$key = ?";
                         $bind_values[] = $value;
                         break;
@@ -279,7 +295,7 @@ class Drone_Db_TableGateway_TableGateway
                             $bind_values[":$k"] = $in_value;
                             break;
 
-                        case 'Mysqli':
+                        case 'Mysqli' || 'Sqlsrv':
                             $parsed_in[] = "?";
                             $bind_values[] = $in_value;
                             break;
@@ -299,7 +315,7 @@ class Drone_Db_TableGateway_TableGateway
                         $bind_values[":$k"] = $value;
                         break;
 
-                    case 'Mysqli':
+                    case 'Mysqli' || 'Sqlsrv':
                         $parsed_where[] = "$key = ?";
                         $bind_values[] = $value;
                         break;
@@ -357,7 +373,7 @@ class Drone_Db_TableGateway_TableGateway
                                 $bind_values[":$k"] = $in_value;
                                 break;
 
-                            case 'Mysqli':
+                            case 'Mysqli' || 'Sqlsrv':
                                 $parsed_in[] = "?";
                                 $bind_values[] = $in_value;
                                 break;
@@ -377,7 +393,7 @@ class Drone_Db_TableGateway_TableGateway
                             $bind_values[":$k"] = $value;
                             break;
 
-                        case 'Mysqli':
+                        case 'Mysqli' || 'Sqlsrv':
                             $parsed_where[] = "$key = ?";
                             $bind_values[] = $value;
                             break;

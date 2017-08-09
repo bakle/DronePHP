@@ -29,7 +29,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
     public function __construct($options)
     {
         if (!array_key_exists("dbchar", $options))
-            $options["dbchar"] = "SQLSRV_ENC_CHAR";
+            $options["dbchar"] = "UTF-8";
 
         parent::__construct($options);
 
@@ -87,9 +87,16 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
 
         $this->arrayResult = null;
 
-        $this->result = sqlsrv_query($this->dbconn, $sql, $params, array( "Scrollable" => SQLSRV_CURSOR_KEYSET ));
+        # Bound variables
+        if (count($params))
+        {
+            $this->result = sqlsrv_prepare($this->dbconn, $sql, $params);
+            $r = sqlsrv_execute($this->result);
+        }
+        else
+            $r = $this->result = sqlsrv_query($this->dbconn, $sql, $params, array( "Scrollable" => SQLSRV_CURSOR_KEYSET ));
 
-        if (!$this->result)
+        if (!$r)
         {
             $errors = sqlsrv_errors();
 
