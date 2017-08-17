@@ -59,13 +59,22 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
 
         if ($this->dbconn->connect_errno)
         {
+            $errno = $this->dbconn->connect_errno;
+            $error = $this->dbconn->connect_error;
+
+            /*
+             * Sets $this->dbconn to NULL after trying to connect!. If NULL is not assigned to $this->dbconn,
+             * a Warning message (Property access is not allowed yet) is showed after property is called.
+             */
+            $this->dbconn = null;
+
             $this->error(
-                $this->dbconn->connect_errno,
-                $this->dbconn->connect_error
+                $errno,
+                $error
             );
 
             if (count($this->errors))
-                throw new Exception($this->dbconn->connect_error, $this->dbconn->connect_errno);
+                throw new Exception($error, $errno);
             else
                 throw new Exception("Unknown error!");
         }
@@ -242,7 +251,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
 
     public function __destruct()
     {
-        if ($this->dbconn !== false)
+        if ($this->dbconn !== false && !is_null($this->dbconn))
             $this->dbconn->close();
     }
 }
