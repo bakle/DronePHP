@@ -202,6 +202,13 @@ abstract class Drone_Mvc_AbstractionController
         {
             if (method_exists($this, $method))
             {
+                $class = __CLASS__;
+
+                $reflection = new ReflectionMethod($this, $method);
+
+                if (!$reflection->isPublic())
+                    throw new PageNotFoundException("The method '$method' is not public in the control class '$class'");
+
                 $this->method = $method;
 
                 // Get the return value of the method (parameters sent to the view)
@@ -212,7 +219,7 @@ abstract class Drone_Mvc_AbstractionController
             }
             else {
                 $class = dirname(__FILE__);
-                throw new Drone_Mvc_PageNotFoundException("The '$method' method doesn't exists in the $class control class");
+                throw new Drone_Mvc_PageNotFoundException("The method '$method' doesn't exists in the control class '$class'");
             }
         }
     }
