@@ -275,6 +275,17 @@ abstract class Drone_Mvc_AbstractionController
         return false;
     }
 
+    /**
+     * Checks if the current request is GET
+     *
+     * @return boolean
+     */
+    public function isGet()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET")
+            return true;
+        return false;
+    }
 
     /**
      * Parses requests parameters
