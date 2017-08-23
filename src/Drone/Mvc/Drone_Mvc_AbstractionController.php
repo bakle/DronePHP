@@ -207,7 +207,7 @@ abstract class Drone_Mvc_AbstractionController
                 $reflection = new ReflectionMethod($this, $method);
 
                 if (!$reflection->isPublic())
-                    throw new PageNotFoundException("The method '$method' is not public in the control class '$class'");
+                    throw new Drone_Mvc_PageNotFoundException("The method '$method' is not public in the control class '$class'");
 
                 $this->method = $method;
 
