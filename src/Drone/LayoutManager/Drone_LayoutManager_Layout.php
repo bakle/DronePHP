@@ -81,7 +81,7 @@ class Drone_LayoutManager_Layout
         else
         {
             if (!file_exists($view))
-                throw new Exception("The 'view' template $view does not exists");
+                throw new Drone_Mvc_PageNotFoundException("The 'view' template $view does not exists");
 
                 $config = $controller->getModule()->getConfig();
                 include $config["view_manager"]["template_map"][$controller->getLayout()];
