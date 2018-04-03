@@ -47,18 +47,18 @@ class Drone_Validate_LessThan extends Zend_Validate_Abstract
     /**
      * Sets validator options
      *
-     * @param  mixed|Zend_Config $max
+     * @param  mixed|Zend_Config $options
      * @throws Zend_Validate_Exception
      */
-    public function __construct($max)
+    public function __construct($options)
     {
-        if ($max instanceof Zend_Config) {
-            $max = $max->toArray();
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
         }
 
-        if (is_array($max)) {
-            if (array_key_exists('max', $max)) {
-                $max = $max['max'];
+        if (is_array($options)) {
+            if (array_key_exists('max', $options)) {
+                $max = $options['max'];
             } else {
                 // require_once 'Zend/Validate/Exception.php';
                 throw new Zend_Validate_Exception("Missing option 'max'");
