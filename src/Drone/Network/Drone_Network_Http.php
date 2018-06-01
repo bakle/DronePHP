@@ -9,7 +9,7 @@
 
 class Drone_Network_Http
 {
-    /**#@+
+    /**
      * Status codes
      * As per http://php.net/manual/en/function.header.php, See the » HTTP/1.1 specification
      *
@@ -111,6 +111,8 @@ class Drone_Network_Http
      *
      * @param integer $code
      *
+     * @throws LogicException
+     *
      * @return string
      */
     public function getStatusText($code)
@@ -118,7 +120,7 @@ class Drone_Network_Http
         $codes = $this->httpStatusCodes;
 
         if (!in_array($code, array_keys($codes)))
-            throw new Exception("Status code not supported");
+            throw new LogicException("Status code not supported");
 
         return $this->httpStatusCodes[$code];
     }
