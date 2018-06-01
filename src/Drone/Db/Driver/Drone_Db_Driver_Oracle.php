@@ -40,7 +40,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
      *
      * @throws RuntimeException
      *
-     * @return boolean
+     * @return resource
      */
     public function connect()
     {
@@ -53,12 +53,10 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
         if ($this->dbconn === false)
         {
             $error = oci_error();
-            $this->errorProvider->error($error["code"], $error["message"]);
-
-            return false;
+            throw new Drone_Exception_ConnectionException($error["message"], $error["code"]);
         }
 
-        return true;
+        return $this->dbconn;
     }
 
     /**

@@ -61,9 +61,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
              * (Property access is not allowed yet) is showed after property is called with
              * $this->dbconn->errno and $this->dbconn->error.
              */
-            $this->errorProvider->error(mysqli_connect_errno(), mysqli_connect_error());
-
-            throw new RuntimeException("Could not connect to Database");
+            throw new Drone_Exception_ConnectionException(mysqli_connect_error(), mysqli_connect_errno());
         }
         else
             $this->dbconn->set_charset($this->dbchar);

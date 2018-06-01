@@ -54,15 +54,17 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
         {
             $errors = sqlsrv_errors();
 
+            $previousException;
+
             foreach ($errors as $error)
             {
-                $this->errorProvider->error($error["code"], $error["message"]);
+                $previousException = new Drone_Exception_ConnectionException($error["message"], $error["code"], $previousException);
             }
 
-            return false;
+            throw $previousException;
         }
 
-        return true;
+        return $this->dbconn;
     }
 
     /**
