@@ -218,9 +218,9 @@ implements Drone_Db_TableGateway_TableGatewayInterface
         $parsed_set = array();
 
         if (!count($set))
-            throw new LogicException("Missing SET arguments!");
+            throw new LogicException("You cannot update rows without SET clause");
 
-        if (!count($set))
+        if (!count($where))
             throw new Drone_Exception_SecurityException("You cannot update rows without WHERE clause!");
 
         $bind_values = array();
