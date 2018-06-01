@@ -7,7 +7,7 @@
  * @license   http://www.dronephp.com/license
  */
 
-abstract class Drone_Dom_Element
+abstract class Drone_Dom_Element_AbstractElement
 {
     /**
      * @var string

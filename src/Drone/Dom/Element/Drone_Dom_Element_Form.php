@@ -7,14 +7,14 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Dom_Element_Form extends Drone_Dom_Element
+class Drone_Dom_Element_Form extends Drone_Dom_Element_AbstractElement
 {
     /**
      * Constructor
      *
      * @param array $options
      */
-    public function __construct($options)
+    public function __construct(Array $options)
     {
         $options["startTag"] = 'form';
         $options["endTag"] = true;
@@ -27,7 +27,7 @@ class Drone_Dom_Element_Form extends Drone_Dom_Element
      *
      * @param array $values
      */
-    public function fill($values)
+    public function fill(Array $values)
     {
         foreach ($values as $label => $value)
         {
