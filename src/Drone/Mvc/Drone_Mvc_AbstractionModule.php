@@ -8,6 +8,12 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * AbstractionModule class
+ *
+ * This is an abstract class required for each mvc module. The first code execution
+ * in a route is the module, after the module loads the controller.
+ */
 abstract class Drone_Mvc_AbstractionModule
 {
     /**

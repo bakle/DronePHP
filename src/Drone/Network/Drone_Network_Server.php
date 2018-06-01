@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Server class
+ *
+ * Helper class to get some information about server
+ */
 class Drone_Network_Server
 {
     /**

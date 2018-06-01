@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Router class
+ *
+ * This class build the route and calls to specific application controller
+ */
 class Drone_Mvc_Router
 {
     /**

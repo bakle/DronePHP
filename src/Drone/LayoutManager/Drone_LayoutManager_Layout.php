@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Layout class
+ *
+ * This class manages templates from views
+ */
 class Drone_LayoutManager_Layout
 {
     /**
@@ -54,7 +59,9 @@ class Drone_LayoutManager_Layout
     /**
      * Sets the document title
      *
-     * @return string
+     * @param string $title
+     *
+     * @return null
      */
     public function setTitle($title)
     {
@@ -104,7 +111,7 @@ class Drone_LayoutManager_Layout
      *
      * This param is sent through the controller in a return statement
      *
-     * @param string
+     * @param string $paramName
      *
      * @return mixed
      */

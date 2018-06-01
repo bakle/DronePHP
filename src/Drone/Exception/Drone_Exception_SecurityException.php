@@ -11,12 +11,12 @@
 /**
  * SecurityException Class
  *
- * This is a helper exception that represents error in the program logic.
+ * This is a helper exception that represents an error in the program logic.
  * The goal of it is throw a LogicException that could cause an unexcepted
- * behavior of security is the aplication.
+ * behavior of security in the aplication.
  *
  * For example, in a TableGateway for databases (ORM or DataMapper implementations),
- * the signature update(Array $set, Array $where) allow to use updating like
+ * the signature update(Array $set, Array $where) allow to use the following
  *
  * $entity->update(array('name' => 'John Doe'), array());
  *

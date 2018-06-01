@@ -8,6 +8,12 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * SQLFunction class
+ *
+ * This class could be used to build specific querys that requires
+ * specific database functions that data mapper does not support
+ */
 class Drone_Db_SQLFunction
 {
     /**

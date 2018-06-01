@@ -8,6 +8,12 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * AbstractSocket class
+ *
+ * This class defines some standard functions to interact with sockets.
+ * Client and Server behaviors must be implemented.
+ */
 class Drone_Network_Socket_AbstractSocket
 {
     /**

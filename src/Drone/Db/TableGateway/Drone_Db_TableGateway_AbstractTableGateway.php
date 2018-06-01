@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * AbstractTableGateway class
+ *
+ * This class stores statically different connections from a TableGateway
+ */
 abstract class Drone_Db_TableGateway_AbstractTableGateway
 {
     /**

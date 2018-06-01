@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * AbstractionController class
+ *
+ * This class manges the interaction between models and views
+ */
 abstract class Drone_Mvc_AbstractionController
 {
     /**
@@ -232,6 +237,8 @@ abstract class Drone_Mvc_AbstractionController
     /**
      * Gets a particular parameter
      *
+     * @param string $param
+     *
      * @return string
      */
     public function getParam($param)
@@ -242,6 +249,8 @@ abstract class Drone_Mvc_AbstractionController
 
     /**
      * Checks if a parameter exists
+     *
+     * @param string $param
      *
      * @return boolean
      */

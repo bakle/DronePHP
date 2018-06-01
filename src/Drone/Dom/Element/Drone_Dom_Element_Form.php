@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Form class
+ *
+ * Represents a html Form element
+ */
 class Drone_Dom_Element_Form extends Drone_Dom_Element_AbstractElement
 {
     /**

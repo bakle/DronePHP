@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Http class
+ *
+ * Helper class to send http headers
+ */
 class Drone_Network_Http
 {
     /**

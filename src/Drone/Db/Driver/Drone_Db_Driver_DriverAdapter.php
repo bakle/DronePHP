@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * DriverAdapter Class
+ *
+ * This class makes a database connection with a specified driver
+ */
 class Drone_Db_Driver_DriverAdapter
 {
     /**

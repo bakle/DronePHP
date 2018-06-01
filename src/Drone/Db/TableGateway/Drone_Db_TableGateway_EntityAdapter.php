@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * EntityAdapter class
+ *
+ * This class allows to persist objects to database (Data Mapper pattern)
+ */
 class Drone_Db_TableGateway_EntityAdapter
 {
     /**

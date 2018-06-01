@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Server class
+ *
+ * Server socket implementation
+ */
 class Drone_Network_Socket_Server
 {
     /**
@@ -58,7 +63,7 @@ class Drone_Network_Socket_Server
     /**
      * Sets socket to listening
      *
-     * @param array $handlers
+     * @param array $eventHandlers
      *
      * @throws RuntimeException
      *

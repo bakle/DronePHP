@@ -8,6 +8,12 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * FormValidator class
+ *
+ * Form validation implements Zend validator to check html form parameters.
+ * n-dimensional arrays (name='example[][]') are supported.
+ */
 class Drone_Validator_FormValidator
 {
     /**
@@ -64,6 +70,8 @@ class Drone_Validator_FormValidator
     /**
      * Sets valid atribute after each validation
      *
+     * @param boolean $valid
+     *
      * @return null
      */
     public function setValid($valid)
@@ -74,7 +82,8 @@ class Drone_Validator_FormValidator
     /**
      * Gets an option
      *
-     * @param string $option
+     * @param string $key
+     * @param string $name
      *
      * @throws LogicException
      *
@@ -92,6 +101,7 @@ class Drone_Validator_FormValidator
      * Constructor
      *
      * @param Drone_Dom_Element_Form $formHandler
+     * @param array $options
      */
     public function __construct(Drone_Dom_Element_Form $formHandler, $options)
     {

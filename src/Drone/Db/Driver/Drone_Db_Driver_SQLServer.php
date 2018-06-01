@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * SQLServer class
+ *
+ * This is a database driver class to connect to SQLServer
+ */
 class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
@@ -203,6 +208,11 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
         return $data;
     }
 
+    /**
+     * By default __destruct() disconnects to database
+     *
+     * @return null
+     */
     public function __destruct()
     {
         if ($this->dbconn)

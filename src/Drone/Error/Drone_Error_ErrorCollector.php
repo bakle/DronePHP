@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * ErrorCollector class
+ *
+ * Standard error management for some classes
+ */
 class Drone_Error_ErrorCollector
 {
     /**

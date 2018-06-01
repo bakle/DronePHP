@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Application class
+ *
+ * This is the main class for mvc pattern
+ */
 class Drone_Mvc_Application
 {
     /**

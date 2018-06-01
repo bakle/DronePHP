@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Oracle class
+ *
+ * This is a database driver class to connect to Oracle
+ */
 class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
@@ -180,6 +185,11 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
         return $data;
     }
 
+    /**
+     * By default __destruct() disconnects to database
+     *
+     * @return null
+     */
     public function __destruct()
     {
         if ($this->dbconn)

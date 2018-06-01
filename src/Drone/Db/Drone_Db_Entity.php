@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Entity class
+ *
+ * This class represents an abstract database entity, often a table
+ */
 abstract class Drone_Db_Entity
 {
     /**

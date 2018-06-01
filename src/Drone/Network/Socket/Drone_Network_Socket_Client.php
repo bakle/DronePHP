@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Client class
+ *
+ * Client socket implementation
+ */
 class Drone_Network_Socket_Client
 {
     /**

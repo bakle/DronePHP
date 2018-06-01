@@ -26,7 +26,9 @@ class Drone_Exception_Exception extends Exception
     /**
      * Constructor
      *
-     * @param array $data
+     * @param string         $message
+     * @param integer        $code
+     * @param Exception|null $previous
      *
      * @return null
      */

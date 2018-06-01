@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * MySQL class
+ *
+ * This is a database driver class to connect to MySQL
+ */
 class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
@@ -231,6 +236,11 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
         return $data;
     }
 
+    /**
+     * By default __destruct() disconnects to database
+     *
+     * @return null
+     */
     public function __destruct()
     {
         if ($this->dbconn !== false && !is_null($this->dbconn))

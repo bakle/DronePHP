@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * AbstractDriver Class
+ *
+ * This class defines standard behavior for database drivers
+ */
 abstract class Drone_Db_Driver_AbstractDriver
 {
     /**
@@ -360,9 +365,11 @@ abstract class Drone_Db_Driver_AbstractDriver
     /**
      * Excecutes multiple statements as transaction
      *
+     * @param array $querys
+     *
      * @return boolean
      */
-    public function transaction($querys)
+    public function transaction(Array $querys)
     {
         $this->beginTransaction();
 

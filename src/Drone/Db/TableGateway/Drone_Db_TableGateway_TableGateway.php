@@ -8,9 +8,14 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * TableGateway class
+ *
+ * This class is a query builder for CRUD (create, read, update, delete)
+ */
 class Drone_Db_TableGateway_TableGateway
-    extends Drone_Db_TableGateway_AbstractTableGateway
-    implements Drone_Db_TableGateway_TableGatewayInterface
+extends Drone_Db_TableGateway_AbstractTableGateway
+implements Drone_Db_TableGateway_TableGatewayInterface
 {
     /**
      * Entity instance
@@ -33,6 +38,7 @@ class Drone_Db_TableGateway_TableGateway
      * Constructor
      *
      * @param Drone_Db_Entity $entity
+     * @param boolean         $auto_connect
      */
     public function __construct(Drone_Db_Entity $entity, $auto_connect = true)
     {

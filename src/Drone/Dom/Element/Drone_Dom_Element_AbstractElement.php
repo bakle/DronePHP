@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * AbstractElement class
+ *
+ * To represent an abstract html element
+ */
 abstract class Drone_Dom_Element_AbstractElement
 {
     /**

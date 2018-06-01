@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Shell class
+ *
+ * This class represents a system terminal
+ */
 class Drone_FileSystem_Shell implements Drone_FileSystem_ShellInterface
 {
     /**

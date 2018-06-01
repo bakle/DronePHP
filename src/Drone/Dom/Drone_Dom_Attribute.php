@@ -8,6 +8,11 @@
  * @author    Darío Rivera <dario@pleets.org>
  */
 
+/**
+ * Attribute class
+ *
+ * To represent html attribute
+ */
 class Drone_Dom_Attribute
 {
     /**
