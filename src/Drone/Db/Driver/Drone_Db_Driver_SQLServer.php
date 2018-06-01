@@ -16,11 +16,7 @@
 class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
-     * Constructor for Oracle driver
-     *
-     * @param array $options
-     *
-     * @throws RuntimeException if connect() found an error
+     * {@inheritDoc}
      */
     public function __construct($options)
     {
@@ -136,9 +132,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
     }
 
     /**
-     * Commit definition
-     *
-     * @return boolean
+     * {@inheritDoc}
      */
     public function commit()
     {
@@ -146,9 +140,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
     }
 
     /**
-     * Rollback definition
-     *
-     * @return boolean
+     * {@inheritDoc}
      */
     public function rollback()
     {
@@ -156,12 +148,16 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
     }
 
     /**
-     * Defines start point of a transaction
-     *
-     * @throws RuntimeException
-     * @throws LogicException if transaction was already started
-     *
-     * @return null
+     * {@inheritDoc}
+     */
+    public function disconnect()
+    {
+        parent::disconnect();
+        return sqlsrv_close($this->dbconn);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function beginTransaction()
     {
@@ -178,17 +174,6 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
         }
 
         return parent::beginTransaction();
-    }
-
-    /**
-     * Closes the connection
-     *
-     * @return boolean
-     */
-    public function disconnect()
-    {
-        parent::disconnect();
-        return sqlsrv_close($this->dbconn);
     }
 
     /**

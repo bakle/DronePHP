@@ -16,11 +16,7 @@
 class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
-     * Constructor for Oracle driver
-     *
-     * @param array $options
-     *
-     * @throws RuntimeException if connect() found an error
+     * {@inheritDoc}
      */
     public function __construct($options)
     {
@@ -39,6 +35,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
      * Connects to database
      *
      * @throws RuntimeException
+     * @throws Drone_Db_Driver_Exception_ConnectionException
      *
      * @return resource
      */
@@ -59,7 +56,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
         if ($this->dbconn === false)
         {
             $error = oci_error();
-            throw new Drone_Exception_ConnectionException($error["message"], $error["code"]);
+            throw new Drone_Db_Driver_Exception_ConnectionException($error["message"], $error["code"]);
         }
 
         return $this->dbconn;
@@ -148,9 +145,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
     }
 
     /**
-     * Commit definition
-     *
-     * @return boolean
+     * {@inheritDoc}
      */
     public function commit()
     {
@@ -158,9 +153,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
     }
 
     /**
-     * Rollback definition
-     *
-     * @return boolean
+     * {@inheritDoc}
      */
     public function rollback()
     {
@@ -168,11 +161,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
     }
 
     /**
-     * Closes the connection
-     *
-     * @throws LogicException
-     *
-     * @return boolean
+     * {@inheritDoc}
      */
     public function disconnect()
     {

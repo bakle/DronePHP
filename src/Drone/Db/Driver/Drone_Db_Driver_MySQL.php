@@ -16,11 +16,7 @@
 class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
-     * Constructor for MySql driver
-     *
-     * @param array $options
-     *
-     * @throws RuntimeException if connect() found an error
+     * {@inheritDoc}
      */
     public function __construct($options)
     {
@@ -32,25 +28,21 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
         $auto_connect = array_key_exists('auto_connect', $options) ? $options["auto_connect"] : true;
 
         if ($auto_connect)
-        {
-            $this->dbconn = @new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname);
-
-            if ($this->dbconn->connect_errno)
-                $this->connect();
-        }
+            $this->connect();
     }
 
     /**
      * Connects to database
      *
      * @throws RuntimeException
+     * @throws Drone_Db_Driver_Exception_ConnectionException
      *
      * @return mysqli
      */
     public function connect()
     {
         if (!extension_loaded('mysqli'))
-            throw new RuntimeExceptionException("The Mysqli extension is not loaded");
+            throw new RuntimeException("The Mysqli extension is not loaded");
 
         if (!is_null($this->dbport) && !empty($this->dbport))
             $this->dbconn = @new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname, $this->dbport);
@@ -64,7 +56,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
              * over $this->dbconn->errno and $this->dbconn->error to prevent
              * the warning message "Property access is not allowed yet".
              */
-            throw new Drone_Exception_ConnectionException(mysqli_connect_error(), mysqli_connect_errno());
+            throw new Drone_Db_Driver_Exception_ConnectionException(mysqli_connect_error(), mysqli_connect_errno());
         }
         else
             $this->dbconn->set_charset($this->dbchar);
@@ -78,7 +70,8 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
      * @param string $sql
      * @param array $params
      *
-     * @throws Drone_Exception_InvalidQueryException
+     * @throws RuntimeException
+     * @throws Drone_Db_Driver_Exception_InvalidQueryException
      *
      * @return resource
      */
@@ -97,8 +90,8 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
 
             if (!$stmt)
             {
-                $this->error($this->dbconn->errno, $this->dbconn->error);
-                throw new Drone_Exception_InvalidQueryException($this->dbconn->error, $this->dbconn->errno);
+                $this->errorProvider->error($this->dbconn->errno, $this->dbconn->error);
+                throw new Drone_Db_Driver_Exception_InvalidQueryException($this->dbconn->error, $this->dbconn->errno);
             }
 
             $param_values = array_values($params);
@@ -154,7 +147,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
         if (!$r)
         {
             $this->errorProvider->error($this->dbconn->errno, $this->dbconn->error);
-            throw new Drone_Exception_InvalidQueryException($this->dbconn->error, $this->dbconn->errno);
+            throw new Drone_Db_Driver_Exception_InvalidQueryException($this->dbconn->error, $this->dbconn->errno);
         }
 
         if (is_object($this->result) && property_exists($this->result, 'num_rows'))
@@ -173,9 +166,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
     }
 
     /**
-     * Commit definition
-     *
-     * @return boolean
+     * {@inheritDoc}
      */
     public function commit()
     {
@@ -183,9 +174,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
     }
 
     /**
-     * Rollback definition
-     *
-     * @return boolean
+     * {@inheritDoc}
      */
     public function rollback()
     {
@@ -193,28 +182,21 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
     }
 
     /**
-     * Begins a transaction in SQLServer
-     *
-     * @throws RuntimeException
-     * @throws LogicException if transaction was already started
-     *
-     * @return null
-     */
-    public function beginTransaction()
-    {
-        parent::beginTransaction();
-        $this->dbconn->autocommit(false);
-    }
-
-    /**
-     * Closes the connection
-     *
-     * @return boolean
+     * {@inheritDoc}
      */
     public function disconnect()
     {
         parent::disconnect();
         return $this->dbconn->close();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function beginTransaction()
+    {
+        parent::beginTransaction();
+        $this->dbconn->autocommit(false);
     }
 
     /**
@@ -224,7 +206,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
      *
      * @return array
      */
-    protected  function toArray()
+    protected function toArray()
     {
         $data = array();
 

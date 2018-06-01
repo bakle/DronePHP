@@ -189,8 +189,6 @@ abstract class Drone_Db_Driver_AbstractDriver
     /**
      * Returns an array with all results of the last execute statement
      *
-     * @throws LogicException if toArray() is executed before execute()
-     *
      * @return array
      */
     public function getArrayResult()
@@ -278,8 +276,6 @@ abstract class Drone_Db_Driver_AbstractDriver
      *
      * All modifiable attributes (i.e. with setter method) can be passed as key
      *
-     * @throws RuntimeException
-     *
      * @param array $options
      */
     public function __construct($options)
@@ -341,21 +337,21 @@ abstract class Drone_Db_Driver_AbstractDriver
     }
 
     /**
-     * Abstract commit
+     * Commit definition
      *
      * @return boolean
      */
     public function commit() {}
 
     /**
-     * Abstract rollback
+     * Rollback definition
      *
      * @return boolean
      */
     public function rollback() {}
 
     /**
-     * Abstract disconnect
+     * Closes the connection
      *
      * @throws LogicException
      *
@@ -370,7 +366,6 @@ abstract class Drone_Db_Driver_AbstractDriver
     /**
      * Defines start point of a transaction
      *
-     * @throws RuntimeException
      * @throws LogicException if transaction was already started
      *
      * @return null
@@ -389,7 +384,6 @@ abstract class Drone_Db_Driver_AbstractDriver
     /**
      * Defines end point of a transaction
      *
-     * @throws RuntimeException
      * @throws LogicException if transaction has not been started or it's empty
      *
      * @return null
@@ -430,9 +424,6 @@ abstract class Drone_Db_Driver_AbstractDriver
      * Excecutes multiple statements as transaction
      *
      * @param array $querys
-     *
-     * @throws RuntimeException
-     * @throws LogicException
      *
      * @return null
      */
