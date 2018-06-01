@@ -15,6 +15,14 @@
  */
 class Drone_Util_ArrayDimension
 {
+    /**
+     * Converts a multidimensional array in a dimensional array
+     *
+     * @param array  $array
+     * @param string $glue
+     *
+     * @return array
+     */
     public static function toUnidimensional(Array $array, $glue)
     {
         $new_config = [];
