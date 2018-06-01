@@ -30,13 +30,6 @@ abstract class Drone_Mvc_AbstractionController
     private $method = null;
 
     /**
-     * Current parameters
-     *
-     * @var array
-     */
-    private $params;
-
-    /**
      * Layout name
      *
      * @var string
@@ -49,6 +42,23 @@ abstract class Drone_Mvc_AbstractionController
      * @var boolean
      */
     private $terminal = false;
+
+    /**
+     * Defines starting execution
+     *
+     * When this parameter is true, the constructor executes the method of the specified controller
+     * The only way to stop init execution is throw the method stopInitExecution() inside a module class
+     *
+     * @var boolean
+     */
+    private $initExecution = true;
+
+    /**
+     * Base path
+     *
+     * @var string
+     */
+    private $basePath;
 
     /**
      * Returns the current module
@@ -91,13 +101,13 @@ abstract class Drone_Mvc_AbstractionController
     }
 
     /**
-     * Returns all parameters
+     * Returns the base path
      *
-     * @return array
+     * @return string
      */
-    public function getParams()
+    public function getBasePath()
     {
-        return $this->params;
+        return $this->basePath;
     }
 
     /**
@@ -208,7 +218,11 @@ abstract class Drone_Mvc_AbstractionController
 
         $this->module = new $fqn($module, $this);
 
-        if (!is_null($method))
+        # detects method change inside Module.php
+        if (!is_null($this->getMethod()))
+            $method = $this->getMethod();
+
+        if (!is_null($method) && $this->initExecution)
         {
             if (method_exists($this, $method))
             {
@@ -225,7 +239,10 @@ abstract class Drone_Mvc_AbstractionController
                 $this->params = $this->$method();
 
                 if (!is_null($this->getMethod()))
-                    $layoutManager = new Drone_LayoutManager_Layout($this);
+                {
+                    $layoutManager = new Drone_LayoutManager_Layout();
+                    $layoutManager->fromController($this);
+                }
             }
             else {
                 $class = dirname(__FILE__);
@@ -235,33 +252,13 @@ abstract class Drone_Mvc_AbstractionController
     }
 
     /**
-     * Gets a particular parameter
+     * Stops the execution of the specified method inside of __construct()
      *
-     * @param string $param
-     *
-     * @return string
+     * @return null
      */
-    public function getParam($param)
+    public function stopInitExecution()
     {
-        $parameters = $this->getParams();
-        return $parameters[$param];
-    }
-
-    /**
-     * Checks if a parameter exists
-     *
-     * @param string $param
-     *
-     * @return boolean
-     */
-    public function isParam($param)
-    {
-        $parameters = $this->getParams();
-
-        if (array_key_exists($param, $parameters))
-            return true;
-
-        return false;
+        $this->initExecution = false;
     }
 
     /**
