@@ -95,7 +95,7 @@ class Drone_Exception_Storage extends Exception
         }
         catch (Exception $e)
         {
-            $data[$id]["object"] = $e;
+            $data[$id]["object"] = serialize($e);
         }
 
         if (($encoded_data = json_encode($data)) === false)
