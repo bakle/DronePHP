@@ -160,15 +160,14 @@ class Drone_Mvc_Application
      */
     private function loadModules($modules, $module)
     {
-        $fileSystem = new Drone_FileSystem_Shell();
-
         if ($modules)
         {
-            $mod = array_key_exists('module', $_GET) ? $_GET["module"] : $module;
-
             foreach ($modules as $module)
             {
-                // First include the Module class
+                /*
+                 *  This instruction include each module declared in application.config.php
+                 *  Each module has an autoloader to load its classes (controllers and models)
+                 */
                 if (file_exists("module/".$module."/Module.php"))
                     include("module/".$module."/Module.php");
 
