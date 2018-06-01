@@ -95,7 +95,7 @@ class Drone_Mvc_Layout
     /**
      * Sets the view
      *
-     * @param Drone\Mvc\AbstractionModule $module
+     * @param Drone_Mvc_AbstractionModule $module
      * @param string $view
      *
      * @return null
@@ -103,6 +103,11 @@ class Drone_Mvc_Layout
     public function setView($module, $view)
     {
         $config = $module->getConfig();
+
+
+        if (!array_key_exists($view, $config["view_manager"]["view_map"]) || !file_exists($config["view_manager"]["view_map"][$view]))
+            throw new Drone_Mvc_Exception_ViewNotFoundException("The 'view' template " . $view . " does not exists");
+
         $this->view = $config["view_manager"]["view_map"][$view];
     }
 
