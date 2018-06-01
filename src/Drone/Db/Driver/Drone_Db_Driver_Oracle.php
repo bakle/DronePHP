@@ -85,6 +85,9 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
 
         $this->result = $stid = oci_parse($this->dbconn, $sql);
 
+        if (!$stid)
+            throw new RuntimeException("Invalid SQL statement");
+
         # Bound variables
         if (count($params))
         {
