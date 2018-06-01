@@ -36,4 +36,23 @@ class Drone_Error_Errno
     const DB_TRANSACTION_STARTED     = 20;
     const DB_TRANSACTION_NOT_STARTED = 21;
     const DB_TRANSACTION_EMPTY       = 22;
+
+    public static function getErrorCodeName($code)
+    {
+        $currentClass = new ReflectionClass('Drone_Error_Errno');
+        $constants = $currentClass->getConstants();
+
+        $constName = null;
+
+        foreach ($constants as $name => $value)
+        {
+            if ($value == $code)
+            {
+                $constName = $name;
+                break;
+            }
+        }
+
+        return $constName;
+    }
 }
