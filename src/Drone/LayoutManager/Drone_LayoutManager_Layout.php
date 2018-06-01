@@ -128,11 +128,8 @@ class Drone_LayoutManager_Layout
         }
         else
         {
-            if (!file_exists($view))
-                throw new Drone_Mvc_PageNotFoundException("The 'view' template $view does not exists");
-
-                $config = $controller->getModule()->getConfig();
-                include $config["view_manager"]["template_map"][$controller->getLayout()];
+            $config = $controller->getModule()->getConfig();
+            include $config["view_manager"]["template_map"][$controller->getLayout()];
         }
 
         $this->parameterProvider = new Drone_Util_Parameterizable();
@@ -162,6 +159,9 @@ class Drone_LayoutManager_Layout
      */
     public function content()
     {
+        if (!file_exists($this->view))
+            throw new Drone_Mvc_PageNotFoundException("The 'view' template " . $this->view . " does not exists");
+
         include $this->view;
     }
 
