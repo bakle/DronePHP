@@ -61,6 +61,16 @@ class Drone_LayoutManager_Layout
     }
 
     /**
+     * Returns the view
+     *
+     * @return string
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
+
+    /**
      * Returns the document title
      *
      * @return string
@@ -80,6 +90,20 @@ class Drone_LayoutManager_Layout
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * Sets the view
+     *
+     * @param Drone\Mvc\AbstractionModule $module
+     * @param string $view
+     *
+     * @return null
+     */
+    public function setView($module, $view)
+    {
+        $config = $module->getConfig();
+        $this->view = $config["view_manager"]["view_map"][$view];
     }
 
     /**
@@ -142,12 +166,9 @@ class Drone_LayoutManager_Layout
      *
      * @param Drone\Mvc\AbstractionModule $module
      * @param string $template
-     * @param array $params
      */
-    public function fromTemplate($module, $template, $params = array())
+    public function fromTemplate($module, $template)
     {
-        $this->setParams($params);
-
         $config = $module->getConfig();
         include $config["view_manager"]["template_map"][$template];
     }
