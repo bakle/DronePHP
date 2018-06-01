@@ -83,7 +83,7 @@ class Drone_Db_TableGateway_EntityAdapter
      *
      * @throws InvalidArgumentException
      *
-     * @return boolean
+     * @return resource|object
      */
     public function insert($entity)
     {
@@ -94,9 +94,7 @@ class Drone_Db_TableGateway_EntityAdapter
 
         $this->parseEntity($entity);
 
-        $result = $this->tableGateway->insert($entity);
-
-        return $result;
+        return $this->tableGateway->insert($entity);
     }
 
     /**
@@ -105,9 +103,9 @@ class Drone_Db_TableGateway_EntityAdapter
      * @param Drone_Db_Entity|array $entity
      * @param array $where
      *
-     * @throws InvalidArgumentException
+     * @throws RuntimeException from internal execute()
      *
-     * @return boolean
+     * @return resource|boolean
      */
     public function update($entity, $where)
     {
@@ -131,9 +129,7 @@ class Drone_Db_TableGateway_EntityAdapter
 
         $this->parseEntity($entity);
 
-        $result = $this->tableGateway->update($entity, $where);
-
-        return $result;
+        return $this->tableGateway->update($entity, $where);
     }
 
     /**
@@ -141,6 +137,7 @@ class Drone_Db_TableGateway_EntityAdapter
      *
      * @param Drone_Db_Entity|array $entity
      *
+     * @throws RuntimeException from internal execute()
      * @throws InvalidArgumentException
      *
      * @return boolean
@@ -152,9 +149,7 @@ class Drone_Db_TableGateway_EntityAdapter
         else if (!is_array($entity))
             throw new InvalidArgumentException("Invalid type given. Drone_Db_Entity or Array expected");
 
-        $result = $this->tableGateway->delete($entity);
-
-        return $result;
+        return $this->tableGateway->delete($entity);
     }
 
    /**

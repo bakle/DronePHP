@@ -20,7 +20,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
      *
      * @param array $options
      *
-     * @throws Exception
+     * @throws RuntimeException if connect() found an error
      */
     public function __construct($options)
     {
@@ -40,7 +40,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
      *
      * @throws RuntimeException
      *
-     * @return boolean
+     * @return resource
      */
     public function connect()
     {
@@ -70,7 +70,12 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
     /**
      * Excecutes a statement
      *
-     * @return boolean
+     * @param string $sql
+     * @param params $params
+     *
+     * @throws RuntimeException
+     *
+     * @return resource
      */
     public function execute($sql, Array $params = array())
     {
@@ -98,7 +103,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
                 $this->errorProvider->error($error["code"], $error["message"]);
             }
 
-            return false;
+            throw new RuntimeException("Could not execute query");
         }
 
         $this->getArrayResult();
@@ -136,7 +141,10 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
     /**
      * Defines start point of a transaction
      *
-     * @return boolean
+     * @throws RuntimeException
+     * @throws LogicException if transaction was already started
+     *
+     * @return null
      */
     public function beginTransaction()
     {
@@ -149,7 +157,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
                 $this->errorProvider->error($error["code"], $error["message"]);
             }
 
-            return false;
+            throw new RuntimeException("Could not begin transaction");
         }
 
         return parent::beginTransaction();
@@ -162,10 +170,8 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
      */
     public function disconnect()
     {
-        if ($this->dbconn)
-            return sqlsrv_close($this->dbconn);
-
-        return true;
+        parent::disconnect();
+        return sqlsrv_close($this->dbconn);
     }
 
     /**

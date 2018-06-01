@@ -20,7 +20,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
      *
      * @param array $options
      *
-     * @throws RuntimeException
+     * @throws RuntimeException if connect() found an error
      */
     public function __construct($options)
     {
@@ -72,7 +72,12 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
     /**
      * Excecutes a statement
      *
-     * @return boolean
+     * @param string $sql
+     * @param array $params
+     *
+     * @throws RuntimeException
+     *
+     * @return resource
      */
     public function execute($sql, Array $params = array())
     {
@@ -122,8 +127,8 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
 
         if (!$r)
         {
-            $this->errorProvider->error($this->dbconn->error);
-            return false;
+            $this->errorProvider->error($this->dbconn->errno, $this->dbconn->error);
+            throw new RuntimeException("Could not execute query");
         }
 
         if (is_object($this->result) && property_exists($this->result, 'num_rows'))
@@ -164,12 +169,15 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
     /**
      * Begins a transaction in SQLServer
      *
-     * @return boolean
+     * @throws RuntimeException
+     * @throws LogicException if transaction was already started
+     *
+     * @return null
      */
     public function beginTransaction()
     {
         parent::beginTransaction();
-        return $this->dbconn->autocommit(false);
+        $this->dbconn->autocommit(false);
     }
 
     /**
@@ -179,10 +187,8 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
      */
     public function disconnect()
     {
-        if ($this->dbconn !== false && !is_null($this->dbconn))
-            return $this->dbconn->close();
-
-        return true;
+        parent::disconnect();
+        return $this->dbconn->close();
     }
 
     /**

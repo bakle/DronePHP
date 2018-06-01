@@ -135,7 +135,7 @@ implements Drone_Db_TableGateway_TableGatewayInterface
      *
      * @throws LogicException
      *
-     * @return boolean
+     * @return resource|object
      */
     public function insert($data)
     {
@@ -207,10 +207,11 @@ implements Drone_Db_TableGateway_TableGatewayInterface
      * @param array $set
      * @param array $where
      *
+     * @throws RuntimeException from internal execute()
      * @throws LogicException
      * @throws SecurityException
      *
-     * @return boolean
+     * @return resource|object
      */
     public function update(Array $set,Array $where)
     {
@@ -350,9 +351,10 @@ implements Drone_Db_TableGateway_TableGatewayInterface
      *
      * @param array $where
      *
+     * @throws RuntimeException from internal execute()
      * @throws SecurityException
      *
-     * @return boolean
+     * @return resource|object
      */
     public function delete(Array $where)
     {

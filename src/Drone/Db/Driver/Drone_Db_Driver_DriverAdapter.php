@@ -25,7 +25,7 @@ class Drone_Db_Driver_DriverAdapter
     /**
      * Connection resource
      *
-     * @var resource|object
+     * @var AbstractDriver
      */
     private $db;
 
@@ -47,9 +47,9 @@ class Drone_Db_Driver_DriverAdapter
     }
 
     /**
-     * Returns the connection resource or object
+     * Returns the AbstractDriver
      *
-     * @return resource|object
+     * @return AbstractDriver
      */
     public function getDb()
     {

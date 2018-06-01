@@ -17,7 +17,7 @@
 class Drone_Db_SQLFunction
 {
     /**
-     * The SQL function
+     * The SQL function name
      *
      * @var string
      */

@@ -71,6 +71,8 @@ class Drone_LayoutManager_Layout
     /**
      * Constructor
      *
+     * @throws PageNotFoundException
+     *
      * @param AbstractionController
      */
     public function __construct($controller)

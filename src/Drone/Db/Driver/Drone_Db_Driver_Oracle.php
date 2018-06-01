@@ -20,7 +20,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
      *
      * @param array $options
      *
-     * @throws RuntimeException
+     * @throws RuntimeException if connect() found an error
      */
     public function __construct($options)
     {
@@ -36,7 +36,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
     }
 
     /**
-     * Connects  to database
+     * Connects to database
      *
      * @throws RuntimeException
      *
@@ -62,7 +62,12 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
     /**
      * Excecutes a statement
      *
-     * @return boolean
+     * @param string $sql
+     * @param array $params
+     *
+     * @throws RuntimeException
+     *
+     * @return resource
      */
     public function execute($sql, Array $params = array())
     {
@@ -90,8 +95,10 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
 
         if (!$r)
         {
-            $this->errorProvider->error($error["code"], $error["message"]);
-            return false;
+             $error = oci_error($this->result);
+             $this->errorProvider->error($error["code"], $error["message"]);
+
+            throw new RuntimeException("Could not execute query");
         }
 
         # This should be before of getArrayResult() because oci_fetch() is incremental.
@@ -131,14 +138,14 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
     /**
      * Closes the connection
      *
+     * @throws LogicException
+     *
      * @return boolean
      */
     public function disconnect()
     {
-        if ($this->dbconn)
-            return oci_close($this->dbconn);
-
-        return true;
+        parent::disconnect();
+        return oci_close($this->dbconn);
     }
 
     /**
