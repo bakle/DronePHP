@@ -122,7 +122,7 @@ class Drone_Mvc_Router
     /**
      * Builds the current route and calls the controller
      *
-     * @throws Drone_Mvc_PageNotFoundException
+     * @throws Drone_Mvc_Exception_ControllerNotFoundException
      *
      * @return  null
      */

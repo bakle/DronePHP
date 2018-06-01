@@ -207,9 +207,9 @@ implements Drone_Db_TableGateway_TableGatewayInterface
      * @param array $set
      * @param array $where
      *
-     * @throws RuntimeException from internal execute()
+     * @throws RuntimeException inherit from internal execute()
      * @throws LogicException
-     * @throws SecurityException
+     * @throws Drone_Exception_SecurityException
      *
      * @return resource|object
      */
@@ -351,8 +351,8 @@ implements Drone_Db_TableGateway_TableGatewayInterface
      *
      * @param array $where
      *
-     * @throws RuntimeException from internal execute()
-     * @throws SecurityException
+     * @throws RuntimeException inherit from internal execute()
+     * @throws Drone_Exception_SecurityException
      *
      * @return resource|object
      */

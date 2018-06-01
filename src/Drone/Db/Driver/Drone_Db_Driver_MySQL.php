@@ -78,7 +78,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
      * @param string $sql
      * @param array $params
      *
-     * @throws RuntimeException
+     * @throws Drone_Exception_InvalidQueryException
      *
      * @return resource
      */

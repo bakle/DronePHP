@@ -335,7 +335,7 @@ abstract class Drone_Db_Driver_AbstractDriver
     public function reconnect()
     {
         if (!$this->isConnected())
-            throw new \LogicException("Connection was not established");
+            throw new LogicException("Connection was not established");
 
         $this->disconnect();
         return $this->connect();
@@ -365,7 +365,7 @@ abstract class Drone_Db_Driver_AbstractDriver
     public function disconnect()
     {
         if (!$this->isConnected())
-            throw new \LogicException("Connection was not established");
+            throw new LogicException("Connection was not established");
     }
 
     /**
@@ -401,7 +401,7 @@ abstract class Drone_Db_Driver_AbstractDriver
             throw new LogicException(self::DB_TRANSACTION_NOT_STARTED);
 
         if (is_null($this->transac_result))
-            throw new \LogicException(self::DB_TRANSACTION_EMPTY);
+            throw new LogicException(self::DB_TRANSACTION_EMPTY);
 
         if ($this->transac_result)
             $this->commit();

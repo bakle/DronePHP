@@ -71,7 +71,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
      * @param string $sql
      * @param array $params
      *
-     * @throws RuntimeException
+     * @throws Drone_Db_Driver_Exception_InvalidQueryException
      *
      * @return resource
      */
@@ -101,9 +101,9 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
                 $this->errorProvider->error($error["code"], $error["message"]);
 
             if (array_key_exists("code", $error))
-                throw new Drone_Exception_InvalidQueryException($error["message"], $error["code"]);
+                throw new Drone_Db_Driver_Exception_InvalidQueryException($error["message"], $error["code"]);
             else
-                throw new Drone_Exception_InvalidQueryException($error["message"]);
+                throw new Drone_Db_Driver_Exception_InvalidQueryException($error["message"]);
         }
 
         # Bound variables
@@ -130,7 +130,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
              $error = oci_error($this->result);
              $this->errorProvider->error($error["code"], $error["message"]);
 
-            throw new Exception\InvalidQueryException($error["message"], $error["code"]);
+            throw new Drone_Db_Driver_Exception_InvalidQueryException($error["message"], $error["code"]);
         }
 
         # This should be before of getArrayResult() because oci_fetch() is incremental.

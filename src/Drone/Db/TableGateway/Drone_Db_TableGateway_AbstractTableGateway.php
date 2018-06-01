@@ -18,7 +18,7 @@ abstract class Drone_Db_TableGateway_AbstractTableGateway
     /**
      * Driver collector
      *
-     * @var DriverAdapter[]
+     * @var Drone_Db_Driver_DriverAdapter[]
      */
     private static $drivers;
 

@@ -75,12 +75,12 @@ class Drone_Pear_Mail
 
         include_once 'Net/SMTP.php';
 
-        if (!class_exists('\Net_SMTP', false))
+        if (!class_exists('Net_SMTP', false))
             throw new RuntimeException("PEAR::Net_SMTP is not installed!");
 
         @include_once 'Mail.php';
 
-        if (!class_exists('\Mail', false))
+        if (!class_exists('Mail', false))
             throw new RuntimeException("PEAR::Mail is not installed!");
     }
 

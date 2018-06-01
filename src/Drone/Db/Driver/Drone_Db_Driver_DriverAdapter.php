@@ -90,7 +90,7 @@ class Drone_Db_Driver_DriverAdapter
         {
             # Take connection parameters from configuration file
             if (!file_exists("config/database.config.php"))
-                throw new \RuntimeException("config/data.base.config.php is missing!");
+                throw new RuntimeException("config/data.base.config.php is missing!");
 
             $dbsettings = include("config/database.config.php");
             $connection_array = $dbsettings[$connection_identifier];

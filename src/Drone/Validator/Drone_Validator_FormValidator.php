@@ -281,7 +281,7 @@ class Drone_Validator_FormValidator
      *
      * Supports n-dimensional arrays (name='example[][]')
      *
-     * @param Zend\Validator $validator
+     * @param Zend_Validate $validator
      * @param mixed          $form_value
      * @param integer        $key
      * @param boolean        $required

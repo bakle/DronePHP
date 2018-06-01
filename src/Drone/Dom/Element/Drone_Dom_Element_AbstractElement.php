@@ -92,7 +92,7 @@ abstract class Drone_Dom_Element_AbstractElement
      * @param string $label
      * @param string $name
      *
-     * @return Drone\Dom\Atribute|null
+     * @return Drone_Dom_Atribute|null
      */
     public function getAttribute($label, $name)
     {

@@ -98,6 +98,8 @@ class Drone_Mvc_Layout
      * @param Drone_Mvc_AbstractionModule $module
      * @param string $view
      *
+     * @throws Drone_Mvc_Exception_ViewNotFoundException
+     *
      * @return null
      */
     public function setView($module, $view)
@@ -136,7 +138,8 @@ class Drone_Mvc_Layout
     /**
      * Loads a view from a controller
      *
-     * @throws PageNotFoundException
+     * @throws Drone_Mvc_Exception_ViewNotFoundException
+     * @throws Drone_Mvc_Exception_PageNotFoundException
      *
      * @param AbstractionController
      */
@@ -184,8 +187,6 @@ class Drone_Mvc_Layout
 
     /**
      * Loads a view from a template file
-     *
-     * @throws PageNotFoundException
      *
      * @param Drone_Mvc_AbstractionModule $module
      * @param string $template

@@ -231,7 +231,7 @@ abstract class Drone_Mvc_AbstractionController
      * @param string $method
      * @param string $basePath
      *
-     * @throws PageNotFoundException
+     * @throws Drone_Mvc_PageNotFoundException
      */
     public function __construct($module, $method, $basePath)
     {
@@ -269,7 +269,7 @@ abstract class Drone_Mvc_AbstractionController
 
                 if (!is_null($this->getMethod()))
                 {
-                    $layoutManager = new Drone_LayoutManager_Layout();
+                    $layoutManager = new Drone_Mvc_Layout();
                     $layoutManager->fromController($this);
                 }
             }

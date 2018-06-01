@@ -80,7 +80,7 @@ class Drone_Exception_Storage extends Exception
         );
 
         if (!function_exists('mb_detect_encoding'))
-            throw new \RuntimeException("mbstring library is not installed!");
+            throw new RuntimeException("mbstring library is not installed!");
 
         /*
          * Encodes to UTF8 all messages. It ensures JSON encoding.

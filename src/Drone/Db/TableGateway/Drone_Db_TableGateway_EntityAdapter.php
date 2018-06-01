@@ -103,7 +103,8 @@ class Drone_Db_TableGateway_EntityAdapter
      * @param Drone_Db_Entity|array $entity
      * @param array $where
      *
-     * @throws RuntimeException from internal execute()
+     * @throws RuntimeException inherit from internal execute()
+     * @throws InvalidArgumentException
      *
      * @return resource|boolean
      */
@@ -137,7 +138,7 @@ class Drone_Db_TableGateway_EntityAdapter
      *
      * @param Drone_Db_Entity|array $entity
      *
-     * @throws RuntimeException from internal execute()
+     * @throws RuntimeException inherit from internal execute()
      * @throws InvalidArgumentException
      *
      * @return boolean

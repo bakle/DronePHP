@@ -39,6 +39,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
      * Connects to database
      *
      * @throws RuntimeException
+     * @throws Drone_Db_Driver_Exception_ConnectionException
      *
      * @return resource
      */
@@ -61,7 +62,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
 
             foreach ($errors as $error)
             {
-                $previousException = new Drone_Exception_ConnectionException($error["message"], $error["code"], $previousException);
+                $previousException = new Drone_Db_Driver_Exception_ConnectionException($error["message"], $error["code"], $previousException);
             }
 
             throw $previousException;
@@ -76,7 +77,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
      * @param string $sql
      * @param params $params
      *
-     * @throws RuntimeException
+     * @throws Drone_Db_Driver_Exception_InvalidQueryException
      *
      * @return resource
      */
@@ -102,7 +103,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
                     $this->errorprovider->error($error["code"], $error["message"]);
                 }
 
-                throw new Drone_Exception_InvalidQueryException($error["message"], $error["code"]);
+                throw new Drone_Db_Driver_Exception_InvalidQueryException($error["message"], $error["code"]);
             }
 
             $r = sqlsrv_execute($this->result);
@@ -119,7 +120,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
                 $this->errorProvider->error($error["code"], $error["message"]);
             }
 
-            throw new Drone_Exception_InvalidQueryException($error["message"], $error["code"]);
+            throw new Drone_Db_Driver_Exception_InvalidQueryException($error["message"], $error["code"]);
         }
 
         $this->getArrayResult();
