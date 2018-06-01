@@ -252,7 +252,7 @@ abstract class Drone_Db_Driver_AbstractDriver
     /**
      * Sets dbchar attribute
      *
-     * @param string
+     * @param string $value
      *
      * @return null
      */
@@ -327,7 +327,6 @@ abstract class Drone_Db_Driver_AbstractDriver
     /**
      * Reconnects to the database
      *
-     * @throws RuntimeException
      * @throws LogicException
      *
      * @return resource|object
