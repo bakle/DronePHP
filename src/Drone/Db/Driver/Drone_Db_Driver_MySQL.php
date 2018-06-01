@@ -142,7 +142,14 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
             }
         }
         else
-            $r = $this->result = @$this->dbconn->query($sql);
+        {
+            $prev_error_handler = set_error_handler(['Drone_Error_ErrorHandler', 'errorControlOperator'], E_ALL);
+
+            // may be throw a Fatal error (Ex: Maximum execution time)
+            $r = $this->result = $this->dbconn->query($sql);
+
+            set_error_handler($prev_error_handler);
+        }
 
         if (!$r)
         {

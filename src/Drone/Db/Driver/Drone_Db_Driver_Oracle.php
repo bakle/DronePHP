@@ -118,7 +118,12 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
             }
         }
 
-        $r = ($this->transac_mode) ? @oci_execute($stid, OCI_NO_AUTO_COMMIT) : @oci_execute($stid,  OCI_COMMIT_ON_SUCCESS);
+        $prev_error_handler = set_error_handler(['Drone_Error_ErrorHandler', 'errorControlOperator'], E_ALL);
+
+        // may be throw a Fatal error (Ex: Maximum execution time)
+        $r = ($this->transac_mode) ? oci_execute($stid, OCI_NO_AUTO_COMMIT) : oci_execute($stid,  OCI_COMMIT_ON_SUCCESS);
+
+        set_error_handler($prev_error_handler);
 
         if (!$r)
         {
