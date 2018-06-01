@@ -47,7 +47,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
         if (!extension_loaded('sqlsrv'))
             throw new RuntimeException("The Sqlsrv extension is not loaded");
 
-        if (!is_null($this->dbport))
+        if (!is_null($this->dbport) && !empty($this->dbport))
             $this->dbhost .= ', ' . $this->dbport;
 
         $db_info = array("Database" => $this->dbname, "UID" => $this->dbuser, "PWD" => $this->dbpass, "CharacterSet" => $this->dbchar);

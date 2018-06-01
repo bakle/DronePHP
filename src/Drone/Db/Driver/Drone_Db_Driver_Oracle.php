@@ -50,7 +50,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
         $connection_string = (is_null($this->dbhost) || empty($this->dbhost))
             ? $this->dbname
             :
-                (!is_null($this->dbport))
+                (!is_null($this->dbport) && !empty($this->dbport))
                     ? $this->dbhost .":". $this->dbport ."/". $this->dbname
                     : $this->dbhost ."/". $this->dbname;
 
