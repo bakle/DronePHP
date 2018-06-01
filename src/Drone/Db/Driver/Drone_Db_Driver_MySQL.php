@@ -57,9 +57,9 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
         if ($this->dbconn->connect_errno)
         {
             /*
-             * Use ever mysqli_connect_errno() and mysqli_connect_error(). A Warning message
-             * (Property access is not allowed yet) is showed after property is called with
-             * $this->dbconn->errno and $this->dbconn->error.
+             * Use ever mysqli_connect_errno() and mysqli_connect_error()
+             * over $this->dbconn->errno and $this->dbconn->error to prevent
+             * the warning message "Property access is not allowed yet".
              */
             throw new Drone_Exception_ConnectionException(mysqli_connect_error(), mysqli_connect_errno());
         }
