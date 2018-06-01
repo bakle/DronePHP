@@ -52,7 +52,10 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
         if (!extension_loaded('mysqli'))
             throw new RuntimeExceptionException("The Mysqli extension is not loaded");
 
-        $this->dbconn = @new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname);
+        if (!is_null($this->dbport))
+            $this->dbconn = @new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname, $this->dbport);
+        else
+            $this->dbconn = @new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname);
 
         if ($this->dbconn->connect_errno)
         {

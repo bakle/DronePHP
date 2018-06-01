@@ -41,6 +41,11 @@ abstract class Drone_Db_Driver_AbstractDriver
     protected $dbchar;
 
     /**
+     * @var integer
+     */
+    protected $dbport;
+
+    /**
      * Connection identifier
      *
      * @var resource|boolean
@@ -129,6 +134,26 @@ abstract class Drone_Db_Driver_AbstractDriver
     public function getDbname()
     {
         return $this->dbname;
+    }
+
+    /**
+     * Returns the dbchar attribute
+     *
+     * @return string
+     */
+    public function getDbchar()
+    {
+        return $this->dbchar;
+    }
+
+    /**
+     * Returns the dbport attribute
+     *
+     * @return string
+     */
+    public function getDbport()
+    {
+        return $this->dbport;
     }
 
     /**
@@ -234,6 +259,18 @@ abstract class Drone_Db_Driver_AbstractDriver
     public function setDbchar($value)
     {
         return $this->dbchar = $value;
+    }
+
+    /**
+     * Sets dbport attribute
+     *
+     * @param integer $value
+     *
+     * @return null
+     */
+    public function setDbport($value)
+    {
+        return $this->dbport = $value;
     }
 
     /**
