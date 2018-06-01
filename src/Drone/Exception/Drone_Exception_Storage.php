@@ -65,7 +65,7 @@ class Drone_Exception_Storage extends Exception
             {
                 $data   = json_decode($string, true);
 
-                # json_encode can be return TRUE, FALSE or NULL (http://php.net/manual/en/function.json-decode.php)
+                # json_encode can return TRUE, FALSE or NULL (http://php.net/manual/en/function.json-decode.php)
                 if (is_null($data) || $data === false)
                 {
                     $this->errorProvider->error(Drone_Error_Errno::JSON_DECODE_ERROR, $this->outputFile);
