@@ -83,10 +83,28 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
 
         $this->arrayResult = null;
 
-        $this->result = $stid = oci_parse($this->dbconn, $sql);
+        $this->result = $stid = @oci_parse($this->dbconn, $sql);
 
         if (!$stid)
-            throw new RuntimeException("Invalid SQL statement");
+        {
+            $error = $this->result ? oci_error($this->result) : oci_error();
+
+            if (!$error)
+            {
+                $error = array(
+                    "message" => "Could not prepare statement!"
+                );
+
+                $this->errorProvider->error($error["message"]);
+            }
+            else
+                $this->errorProvider->error($error["code"], $error["message"]);
+
+            if (array_key_exists("code", $error))
+                throw new Drone_Exception_InvalidQueryException($error["message"], $error["code"]);
+            else
+                throw new Drone_Exception_InvalidQueryException($error["message"]);
+        }
 
         # Bound variables
         if (count($params))
@@ -107,7 +125,7 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements D
              $error = oci_error($this->result);
              $this->errorProvider->error($error["code"], $error["message"]);
 
-            throw new RuntimeException("Could not execute query");
+            throw new Exception\InvalidQueryException($error["message"], $error["code"]);
         }
 
         # This should be before of getArrayResult() because oci_fetch() is incremental.

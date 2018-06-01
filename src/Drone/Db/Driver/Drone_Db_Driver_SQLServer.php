@@ -92,6 +92,19 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
         if (count($params))
         {
             $this->result = sqlsrv_prepare($this->dbconn, $sql, $params);
+
+            if (!$this->result)
+            {
+                $errors = sqlsrv_errors();
+
+                foreach ($errors as $error)
+                {
+                    $this->errorprovider->error($error["code"], $error["message"]);
+                }
+
+                throw new Drone_Exception_InvalidQueryException($error["message"], $error["code"]);
+            }
+
             $r = sqlsrv_execute($this->result);
         }
         else
@@ -106,7 +119,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
                 $this->errorProvider->error($error["code"], $error["message"]);
             }
 
-            throw new RuntimeException("Could not execute query");
+            throw new Drone_Exception_InvalidQueryException($error["message"], $error["code"]);
         }
 
         $this->getArrayResult();

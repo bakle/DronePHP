@@ -98,7 +98,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
             if (!$stmt)
             {
                 $this->error($this->dbconn->errno, $this->dbconn->error);
-                throw new RuntimeException("Could not prepare statement");
+                throw new Drone_Exception_InvalidQueryException($this->dbconn->error, $this->dbconn->errno);
             }
 
             $param_values = array_values($params);
@@ -147,7 +147,7 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
         if (!$r)
         {
             $this->errorProvider->error($this->dbconn->errno, $this->dbconn->error);
-            throw new RuntimeException("Could not execute query");
+            throw new Drone_Exception_InvalidQueryException($this->dbconn->error, $this->dbconn->errno);
         }
 
         if (is_object($this->result) && property_exists($this->result, 'num_rows'))
