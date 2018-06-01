@@ -75,12 +75,14 @@ class Drone_Validator_FormValidator
      *
      * @param string $option
      *
+     * @throws LogicException
+     *
      * @return mixed
      */
     public function getOption($key, $name)
     {
         if (!array_key_exists($key, $this->options))
-            throw new Exception("The option '$key' does not exists");
+            throw new LogicException("The option '$key' does not exists");
 
         return array_key_exists($name, $this->options[$key]) ? $this->options[$key][$name] : null;
     }
@@ -110,6 +112,9 @@ class Drone_Validator_FormValidator
     /**
      * Checks all form rules
      *
+     * @throws LogicException
+     * @throws RuntimeException
+     *
      * @return null
      */
     public function validate()
@@ -121,7 +126,7 @@ class Drone_Validator_FormValidator
         foreach ($attribs as $key => $attributes)
         {
             if (!array_key_exists($key, $attribs))
-                throw new Exception("The field '$key' does not exists!");
+                throw new LogicException("The field '$key' does not exists!");
 
             $label = (array_key_exists('label', array_keys($this->options))) ? $attributes["label"] : $key;
 
@@ -190,7 +195,7 @@ class Drone_Validator_FormValidator
                         if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], array('number', 'range')))
                             $validator = new Drone_Validate_GreaterThan(array('min' => $value, 'inclusive' => true));
                         else
-                            throw new Exception("The input type must be 'range' or 'number'");
+                            throw new LogicException("The input type must be 'range' or 'number'");
 
                         break;
 
@@ -199,7 +204,7 @@ class Drone_Validator_FormValidator
                         if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], array('number', 'range')))
                             $validator = new Drone_Validate_LessThan(array('max' => $value, 'inclusive' => true));
                         else
-                            throw new Exception("The input type must be 'range' or 'number'");
+                            throw new LogicException("The input type must be 'range' or 'number'");
 
                         break;
 
@@ -210,7 +215,7 @@ class Drone_Validator_FormValidator
                         if (array_key_exists('type', $all_attribs) && in_array($all_attribs['type'], array('range')))
                             $validator = new Drone_Validate_Step(array('baseValue' => $baseValue, 'step' => $value));
                         else
-                            throw new Exception("The input type must be 'range'");
+                            throw new LogicException("The input type must be 'range'");
 
                         break;
                 }
@@ -247,7 +252,7 @@ class Drone_Validator_FormValidator
                         $className = 'Zend_Validate_' . $class;
 
                         if (!class_exists($className))
-                            throw new Exception("The class '$className' does not exists");
+                            throw new RuntimeException("The class '$className' does not exists");
 
                         $validator = new $className($params);
 
