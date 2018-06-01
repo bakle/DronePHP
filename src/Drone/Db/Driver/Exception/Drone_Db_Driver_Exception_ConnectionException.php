@@ -13,6 +13,6 @@
  *
  * This Exception is throwed in the constructor of all database drivers
  */
-class Drone_Exception_ConnectionException extends RuntimeException
+class Drone_Db_Driver_Exception_ConnectionException extends RuntimeException
 {
 }

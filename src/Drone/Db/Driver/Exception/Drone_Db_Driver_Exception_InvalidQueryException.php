@@ -13,6 +13,6 @@
  *
  * This Exception is throwed when an error ocurred in SQL statement executions
  */
-class Drone_Exception_InvalidQueryException extends Exception
+class Drone_Db_Driver_Exception_InvalidQueryException extends Exception
 {
 }
