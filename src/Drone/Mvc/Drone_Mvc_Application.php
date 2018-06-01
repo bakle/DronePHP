@@ -52,6 +52,8 @@ class Drone_Mvc_Application
      * @param array $required_tree
      * @param array $parameters
      *
+     * @throws RuntimeException
+     *
      * @return null
      */
     public function verifyRequiredParameters(Array $required_tree, Array $parameters)
@@ -61,7 +63,7 @@ class Drone_Mvc_Application
             $req_keys = array_keys($parameters);
 
             if (!in_array($key, $req_keys))
-                throw new Exception("The key '$key' must be in the configuration!", 1);
+                throw new RuntimeException("The key '$key' must be in the configuration!", 1);
 
             if (is_array($value))
                 $this->verifyRequiredParameters($value, $parameters[$key]);
@@ -146,6 +148,8 @@ class Drone_Mvc_Application
      * @param array $modules
      * @param array $module
      *
+     * @throws RuntimeException
+     *
      * @return null
      */
     private function loadModules($modules, $module)
@@ -166,7 +170,7 @@ class Drone_Mvc_Application
             }
         }
         else
-            throw new Exception("The application must have at least one module");
+            throw new RuntimeException("The application must have at least one module");
     }
 
     /**

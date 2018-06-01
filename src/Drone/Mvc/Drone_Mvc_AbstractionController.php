@@ -26,7 +26,7 @@ abstract class Drone_Mvc_AbstractionController
     /**
      * Current parameters
      *
-     * @var string
+     * @var array
      */
     private $params;
 
@@ -87,7 +87,7 @@ abstract class Drone_Mvc_AbstractionController
     /**
      * Returns all parameters
      *
-     * @return string
+     * @return array
      */
     public function getParams()
     {
@@ -120,12 +120,14 @@ abstract class Drone_Mvc_AbstractionController
     /**
      * Returns json contents
      *
+     * @throws LogicException
+     *
      * @return array
      */
     public function getJson()
     {
         if ($_SERVER['REQUEST_METHOD'] != 'JSON')
-            throw new Exception("Request method is not JSON");
+            throw new LogicException("Request method is not JSON");
 
         $input =  file_get_contents('php://input');
         $array = explode("&", $input);
@@ -183,6 +185,8 @@ abstract class Drone_Mvc_AbstractionController
      * @param string $module
      * @param string $method
      * @param string $basePath
+     *
+     * @throws PageNotFoundException
      */
     public function __construct($module, $method, $basePath)
     {

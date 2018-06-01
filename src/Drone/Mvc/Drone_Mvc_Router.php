@@ -116,6 +116,8 @@ class Drone_Mvc_Router
     /**
      * Builds the current route and calls the controller
      *
+     * @throws Drone_Mvc_PageNotFoundException
+     *
      * @return  null
      */
     public function run()
@@ -146,17 +148,19 @@ class Drone_Mvc_Router
     /**
      * Adds a new route to router
      *
-     * @param Array $routes
+     * @param Array $route
+     *
+     * @throws LogicException
      *
      * @return string
      */
-    public function addRoute($route)
+    public function addRoute(Array $route)
     {
         $key = array_keys($route);
         $key = array_shift($key);
 
         if (array_key_exists($key, $this->routes))
-            throw new Exception("The key '$key' was already defined as route");
+            throw new LogicException("The key '$key' was already defined as route");
 
         $this->routes = array_merge($this->routes, $route);
     }
