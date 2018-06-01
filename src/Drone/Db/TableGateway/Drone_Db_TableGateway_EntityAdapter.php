@@ -161,7 +161,7 @@ class Drone_Db_TableGateway_EntityAdapter
      */
     private function parseEntity(Array &$entity)
     {
-        $drv = $this->getTableGateway()->getDriver()->getDriver();
+        $drv = $this->getTableGateway()->getDriver()->getDriverName();
 
         foreach ($entity as $field => $value)
         {
