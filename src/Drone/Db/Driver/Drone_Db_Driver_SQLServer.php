@@ -16,13 +16,6 @@
 class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
-     * Error collector
-     *
-     * @var Drone_Error_ErrorCollector
-     */
-    protected $errorProvider;
-
-    /**
      * Constructor for Oracle driver
      *
      * @param array $options
@@ -40,8 +33,6 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implement
 
         if ($auto_connect)
             $this->connect();
-
-        $this->errorProvider->errorProvider = new Drone_Error_ErrorCollector();
     }
 
     /**

@@ -16,13 +16,6 @@
 class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
-     * Error collector
-     *
-     * @var Drone_Error_ErrorCollector
-     */
-    protected $errorProvider;
-
-    /**
      * Constructor for MySql driver
      *
      * @param array $options
@@ -45,8 +38,6 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
             if ($this->dbconn->connect_errno)
                 $this->connect();
         }
-
-        $this->errorProvider->errorProvider = new Drone_Error_ErrorCollector();
     }
 
     /**
