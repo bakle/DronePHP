@@ -13,6 +13,6 @@
  *
  * Page not found is throwed in application class and other management classes
  */
-class Drone_Mvc_PageNotFoundException extends Exception
+class Drone_Mvc_Exception_PageNotFoundException extends Exception
 {
 }

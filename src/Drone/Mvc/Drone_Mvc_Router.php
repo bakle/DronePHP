@@ -138,7 +138,7 @@ class Drone_Mvc_Router
                     ? $this->routes["defaults"]["module"] : $this->identifiers["module"];
 
         if (!array_key_exists($module, $this->routes))
-            throw new PageNotFoundException("The key '$module' does not exists in routes!");
+            throw new Drone_Mvc_Exception_ModuleNotFoundException("The key '$module' does not exists in routes!");
 
         $controller = (is_null($this->identifiers["controller"]) || empty($this->identifiers["controller"]))
                     ? $this->routes[$module]["controller"] : $this->identifiers["controller"];
@@ -151,7 +151,7 @@ class Drone_Mvc_Router
         if (class_exists($fqn_controller))
             $this->controller = new $fqn_controller($module, $view, $this->basePath);
         else
-            throw new Drone_Mvc_PageNotFoundException("The control class '$fqn_controller' does not exists!");
+            throw new Drone_Mvc_Exception_ControllerNotFoundException("The control class '$fqn_controller' does not exists!");
     }
 
     /**

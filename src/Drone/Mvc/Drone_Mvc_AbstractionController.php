@@ -44,10 +44,17 @@ abstract class Drone_Mvc_AbstractionController
     private $terminal = false;
 
     /**
+     * Indicates if controller should show the views
+     *
+     * @var boolean
+     */
+    private $showView = true;
+
+    /**
      * Defines starting execution
      *
      * When this parameter is true, the constructor executes the method of the specified controller
-     * The only way to stop init execution is throw the method stopInitExecution() inside a module class
+     * The only way to stop init execution is throw the method stopExecution() inside a module class
      *
      * @var boolean
      */
@@ -88,6 +95,16 @@ abstract class Drone_Mvc_AbstractionController
     public function getTerminal()
     {
         return $this->terminal;
+    }
+
+    /**
+     * Returns the mode of viewing
+     *
+     * @return boolean
+     */
+    public function getShowView()
+    {
+        return $this->showView;
     }
 
     /**
@@ -169,6 +186,18 @@ abstract class Drone_Mvc_AbstractionController
     public function setTerminal($terminal = true)
     {
         $this->terminal = $terminal;
+    }
+
+    /**
+     * Sets the showView parameter
+     *
+     * @param boolean $show
+     *
+     * @return null
+     */
+    public function setShowView($show = true)
+    {
+        $this->showView = $show;
     }
 
     /**
@@ -256,7 +285,7 @@ abstract class Drone_Mvc_AbstractionController
      *
      * @return null
      */
-    public function stopInitExecution()
+    public function stopExecution()
     {
         $this->initExecution = false;
     }
