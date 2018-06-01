@@ -248,11 +248,10 @@ class Drone_Validator_FormValidator
                 $isRequired = (!is_null($attrib)) ? $attrib = $attrib->getValue() : false;
 
                 $validator = new Zend_Validate_NotEmpty();
-                $validator->setTranslator($this->translator);
                 $attribute = $this->formHandler->getAttribute($key, "value");
 
                 if (is_null($attribute))
-                    throw new Exception("Missing attribute 'value' in '" . $key . "'.");
+                    throw new LogicException("Missing attribute 'value' in '" . $key . "'.");
 
                 $value = $attribute->getValue();
 
