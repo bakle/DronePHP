@@ -53,7 +53,8 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
      * Connects to database
      *
      * @throws RuntimeException
-     * @return boolean
+     *
+     * @return mysqli
      */
     public function connect()
     {
@@ -64,27 +65,19 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
 
         if ($this->dbconn->connect_errno)
         {
-            $errno = $this->dbconn->connect_errno;
-            $error = $this->dbconn->connect_error;
-
             /*
-             * Sets $this->dbconn to NULL after trying to connect!. If NULL is not assigned to $this->dbconn,
-             * a Warning message (Property access is not allowed yet) is showed after property is called.
+             * Use ever mysqli_connect_errno() and mysqli_connect_error(). A Warning message
+             * (Property access is not allowed yet) is showed after property is called with
+             * $this->dbconn->errno and $this->dbconn->error.
              */
-            $this->dbconn = null;
-            $this->errorProvider->error($this->dbconn->connect_errno, $this->dbconn->connect_error);
+            $this->errorProvider->error(mysqli_connect_errno(), mysqli_connect_error());
 
-            $this->errorProvider->error(
-                $errno,
-                $error
-            );
-
-            return false;
+            throw new RuntimeException("Could not connect to Database");
         }
         else
             $this->dbconn->set_charset($this->dbchar);
 
-        return true;
+        return $this->dbconn;
     }
 
     /**
@@ -244,6 +237,6 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Dr
     public function __destruct()
     {
         if ($this->dbconn !== false && !is_null($this->dbconn))
-            $this->dbconn->close();
+            @$this->dbconn->close();
     }
 }
