@@ -24,6 +24,15 @@ class Drone_Error_Errno
      *
      * @var integer
      */
-	const JSON_DECODE_ERROR      = 10;
-	const JSON_ENCODE_ERROR      = 11;
+    const JSON_DECODE_ERROR = 10;
+    const JSON_ENCODE_ERROR = 11;
+
+    /**
+     * Common database errors
+     *
+     * @var integer
+     */
+    const DB_TRANSACTION_STARTED     = 20;
+    const DB_TRANSACTION_NOT_STARTED = 21;
+    const DB_TRANSACTION_EMPTY       = 22;
 }

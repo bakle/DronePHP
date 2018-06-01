@@ -25,6 +25,11 @@ class Drone_Error_ErrorCollector
         # JSON errors
         10 => 'Failed to decode JSON file \'%file%\'',
         11 => 'Failed to encode JSON file \'%file%\'',
+
+        # Database related errors
+        20 => 'The transaction was already started',
+        21 => 'The transaction has not been started',
+        22 => 'Transaction cannot be empty',
     );
 
     /**

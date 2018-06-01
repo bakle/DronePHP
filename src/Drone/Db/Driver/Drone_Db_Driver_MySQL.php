@@ -7,24 +7,21 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_Driver_DriverInterface
+class Drone_Db_Driver_MySQL extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
-     * @return array
+     * Error collector
+     *
+     * @var Drone_Error_ErrorCollector
      */
-    public function getArrayResult()
-    {
-        if ($this->arrayResult)
-            return $this->arrayResult;
-        return $this->toArray();
-    }
+    protected $errorProvider;
 
     /**
      * Constructor for MySql driver
      *
      * @param array $options
      *
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function __construct($options)
     {
@@ -42,18 +39,20 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
             if ($this->dbconn->connect_errno)
                 $this->connect();
         }
+
+        $this->errorProvider->errorProvider = new Drone_Error_ErrorCollector();
     }
 
     /**
      * Connects to database
      *
-     * @throws Exception
+     * @throws RuntimeException
      * @return boolean
      */
     public function connect()
     {
         if (!extension_loaded('mysqli'))
-            throw new Exception("The Mysqli extension is not loaded");
+            throw new RuntimeExceptionException("The Mysqli extension is not loaded");
 
         $this->dbconn = @new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname);
 
@@ -67,16 +66,14 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
              * a Warning message (Property access is not allowed yet) is showed after property is called.
              */
             $this->dbconn = null;
+            $this->errorProvider->error($this->dbconn->connect_errno, $this->dbconn->connect_error);
 
-            $this->error(
+            $this->errorProvider->error(
                 $errno,
                 $error
             );
 
-            if (count($this->errors))
-                throw new Exception($error, $errno);
-            else
-                throw new Exception("Unknown error!");
+            return false;
         }
         else
             $this->dbconn->set_charset($this->dbchar);
@@ -87,7 +84,6 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
     /**
      * Excecutes a statement
      *
-     * @throws Exception
      * @return boolean
      */
     public function execute($sql, Array $params = array())
@@ -138,14 +134,8 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
 
         if (!$r)
         {
-            $this->error(
-                100, $this->dbconn->error
-            );
-
-            if (count($this->errors))
-                throw new Exception($this->dbconn->error, 100);
-            else
-                throw new Exception("Unknown error!");
+            $this->errorProvider->error($this->dbconn->error);
+            return false;
         }
 
         if (is_object($this->result) && property_exists($this->result, 'num_rows'))
@@ -161,23 +151,6 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
             $this->transac_result = is_null($this->transac_result) ? $this->result: $this->transac_result && $this->result;
 
         return $this->result;
-    }
-
-    /**
-     * Excecutes multiple statements as transaction
-     *
-     * @return boolean
-     */
-    public function transaction($querys)
-    {
-        $this->beginTransaction();
-
-        foreach ($querys as $sql)
-        {
-            $this->execute($sql);
-        }
-
-        return $this->endTransaction();
     }
 
     /**
@@ -227,10 +200,11 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
     /**
      * Returns an array with the rows fetched
      *
-     * @throws Exception
+     * @throws LogicException
+     *
      * @return array
      */
-    private function toArray()
+    protected  function toArray()
     {
         $data = array();
 
@@ -242,7 +216,14 @@ class Drone_Db_Driver_MySQL extends Drone_Db_Driver_Driver implements Drone_Db_D
             }
         }
         else
-            throw new Exception('There are not data in the buffer!');
+            /*
+             * "This kind of exception should lead directly to a fix in your code"
+             * So much production tests tell us this error is throwed because developers
+             * execute toArray() before execute().
+             *
+             * Ref: http://php.net/manual/en/class.logicexception.php
+             */
+            throw new LogicException('There are not data in the buffer!');
 
         $this->arrayResult = $data;
 

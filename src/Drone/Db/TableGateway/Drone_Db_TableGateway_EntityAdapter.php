@@ -41,7 +41,7 @@ class Drone_Db_TableGateway_EntityAdapter
      *
      * @return Drone_Db_Entity[]
      */
-    public function select($where)
+    public function select(Array $where)
     {
         $result = $this->tableGateway->select($where);
 
@@ -75,7 +75,8 @@ class Drone_Db_TableGateway_EntityAdapter
      *
      * @param Drone_Db_Entity|array $entity
      *
-     * @throws Exception
+     * @throws InvalidArgumentException
+     *
      * @return boolean
      */
     public function insert($entity)
@@ -83,7 +84,7 @@ class Drone_Db_TableGateway_EntityAdapter
         if ($entity instanceof Drone_Db_Entity)
             $entity = get_object_vars($entity);
         else if (!is_array($entity))
-            throw new Exception("Invalid type given. Drone_Db_Entity or Array expected");
+            throw new InvalidArgumentException("Invalid type given. Drone_Db_Entity or Array expected");
 
         $this->parseEntity($entity);
 
@@ -98,7 +99,8 @@ class Drone_Db_TableGateway_EntityAdapter
      * @param Drone_Db_Entity|array $entity
      * @param array $where
      *
-     * @throws Exception
+     * @throws InvalidArgumentException
+     *
      * @return boolean
      */
     public function update($entity, $where)
@@ -119,7 +121,7 @@ class Drone_Db_TableGateway_EntityAdapter
             $entity = $fieldsToModify;
         }
         else if (!is_array($entity))
-            throw new Exception("Invalid type given. Drone_Db_Entity or Array expected");
+            throw new InvalidArgumentException("Invalid type given. Drone_Db_Entity or Array expected");
 
         $this->parseEntity($entity);
 
@@ -133,7 +135,8 @@ class Drone_Db_TableGateway_EntityAdapter
      *
      * @param Drone_Db_Entity|array $entity
      *
-     * @throws Exception
+     * @throws InvalidArgumentException
+     *
      * @return boolean
      */
     public function delete($entity)
@@ -141,7 +144,7 @@ class Drone_Db_TableGateway_EntityAdapter
         if ($entity instanceof Drone_Db_Entity)
             $entity = get_object_vars($entity);
         else if (!is_array($entity))
-            throw new Exception("Invalid type given. Drone_Db_Entity or Array expected");
+            throw new InvalidArgumentException("Invalid type given. Drone_Db_Entity or Array expected");
 
         $result = $this->tableGateway->delete($entity);
 
@@ -155,7 +158,7 @@ class Drone_Db_TableGateway_EntityAdapter
      *
      * @return array
      */
-    private function parseEntity(&$entity)
+    private function parseEntity(Array &$entity)
     {
         $drv = $this->getTableGateway()->getDriver()->getDriver();
 

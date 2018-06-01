@@ -7,24 +7,21 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_Driver_DriverInterface
+class Drone_Db_Driver_Oracle extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
-     * @return array
+     * Error collector
+     *
+     * @var Drone_Error_ErrorCollector
      */
-    public function getArrayResult()
-    {
-        if ($this->arrayResult)
-            return $this->arrayResult;
-        return $this->toArray();
-    }
+    protected $errorProvider;
 
     /**
      * Constructor for Oracle driver
      *
      * @param array $options
      *
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function __construct($options)
     {
@@ -37,18 +34,21 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_
 
         if ($auto_connect)
             $this->connect();
+
+        $this->errorProvider->errorProvider = new Drone_Error_ErrorCollector();
     }
 
     /**
      * Connects  to database
      *
-     * @throws Exception
+     * @throws RuntimeException
+     *
      * @return boolean
      */
     public function connect()
     {
         if (!extension_loaded('oci8'))
-            throw new Exception("The Oci8 extension is not loaded");
+            throw new RuntimeException("The Oci8 extension is not loaded");
 
         $connection_string = (is_null($this->dbhost) || empty($this->dbhost)) ? $this->dbname : $this->dbhost ."/". $this->dbname;
         $this->dbconn = @oci_connect($this->dbuser,  $this->dbpass, $connection_string, $this->dbchar);
@@ -56,15 +56,9 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_
         if ($this->dbconn === false)
         {
             $error = oci_error();
+            $this->errorProvider->error($error["code"], $error["message"]);
 
-            $this->error(
-                $error["code"], $error["message"]
-            );
-
-            if (count($this->errors))
-                throw new Exception($error["message"], $error["code"]);
-            else
-                throw new Exception("Unknown error!");
+            return false;
         }
 
         return true;
@@ -73,7 +67,6 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_
     /**
      * Excecutes a statement
      *
-     * @throws Exception
      * @return boolean
      */
     public function execute($sql, Array $params = array())
@@ -102,16 +95,8 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_
 
         if (!$r)
         {
-            $error = oci_error($this->result);
-
-            $this->error(
-                $error["code"], $error["message"]
-            );
-
-            if (count($this->errors))
-                throw new Exception($error["message"], $error["code"]);
-            else
-                throw new Exception("Unknown error!");
+            $this->errorProvider->error($error["code"], $error["message"]);
+            return false;
         }
 
         # This should be before of getArrayResult() because oci_fetch() is incremental.
@@ -126,23 +111,6 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_
             $this->transac_result = is_null($this->transac_result) ? $this->result: $this->transac_result && $this->result;
 
         return $this->result;
-    }
-
-    /**
-     * Excecutes multiple statements as transaction
-     *
-     * @return boolean
-     */
-    public function transaction($querys)
-    {
-        $this->beginTransaction();
-
-        foreach ($querys as $sql)
-        {
-            $this->execute($sql);
-        }
-
-        $this->endTransaction();
     }
 
     /**
@@ -181,10 +149,11 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_
     /**
      * Returns an array with the rows fetched
      *
-     * @throws Exception
+     * @throws LogicException
+     *
      * @return array
      */
-    private function toArray()
+    protected function toArray()
     {
         $data = array();
 
@@ -196,7 +165,14 @@ class Drone_Db_Driver_Oracle extends Drone_Db_Driver_Driver implements Drone_Db_
             }
         }
         else
-            throw new Exception('There are not data in the buffer!');
+            /*
+             * "This kind of exception should lead directly to a fix in your code"
+             * So much production tests tell us this error is throwed because developers
+             * execute toArray() before execute().
+             *
+             * Ref: http://php.net/manual/en/class.logicexception.php
+             */
+            throw new LogicException('There are not data in the buffer!');
 
         $this->arrayResult = $data;
 

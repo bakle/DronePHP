@@ -7,17 +7,14 @@
  * @license   http://www.dronephp.com/license
  */
 
-class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_Db_Driver_DriverInterface
+class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_AbstractDriver implements Drone_Db_Driver_DriverInterface
 {
     /**
-     * @return array
+     * Error collector
+     *
+     * @var Drone_Error_ErrorCollector
      */
-    public function getArrayResult()
-    {
-        if ($this->arrayResult)
-            return $this->arrayResult;
-        return $this->toArray();
-    }
+    protected $errorProvider;
 
     /**
      * Constructor for Oracle driver
@@ -37,18 +34,21 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
 
         if ($auto_connect)
             $this->connect();
+
+        $this->errorProvider->errorProvider = new Drone_Error_ErrorCollector();
     }
 
     /**
      * Connects to database
      *
-     * @throws Exception
+     * @throws RuntimeException
+     *
      * @return boolean
      */
     public function connect()
     {
         if (!extension_loaded('sqlsrv'))
-            throw new Exception("The Sqlsrv extension is not loaded");
+            throw new RuntimeException("The Sqlsrv extension is not loaded");
 
         $db_info = array("Database" => $this->dbname, "UID" => $this->dbuser, "PWD" => $this->dbpass, "CharacterSet" => $this->dbchar);
         $this->dbconn = sqlsrv_connect($this->dbhost, $db_info);
@@ -59,15 +59,10 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
 
             foreach ($errors as $error)
             {
-                $this->error(
-                    $error["code"], $error["message"]
-                );
+                $this->errorProvider->error($error["code"], $error["message"]);
             }
 
-            if (count($this->errors))
-                throw new Exception($errors[0]["message"], $errors[0]["code"]);
-            else
-                throw new Exception("Unknown error!");
+            return false;
         }
 
         return true;
@@ -76,7 +71,6 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
     /**
      * Excecutes a statement
      *
-     * @throws Exception
      * @return boolean
      */
     public function execute($sql, Array $params = array())
@@ -102,15 +96,10 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
 
             foreach ($errors as $error)
             {
-                $this->error(
-                    $error["code"], $error["message"]
-                );
+                $this->errorProvider->error($error["code"], $error["message"]);
             }
 
-            if (count($this->errors))
-                throw new Exception($errors[0]["message"], $[0]["code"]);
-            else
-                throw new Exception("Unknown error!");
+            return false;
         }
 
         $this->getArrayResult();
@@ -123,23 +112,6 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
             $this->transac_result = is_null($this->transac_result) ? $this->result: $this->transac_result && $this->result;
 
         return $this->result;
-    }
-
-    /**
-     * Excecutes multiple statements as transaction
-     *
-     * @return boolean
-     */
-    public function transaction($querys)
-    {
-        $this->beginTransaction();
-
-        foreach ($querys as $sql)
-        {
-            $this->execute($sql);
-        }
-
-        $this->endTransaction();
     }
 
     /**
@@ -175,9 +147,7 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
 
             foreach ($errors as $error)
             {
-                $this->error(
-                    $error["code"], $error["message"]
-                );
+                $this->errorProvider->error($error["code"], $error["message"]);
             }
 
             return false;
@@ -202,10 +172,11 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
     /**
      * Returns an array with the rows fetched
      *
-     * @throws Exception
+     * @throws LogicException
+     *
      * @return array
      */
-    private function toArray()
+    protected function toArray()
     {
         $data = array();
 
@@ -217,7 +188,14 @@ class Drone_Db_Driver_SQLServer extends Drone_Db_Driver_Driver implements Drone_
             }
         }
         else
-            throw new Exception('There are not data in the buffer!');
+            /*
+             * "This kind of exception should lead directly to a fix in your code"
+             * So much production tests tell us this error is throwed because developers
+             * execute toArray() before execute().
+             *
+             * Ref: http://php.net/manual/en/class.logicexception.php
+             */
+            throw new LogicException('There are not data in the buffer!');
 
         $this->arrayResult = $data;
 

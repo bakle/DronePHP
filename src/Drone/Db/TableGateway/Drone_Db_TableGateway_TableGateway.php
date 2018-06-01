@@ -46,11 +46,11 @@ class Drone_Db_TableGateway_TableGateway
      *
      * @return array With all results
      */
-    public function select($where = array())
+    public function select(Array $where = array())
     {
         $bind_values = array();
 
-        $driver = $this->getDriver()->getDriver();
+        $driver = $this->getDriver()->getDriverName();
 
         if (count($where))
         {
@@ -126,17 +126,18 @@ class Drone_Db_TableGateway_TableGateway
      *
      * @param array $data
      *
-     * @throws Exception
+     * @throws LogicException
+     *
      * @return boolean
      */
     public function insert($data)
     {
         if (!count($data))
-            throw new Exception("Missing values for INSERT statement!");
+            throw new LogicException("Missing values for INSERT statement!");
 
         $bind_values = array();
 
-        $driver = $this->getDriver()->getDriver();
+        $driver = $this->getDriver()->getDriverName();
 
         $k = 0;
 
@@ -199,19 +200,24 @@ class Drone_Db_TableGateway_TableGateway
      * @param array $set
      * @param array $where
      *
-     * @throws Exception
+     * @throws LogicException
+     * @throws SecurityException
+     *
      * @return boolean
      */
-    public function update($set, $where)
+    public function update(Array $set,Array $where)
     {
         $parsed_set = array();
 
         if (!count($set))
-            throw new Exception("Missing SET arguments!");
+            throw new LogicException("Missing SET arguments!");
+
+        if (!count($set))
+            throw new Drone_Exception_SecurityException("You cannot update rows without WHERE clause!");
 
         $bind_values = array();
 
-        $driver = $this->getDriver()->getDriver();
+        $driver = $this->getDriver()->getDriverName();
 
         $k = 0;
 
@@ -337,10 +343,11 @@ class Drone_Db_TableGateway_TableGateway
      *
      * @param array $where
      *
-     * @throws Exception
+     * @throws SecurityException
+     *
      * @return boolean
      */
-    public function delete($where)
+    public function delete(Array $where)
     {
         if (count($where))
         {
@@ -348,7 +355,7 @@ class Drone_Db_TableGateway_TableGateway
 
             $bind_values = array();
 
-            $driver = $this->getDriver()->getDriver();
+            $driver = $this->getDriver()->getDriverName();
 
             $k = 0;
 
@@ -404,7 +411,7 @@ class Drone_Db_TableGateway_TableGateway
             $where = "\r\nWHERE \r\n\t" . implode(" AND\r\n\t", $parsed_where);
         }
         else
-            throw new Exception("You cannot delete rows without WHERE clause!. Use TRUNCATE statement instead.");
+            throw new Drone_Exception_SecurityException("You cannot delete rows without WHERE clause!. Use TRUNCATE statement instead.");
 
         $table = $this->entity->getTableName();
 

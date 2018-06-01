@@ -7,25 +7,8 @@
  * @license   http://www.dronephp.com/license
  */
 
-abstract class Drone_Db_Driver_Driver
+abstract class Drone_Db_Driver_AbstractDriver
 {
-    /**#@+
-     * Transaction constants
-     * @var string
-     */
-    const TRANSAC_STARTED = 'transacStarted';
-    const EMPTY_TRANSAC   = 'emptyTransac';
-
-    /**
-     * Validation failure message template definitions
-     *
-     * @var array
-     */
-    protected $messagesTemplates = array(
-        self::TRANSAC_STARTED => 'Transaction mode has already started',
-        self::EMPTY_TRANSAC   => 'There are not querys in this transaction'
-    );
-
     /**
      * @var string
      */
@@ -57,13 +40,6 @@ abstract class Drone_Db_Driver_Driver
      * @var resource|boolean
      */
     protected $dbconn;
-
-    /**
-     * Failure messages
-     *
-     * @var array
-     */
-    protected $errors = array();
 
     /**
      * Rows returned on query() method
@@ -111,6 +87,13 @@ abstract class Drone_Db_Driver_Driver
      * @var boolean
      */
     protected $transac_result = null;
+
+    /**
+     * Error collector
+     *
+     * @var Drone_Error_ErrorCollector
+     */
+    protected $errorProvider;
 
     /**
      * Returns the dbhost attribute
@@ -173,13 +156,16 @@ abstract class Drone_Db_Driver_Driver
     }
 
     /**
-     * Returns an array with all failure messages
+     * Returns an array with all results of the last execute statement
      *
      * @return array
      */
-    public function getErrors()
+    public function getArrayResult()
     {
-        return $this->errors;
+        if ($this->arrayResult)
+            return $this->arrayResult;
+
+        return $this->toArray();
     }
 
     /**
@@ -256,21 +242,9 @@ abstract class Drone_Db_Driver_Driver
             if (property_exists(__CLASS__, strtolower($option)) && method_exists($this, 'set'.$option))
                 $this->{'set'.$option}($value);
         }
-   }
 
-    /**
-     * Adds an error
-     *
-     * @param string $code
-     * @param string $message
-     *
-     * @return null
-     */
-    protected function error($code, $message = null)
-    {
-        if (!array_key_exists($code, $this->errors))
-            $this->errors[$message] = (is_null($message) && array_key_exists($code, $this->messagesTemplates)) ? $this->messagesTemplates[$code] : $message;
-    }
+        $this->errorProvider->errorProvider = new Drone_Error_ErrorCollector();
+   }
 
     /**
      * Returns true if there is a stablished connection
@@ -327,7 +301,7 @@ abstract class Drone_Db_Driver_Driver
 
         if ($this->transac_mode)
         {
-            $this->error(self::TRANSAC_STARTED);
+            $this->errorProvider->error(Drone_Error_Errno::TRANSAC_STARTED);
             return false;
         }
 
@@ -343,15 +317,22 @@ abstract class Drone_Db_Driver_Driver
      */
     public function endTransaction()
     {
+        if (!$this->transac_mode)
+        {
+            $this->errorProvider->error(Drone_Error_Errno::DB_TRANSACTION_NOT_STARTED);
+            return false;
+        }
+
         if (is_null($this->transac_result))
         {
-            $this->error(self::EMPTY_TRANSAC);
+            $this->errorProvider->error(Drone_Error_Errno::EMPTY_TRANSAC);
             return false;
         }
 
         if ($this->transac_result)
             $this->commit();
-        else {
+        else
+        {
             $this->rollback();
             return false;
         }
@@ -362,5 +343,33 @@ abstract class Drone_Db_Driver_Driver
         $this->transac_mode = false;
 
         return true;
+    }
+
+    /**
+     * Abstract result set
+     *
+     * By default all Drivers must be implement toArray() function.
+     * The toArray() method must take the latest result from an execute statement
+     * and convert it to an array. To get this array getArrayResult() has been implemented.
+     *
+     * @return resource
+     */
+    protected abstract function toArray();
+
+    /**
+     * Excecutes multiple statements as transaction
+     *
+     * @return boolean
+     */
+    public function transaction($querys)
+    {
+        $this->beginTransaction();
+
+        foreach ($querys as $sql)
+        {
+            $this->execute($sql);
+        }
+
+        return $this->endTransaction();
     }
 }
