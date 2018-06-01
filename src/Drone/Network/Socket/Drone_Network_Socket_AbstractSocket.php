@@ -17,7 +17,7 @@ class Drone_Network_Socket_AbstractSocket
     /**
      * @var integer
      */
-   protected $port;
+    protected $port;
 
     /**
      * Socket resource
@@ -96,24 +96,24 @@ class Drone_Network_Socket_AbstractSocket
      *
      * @param array $options
      */
-   public function __construct($options)
-   {
+    public function __construct($options)
+    {
         foreach ($options as $option => $value)
         {
             if (property_exists(__CLASS__, strtolower($option)) && method_exists($this, 'set'.$option))
                 $this->{'set'.$option}($value);
         }
 
-       if (!($this->socket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP)))
-       {
+        if (!($this->socket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP)))
+        {
             $errno = socket_last_error();
             $this->errorProvider->error($errno, socket_strerror($errno));
 
             throw new RuntimeException("Could not create the socket");
-       }
+        }
 
         $this->errorProvider->errorProvider = new Drone_Error_ErrorCollector();
-   }
+    }
 
     /**
      * Binds the socket
@@ -137,8 +137,8 @@ class Drone_Network_Socket_AbstractSocket
      *
      * @return bool
      */
-   public function close()
-   {
-       return socket_close($this->socket);
-   }
+    public function close()
+    {
+        return socket_close($this->socket);
+    }
 }

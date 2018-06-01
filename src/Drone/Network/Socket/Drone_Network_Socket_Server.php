@@ -18,18 +18,18 @@ class Drone_Network_Socket_Server
      *
      * @return string
      */
-   public function read($socket)
-   {
-       if (($message = @socket_read($socket, 1024)) === false)
-       {
+    public function read($socket)
+    {
+        if (($message = @socket_read($socket, 1024)) === false)
+        {
             $errno = socket_last_error();
             $this->error($errno, socket_strerror($errno));
 
             throw new RuntimeException("Could not read message from client socket");
-       }
+        }
 
-       return $message;
-   }
+        return $message;
+    }
 
     /**
      * Sends a message to client socket
@@ -41,18 +41,18 @@ class Drone_Network_Socket_Server
      *
      * @return integer
      */
-   public function send($socket, $message)
-   {
-       if (($bytes = @socket_write($socket, $message, strlen($message))) === false)
-       {
+    public function send($socket, $message)
+    {
+        if (($bytes = @socket_write($socket, $message, strlen($message))) === false)
+        {
             $errno = socket_last_error();
             $this->error($errno, socket_strerror($errno));
 
             throw new RuntimeException("Could not send message to the client socket");
-       }
+        }
 
-       return $bytes;
-   }
+        return $bytes;
+    }
 
     /**
      * Sets socket to listening
@@ -63,54 +63,54 @@ class Drone_Network_Socket_Server
      *
      * @return null
      */
-   public function listen(Array $eventHandlers = array())
-   {
-       $event = $eventHandlers;
-       $clousure = function(){};
+    public function listen(Array $eventHandlers = array())
+    {
+        $event = $eventHandlers;
+        $clousure = function(){};
 
-       if (!array_key_exists('success', $event))
-           $event["success"] = $clousure;
+        if (!array_key_exists('success', $event))
+            $event["success"] = $clousure;
 
-       if (!array_key_exists('error', $event))
-           $event["error"] = $clousure;
+        if (!array_key_exists('error', $event))
+            $event["error"] = $clousure;
 
-       $listener = false;
+        $listener = false;
 
-       if (!($listener = @socket_listen($this->socket, 30)))
-       {
+        if (!($listener = @socket_listen($this->socket, 30)))
+        {
             $errno = socket_last_error();
             $this->error($errno, socket_strerror($errno));
 
             throw new RuntimeException("Could not set socket to listen");
-       }
-       else {
+        }
+        else {
 
-           echo "\n";
-           echo "Server Started : " . date('Y-m-d H:i:s') . "\n";
-           echo "Master socket  : " . $this->socket . "\n";
-           echo "Listening on   : " . $this->host . " port " . $this->port . "\n\n";
+            echo "\n";
+            echo "Server Started : " . date('Y-m-d H:i:s') . "\n";
+            echo "Master socket  : " . $this->socket . "\n";
+            echo "Listening on   : " . $this->host . " port " . $this->port . "\n\n";
 
-           $socket = $this->socket;
+            $socket = $this->socket;
 
-           if (!($spawn = @socket_accept($this->socket)))
-           {
-               $errno = socket_last_error();
-               $this->error($errno, socket_strerror($errno));
+            if (!($spawn = @socket_accept($this->socket)))
+            {
+                $errno = socket_last_error();
+                $this->error($errno, socket_strerror($errno));
 
-               throw new RuntimeException("Could not accept incoming connection");
-           }
+                throw new RuntimeException("Could not accept incoming connection");
+            }
 
-           $input = $this->read($spawn);
+            $input = $this->read($spawn);
 
-           $input = trim($input);
-           call_user_func($event["success"], $input, $this, $spawn);
+            $input = trim($input);
+            call_user_func($event["success"], $input, $this, $spawn);
 
-           socket_close($spawn);
-       }
+            socket_close($spawn);
+        }
 
-       if (!$listener)
-           call_user_func($event["error"], $this->getLastError());
+        if (!$listener)
+            call_user_func($event["error"], $this->getLastError());
 
-       return $listener;
-   }
+        return $listener;
+    }
 }
