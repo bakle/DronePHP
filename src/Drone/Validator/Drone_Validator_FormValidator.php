@@ -103,13 +103,16 @@ class Drone_Validator_FormValidator
      * @param Drone_Dom_Element_Form $formHandler
      * @param array $options
      */
-    public function __construct(Drone_Dom_Element_Form $formHandler, $options)
+    public function __construct(Drone_Dom_Element_Form $formHandler, $options, $locale = null)
     {
         $this->formHandler = $formHandler;
         $this->options = (is_array($options)) ? $options : array();
 
-        $config = include('config/application.config.php');
-        $locale = $config["environment"]["locale"];
+        if (is_null($locale))
+        {
+            $config = include('config/application.config.php');
+            $locale = $config["environment"]["locale"];
+        }
 
         $this->translator = new Zend_Translate(
             array(
