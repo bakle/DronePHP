@@ -101,7 +101,8 @@ class Drone_Validator_FormValidator
      * Constructor
      *
      * @param Drone_Dom_Element_Form $formHandler
-     * @param array $options
+     * @param array  $options
+     * @param string $local
      */
     public function __construct(Drone_Dom_Element_Form $formHandler, $options, $locale = null)
     {
